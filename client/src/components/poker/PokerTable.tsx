@@ -367,14 +367,14 @@ export default function PokerTable({
       )}
 
       {/* Player Seats */}
-      {gameState.players.map((player, index) => {
-        const isCurrentTurn = gameState.currentPlayerIndex === index;
-        const isDealer = gameState.dealerPosition === index;
-        const isSmallBlind = gameState.smallBlindPosition === index;
-        const isBigBlind = gameState.bigBlindPosition === index;
-        
+      {reorderedPlayers.map((player, idx) => {
+        // index는 재정렬된 배열의 인덱스(즉, 0번이 항상 자기 자신)
+        const origIndex = gameState.players.findIndex(p => p.id === player.id);
+        const isCurrentTurn = gameState.currentPlayerIndex === origIndex;
+        const isDealer = gameState.dealerPosition === origIndex;
+        const isSmallBlind = gameState.smallBlindPosition === origIndex;
+        const isBigBlind = gameState.bigBlindPosition === origIndex;
         if (isMobile) {
-          // 현재 플레이어는 항상 커뮤니티 카드 밑에 배치 (position 3)
           if (player.id === currentPlayerId) {
             return (
               <MobilePlayerCard
@@ -382,22 +382,17 @@ export default function PokerTable({
                 player={player}
                 isCurrentPlayer={true}
                 isActive={isCurrentTurn}
-                style={mobileSeatPositions[3]} // 커뮤니티 카드 밑
+                style={mobileSeatPositions[3]}
                 gameStage={gameState.stage}
                 showAllHoleCards={(gameState as any).showAllHoleCards || false}
               />
             );
           }
-          
-          // 다른 플레이어들은 나머지 5개 위치에 배치
-          const otherPlayers = gameState.players.filter(p => p.id !== currentPlayerId);
+          const otherPlayers = reorderedPlayers.filter(p => p.id !== currentPlayerId);
           const otherPlayerIndex = otherPlayers.findIndex(p => p.id === player.id);
           if (otherPlayerIndex === -1) return null;
-          
-          // 위치 0, 1, 2, 4, 5 사용 (3번은 현재 플레이어용)
           const availablePositions = [0, 1, 2, 4, 5];
           const positionIndex = availablePositions[otherPlayerIndex % availablePositions.length];
-          
           return (
             <MobilePlayerCard
               key={player.id}
@@ -414,7 +409,7 @@ export default function PokerTable({
             <div
               key={player.id}
               className="absolute"
-              style={pcSeatPositions[player.position % pcSeatPositions.length]}
+              style={pcSeatPositions[idx % pcSeatPositions.length]}
             >
               <PlayerSeat
                 player={player}

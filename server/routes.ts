@@ -471,11 +471,10 @@ export async function registerRoutes(app) {
         timestamp: Date.now()
       };
       
-      // Send chat message to all players in the room EXCEPT the sender
+      // 모든 플레이어(본인 포함)에게 메시지 전송
       wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN && 
-            (client as any).roomCode === roomCode &&
-            (client as any).playerId !== playerId) {
+            (client as any).roomCode === roomCode) {
           client.send(JSON.stringify({
             type: 'chatMessage',
             data: chatMessage

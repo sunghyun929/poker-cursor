@@ -1722,6 +1722,17 @@ export class PokerGame {
       this.gameState.minRaise = newBigBlind;
       
       console.log(`블라인드 증가 완료: ${this.gameState.smallBlind}/${this.gameState.bigBlind}`);
+      // 블라인드 인상 시 딜러 포지션을 다음 활성 플레이어로 이동
+      let nextDealer = (this.gameState.dealerPosition + 1) % this.gameState.players.length;
+      let attempts = 0;
+      while (attempts < this.gameState.players.length) {
+        if (this.gameState.players[nextDealer].chips > 0) {
+          this.gameState.dealerPosition = nextDealer;
+          break;
+        }
+        nextDealer = (nextDealer + 1) % this.gameState.players.length;
+        attempts++;
+      }
     } else {
       // Keep current blinds (when newBigBlind is not an increase)
       console.log(`현재 블라인드 유지: ${this.gameState.smallBlind}/${this.gameState.bigBlind}`);

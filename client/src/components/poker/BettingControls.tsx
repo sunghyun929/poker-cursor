@@ -96,7 +96,9 @@ export default function BettingControls({ player, gameState, onAction }: Betting
   };
 
   const handleQuickBet = (multiplier: number) => {
-    const amount = Math.min(Math.floor(gameState.pot * multiplier), maxBet);
+    // currentBet이 0이면 최소 레이즈로 처리
+    const base = gameState.currentBet > 0 ? gameState.currentBet : minRaise;
+    const amount = Math.min(base * multiplier, maxBet);
     setBetAmount(Math.max(amount, minRaise));
   };
 
@@ -216,26 +218,26 @@ export default function BettingControls({ player, gameState, onAction }: Betting
               <Button 
                 size="sm" 
                 variant="outline"
-                onClick={() => handleQuickBet(0.5)}
+                onClick={() => handleQuickBet(2)}
                 className="flex-1 h-3 text-xs py-0"
               >
-                1/2
+                2x Current Bet
               </Button>
               <Button 
                 size="sm" 
                 variant="outline"
-                onClick={() => handleQuickBet(0.75)}
+                onClick={() => handleQuickBet(3)}
                 className="flex-1 h-3 text-xs py-0"
               >
-                3/4
+                3x Current Bet
               </Button>
               <Button 
                 size="sm" 
                 variant="outline"
-                onClick={() => handleQuickBet(1)}
+                onClick={() => handleQuickBet(4)}
                 className="flex-1 h-3 text-xs py-0"
               >
-                Pot
+                4x Current Bet
               </Button>
             </div>
 

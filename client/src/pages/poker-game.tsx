@@ -131,6 +131,7 @@ export default function PokerGame() {
       joinGame(currentRoomCode, playerName.trim(), newPlayerId);
       setShowJoinForm(false);
       setIsConnected(true);
+      setChatMessages([]); // 방 입장 시 채팅 초기화
     } catch (error) {
       toast({
         title: "Connection Error",

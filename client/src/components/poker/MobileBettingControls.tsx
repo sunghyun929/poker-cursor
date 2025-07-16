@@ -78,7 +78,9 @@ export default function MobileBettingControls({
   };
 
   const handleQuickBet = (multiplier: number) => {
-    const amount = Math.min(Math.floor(gameState.pot * multiplier), maxBet);
+    // currentBet이 0이면 최소 레이즈로 처리
+    const base = gameState.currentBet > 0 ? gameState.currentBet : minRaise;
+    const amount = Math.min(base * multiplier, maxBet);
     setBetAmount(Math.max(amount, minRaise));
   };
 
@@ -155,28 +157,28 @@ export default function MobileBettingControls({
         {/* Quick Bet Buttons */}
         <div className="flex space-x-1">
           <Button
-            onClick={() => handleQuickBet(0.5)}
-            variant="outline"
-            size="sm"
-            className="flex-1 h-6 py-0 text-xs"
-          >
-            1/2 Pot
-          </Button>
-          <Button
-            onClick={() => handleQuickBet(1)}
-            variant="outline"
-            size="sm"
-            className="flex-1 h-6 py-0 text-xs"
-          >
-            Pot
-          </Button>
-          <Button
             onClick={() => handleQuickBet(2)}
             variant="outline"
             size="sm"
             className="flex-1 h-6 py-0 text-xs"
           >
-            2x Pot
+            2x Current Bet
+          </Button>
+          <Button
+            onClick={() => handleQuickBet(3)}
+            variant="outline"
+            size="sm"
+            className="flex-1 h-6 py-0 text-xs"
+          >
+            3x Current Bet
+          </Button>
+          <Button
+            onClick={() => handleQuickBet(4)}
+            variant="outline"
+            size="sm"
+            className="flex-1 h-6 py-0 text-xs"
+          >
+            4x Current Bet
           </Button>
         </div>
 
