@@ -1,0 +1,396 @@
+팟 생성: $2200 (베팅레벨: $1100, 참여자: 2명)
+팟 생성: $1800 (베팅레벨: $2900, 참여자: 1명)
+총 할당된 팟: $4000
+생성된 사이드팟: [
+  { amount: 2200, eligiblePlayers: [ 'h1p4q7o4j3b', 'xf5l39wp02t' ] },
+  { amount: 1800, eligiblePlayers: [ 'xf5l39wp02t' ] }
+]
+핸드 순위: [ { name: 'q', hand: '스트레이트' }, { name: 'e', hand: '투 페어' } ]
+팟 1 분배 (금액: $2200, 참여자: h1p4q7o4j3b, xf5l39wp02t)
+q이 팟 1에서 $2200 획득 (스트레이트)
+팟 2 분배 (금액: $1800, 참여자: xf5l39wp02t)
+e이 팟 2에서 $1800 획득 (투 페어)
+최종 칩 상태: [
+  { name: 'q', chips: 2200, isWinner: true },
+  { name: 'e', chips: 1800, isWinner: true }
+]
+승자 확인: 1/2 활성 플레이어가 확인함
+승자 확인: 2/2 활성 플레이어가 확인함
+모든 플레이어가 승자 확인 완료 - 다음 핸드 자동 시작
+블라인드 전 총 칩: $4000
+블라인드 후 총 칩: $3700, 팟: $300, 총계: $4000
+e 액션 allIn 전 - 총 칩: $3700, 팟: $300, 총계: $4000
+e 액션 allIn 후 - 총 칩: $2000, 팟: $2000, 총계: $4000
+베팅 라운드 체크: 활성 플레이어 1명, 남은 플레이어 2명
+마지막 활성 플레이어: q, 행동함: false, 베팅: 200, 현재베팅: 1800
+마지막 플레이어가 아직 행동해야 함
+q 액션 fold 전 - 총 칩: $2000, 팟: $2000, 총계: $4000
+q 액션 fold 후 - 총 칩: $2000, 팟: $2000, 총계: $4000
+승자 확인: 1/2 활성 플레이어가 확인함
+승자 확인: 2/2 활성 플레이어가 확인함
+모든 플레이어가 승자 확인 완료 - 다음 핸드 자동 시작
+블라인드 전 총 칩: $4000
+블라인드 후 총 칩: $3700, 팟: $300, 총계: $4000
+q 액션 allIn 전 - 총 칩: $3700, 팟: $300, 총계: $4000
+q 액션 allIn 후 - 총 칩: $1800, 팟: $2200, 총계: $4000
+베팅 라운드 체크: 활성 플레이어 1명, 남은 플레이어 2명
+마지막 활성 플레이어: e, 행동함: false, 베팅: 200, 현재베팅: 2000
+마지막 플레이어가 아직 행동해야 함
+e 액션 fold 전 - 총 칩: $1800, 팟: $2200, 총계: $4000
+e 액션 fold 후 - 총 칩: $1800, 팟: $2200, 총계: $4000
+승자 확인: 1/2 활성 플레이어가 확인함
+승자 확인: 2/2 활성 플레이어가 확인함
+모든 플레이어가 승자 확인 완료 - 다음 핸드 자동 시작
+블라인드 전 총 칩: $4000
+블라인드 후 총 칩: $3700, 팟: $300, 총계: $4000
+e 액션 allIn 전 - 총 칩: $3700, 팟: $300, 총계: $4000
+e 액션 allIn 후 - 총 칩: $2000, 팟: $2000, 총계: $4000
+베팅 라운드 체크: 활성 플레이어 1명, 남은 플레이어 2명
+마지막 활성 플레이어: q, 행동함: false, 베팅: 200, 현재베팅: 1800
+마지막 플레이어가 아직 행동해야 함
+q 액션 fold 전 - 총 칩: $2000, 팟: $2000, 총계: $4000
+q 액션 fold 후 - 총 칩: $2000, 팟: $2000, 총계: $4000
+승자 확인: 1/2 활성 플레이어가 확인함
+승자 확인: 2/2 활성 플레이어가 확인함
+모든 플레이어가 승자 확인 완료 - 다음 핸드 자동 시작
+블라인드 전 총 칩: $4000
+블라인드 후 총 칩: $3700, 팟: $300, 총계: $4000
+q 액션 allIn 전 - 총 칩: $3700, 팟: $300, 총계: $4000
+q 액션 allIn 후 - 총 칩: $1800, 팟: $2200, 총계: $4000
+베팅 라운드 체크: 활성 플레이어 1명, 남은 플레이어 2명
+마지막 활성 플레이어: e, 행동함: false, 베팅: 200, 현재베팅: 2000
+마지막 플레이어가 아직 행동해야 함
+e 액션 fold 전 - 총 칩: $1800, 팟: $2200, 총계: $4000
+e 액션 fold 후 - 총 칩: $1800, 팟: $2200, 총계: $4000
+승자 확인: 1/2 활성 플레이어가 확인함
+블라인드 증가 옵션 표시
+블라인드 증가 완료: 200/400
+블라인드 전 총 칩: $4000
+블라인드 후 총 칩: $3400, 팟: $600, 총계: $4000
+q 액션 call 전 - 총 칩: $3400, 팟: $600, 총계: $4000
+q 액션 call 후 - 총 칩: $3200, 팟: $800, 총계: $4000
+베팅 라운드 체크: 활성 플레이어 2명, 남은 플레이어 2명
+모든 플레이어 행동: false, 모든 베팅 동일: true
+e 액션 raise 전 - 총 칩: $3200, 팟: $800, 총계: $4000
+e 액션 raise 후 - 총 칩: $2800, 팟: $1200, 총계: $4000
+베팅 라운드 체크: 활성 플레이어 2명, 남은 플레이어 2명
+모든 플레이어 행동: false, 모든 베팅 동일: false
+q 액션 allIn 전 - 총 칩: $2800, 팟: $1200, 총계: $4000
+q 액션 allIn 후 - 총 칩: $1000, 팟: $3000, 총계: $4000
+베팅 라운드 체크: 활성 플레이어 1명, 남은 플레이어 2명
+마지막 활성 플레이어: e, 행동함: false, 베팅: 800, 현재베팅: 2200
+마지막 플레이어가 아직 행동해야 함
+e 액션 allIn 전 - 총 칩: $1000, 팟: $3000, 총계: $4000
+e 액션 allIn 후 - 총 칩: $0, 팟: $4000, 총계: $4000
+베팅 라운드 체크: 활성 플레이어 0명, 남은 플레이어 2명
+모든 플레이어가 폴드하거나 올인 - 베팅 라운드 완료
+올인 상황에서 실제 베팅 정보 저장: [
+  {
+    id: 'h1p4q7o4j3b',
+    name: 'q',
+    currentBet: 2200,
+    hasFolded: false,
+    totalChipsInPot: 2200
+  },
+  {
+    id: 'gfzqo53rav7',
+    name: 'w',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 0
+  },
+  {
+    id: 'xf5l39wp02t',
+    name: 'e',
+    currentBet: 1800,
+    hasFolded: false,
+    totalChipsInPot: 1800
+  },
+  {
+    id: '4qf71aog5hc',
+    name: 'r',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 0
+  }
+]
+스테이지 전환 전 - 총 칩: $0, 팟: $4000, 총계: $4000
+베팅 정보 저장: [
+  { id: 'h1p4q7o4j3b', name: 'q', currentBet: 2200, hasFolded: false },
+  { id: 'gfzqo53rav7', name: 'w', currentBet: 0, hasFolded: true },
+  { id: 'xf5l39wp02t', name: 'e', currentBet: 1800, hasFolded: false },
+  { id: '4qf71aog5hc', name: 'r', currentBet: 0, hasFolded: true }
+]
+스테이지 전환 후 - 총 칩: $0, 팟: $4000, 총계: $4000
+모든 활성 플레이어가 올인 - 박진감을 위해 패와 카드 공개
+=== 올인 드라마틱 패 공개 시작 ===
+활성 플레이어 패 공개: [
+  { name: 'q', cards: [ [Object], [Object] ] },
+  { name: 'e', cards: [ [Object], [Object] ] }
+]
+=== 새로운 쇼다운 시스템 ===
+올인 베팅 정보: [
+  {
+    id: 'h1p4q7o4j3b',
+    name: 'q',
+    currentBet: 2200,
+    hasFolded: false,
+    totalChipsInPot: 2200
+  },
+  {
+    id: 'gfzqo53rav7',
+    name: 'w',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 0
+  },
+  {
+    id: 'xf5l39wp02t',
+    name: 'e',
+    currentBet: 1800,
+    hasFolded: false,
+    totalChipsInPot: 1800
+  },
+  {
+    id: '4qf71aog5hc',
+    name: 'r',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 0
+  }
+]
+=== 새로운 사이드팟 시스템 ===
+활성 플레이어 현재 상태: [
+  { name: 'q', currentBet: 0, chips: 0 },
+  { name: 'e', currentBet: 0, chips: 0 }
+]
+활성 플레이어 베팅 데이터: [
+  {
+    id: 'h1p4q7o4j3b',
+    name: 'q',
+    currentBet: 2200,
+    hasFolded: false,
+    totalChipsInPot: 2200
+  },
+  {
+    id: 'xf5l39wp02t',
+    name: 'e',
+    currentBet: 1800,
+    hasFolded: false,
+    totalChipsInPot: 1800
+  }
+]
+저장된 베팅 정보로 사이드팟 생성 시작
+베팅 정보: [
+  {
+    id: 'h1p4q7o4j3b',
+    name: 'q',
+    currentBet: 2200,
+    hasFolded: false,
+    totalChipsInPot: 2200
+  },
+  {
+    id: 'xf5l39wp02t',
+    name: 'e',
+    currentBet: 1800,
+    hasFolded: false,
+    totalChipsInPot: 1800
+  }
+]
+실제 총 팟: $4000
+활성 베팅: [
+  {
+    id: 'h1p4q7o4j3b',
+    name: 'q',
+    currentBet: 2200,
+    hasFolded: false,
+    totalChipsInPot: 2200
+  },
+  {
+    id: 'xf5l39wp02t',
+    name: 'e',
+    currentBet: 1800,
+    hasFolded: false,
+    totalChipsInPot: 1800
+  }
+]
+베팅 금액들: [ 1800, 2200 ]
+팟 생성: $3600 (베팅레벨: $1800, 참여자: 2명)
+팟 생성: $400 (베팅레벨: $2200, 참여자: 1명)
+총 할당된 팟: $4000
+생성된 사이드팟: [
+  { amount: 3600, eligiblePlayers: [ 'h1p4q7o4j3b', 'xf5l39wp02t' ] },
+  { amount: 400, eligiblePlayers: [ 'h1p4q7o4j3b' ] }
+]
+핸드 순위: [ { name: 'e', hand: '원 페어' }, { name: 'q', hand: '하이카드' } ]
+팟 1 분배 (금액: $3600, 참여자: h1p4q7o4j3b, xf5l39wp02t)
+e이 팟 1에서 $3600 획득 (원 페어)
+팟 2 분배 (금액: $400, 참여자: h1p4q7o4j3b)
+q이 팟 2에서 $400 획득 (하이카드)
+최종 칩 상태: [
+  { name: 'e', chips: 3600, isWinner: true },
+  { name: 'q', chips: 400, isWinner: true }
+]
+승자 확인: 1/2 활성 플레이어가 확인함
+승자 확인: 2/2 활성 플레이어가 확인함
+모든 플레이어가 승자 확인 완료 - 다음 핸드 자동 시작
+블라인드 전 총 칩: $4000
+블라인드 후 총 칩: $3400, 팟: $600, 총계: $4000
+e 액션 allIn 전 - 총 칩: $3400, 팟: $600, 총계: $4000
+e 액션 allIn 후 - 총 칩: $0, 팟: $4000, 총계: $4000
+베팅 라운드 체크: 활성 플레이어 0명, 남은 플레이어 2명
+모든 플레이어가 폴드하거나 올인 - 베팅 라운드 완료
+올인 상황에서 실제 베팅 정보 저장: [
+  {
+    id: 'h1p4q7o4j3b',
+    name: 'q',
+    currentBet: 400,
+    hasFolded: false,
+    totalChipsInPot: 400
+  },
+  {
+    id: 'gfzqo53rav7',
+    name: 'w',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 0
+  },
+  {
+    id: 'xf5l39wp02t',
+    name: 'e',
+    currentBet: 3600,
+    hasFolded: false,
+    totalChipsInPot: 3600
+  },
+  {
+    id: '4qf71aog5hc',
+    name: 'r',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 0
+  }
+]
+스테이지 전환 전 - 총 칩: $0, 팟: $4000, 총계: $4000
+베팅 정보 저장: [
+  { id: 'h1p4q7o4j3b', name: 'q', currentBet: 400, hasFolded: false },
+  { id: 'gfzqo53rav7', name: 'w', currentBet: 0, hasFolded: true },
+  { id: 'xf5l39wp02t', name: 'e', currentBet: 3600, hasFolded: false },
+  { id: '4qf71aog5hc', name: 'r', currentBet: 0, hasFolded: true }
+]
+스테이지 전환 후 - 총 칩: $0, 팟: $4000, 총계: $4000
+모든 활성 플레이어가 올인 - 박진감을 위해 패와 카드 공개
+=== 올인 드라마틱 패 공개 시작 ===
+활성 플레이어 패 공개: [
+  { name: 'q', cards: [] },
+  { name: 'e', cards: [ [Object], [Object] ] }
+]
+=== 새로운 쇼다운 시스템 ===
+올인 베팅 정보: [
+  {
+    id: 'h1p4q7o4j3b',
+    name: 'q',
+    currentBet: 400,
+    hasFolded: false,
+    totalChipsInPot: 400
+  },
+  {
+    id: 'gfzqo53rav7',
+    name: 'w',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 0
+  },
+  {
+    id: 'xf5l39wp02t',
+    name: 'e',
+    currentBet: 3600,
+    hasFolded: false,
+    totalChipsInPot: 3600
+  },
+  {
+    id: '4qf71aog5hc',
+    name: 'r',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 0
+  }
+]
+=== 새로운 사이드팟 시스템 ===
+활성 플레이어 현재 상태: [
+  { name: 'q', currentBet: 0, chips: 0 },
+  { name: 'e', currentBet: 0, chips: 0 }
+]
+활성 플레이어 베팅 데이터: [
+  {
+    id: 'h1p4q7o4j3b',
+    name: 'q',
+    currentBet: 400,
+    hasFolded: false,
+    totalChipsInPot: 400
+  },
+  {
+    id: 'xf5l39wp02t',
+    name: 'e',
+    currentBet: 3600,
+    hasFolded: false,
+    totalChipsInPot: 3600
+  }
+]
+저장된 베팅 정보로 사이드팟 생성 시작
+베팅 정보: [
+  {
+    id: 'h1p4q7o4j3b',
+    name: 'q',
+    currentBet: 400,
+    hasFolded: false,
+    totalChipsInPot: 400
+  },
+  {
+    id: 'xf5l39wp02t',
+    name: 'e',
+    currentBet: 3600,
+    hasFolded: false,
+    totalChipsInPot: 3600
+  }
+]
+실제 총 팟: $4000
+활성 베팅: [
+  {
+    id: 'h1p4q7o4j3b',
+    name: 'q',
+    currentBet: 400,
+    hasFolded: false,
+    totalChipsInPot: 400
+  },
+  {
+    id: 'xf5l39wp02t',
+    name: 'e',
+    currentBet: 3600,
+    hasFolded: false,
+    totalChipsInPot: 3600
+  }
+]
+베팅 금액들: [ 400, 3600 ]
+팟 생성: $800 (베팅레벨: $400, 참여자: 2명)
+팟 생성: $3200 (베팅레벨: $3600, 참여자: 1명)
+총 할당된 팟: $4000
+생성된 사이드팟: [
+  { amount: 800, eligiblePlayers: [ 'h1p4q7o4j3b', 'xf5l39wp02t' ] },
+  { amount: 3200, eligiblePlayers: [ 'xf5l39wp02t' ] }
+]
+핸드 순위: [ { name: 'e', hand: '원 페어' }, { name: 'q', hand: '원 페어' } ]
+팟 1 분배 (금액: $800, 참여자: h1p4q7o4j3b, xf5l39wp02t)
+e이 팟 1에서 $800 획득 (원 페어)
+팟 2 분배 (금액: $3200, 참여자: xf5l39wp02t)
+e이 팟 2에서 $3200 획득 (원 페어)
+최종 칩 상태: [
+  { name: 'e', chips: 4000, isWinner: true },
+  { name: 'q', chips: 0, isWinner: false }
+]
+Host q was eliminated in showdown, transferring host rights immediately
+Host transferred quietly from q (position 0) to: e (position 2)
+승자 확인 타이머 종료 - 자동으로 다음 핸드 시작
+마지막 생존자 - 게임 초기화
+=== 게임 초기화 - 마지막 생존자 ===
+방장 권한을 이전 게임 승자 e에게 이전
+게임이 초기 설정 화면으로 리셋됨 - 4명 포함

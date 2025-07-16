@@ -1,0 +1,13 @@
+GitHub에서 server/vite.ts 파일 수정 방법:
+
+1. https://github.com/sunghyun929/ContentCove/blob/main/server/vite.ts 으로 이동
+2. 편집 버튼(연필 아이콘) 클릭
+3. 70번째 줄 찾기:
+   const distPath = path.resolve(import.meta.dirname, "public");
+
+4. 다음으로 변경:
+   const distPath = path.resolve(import.meta.dirname, "..", "dist", "public");
+
+5. "Commit changes" 클릭
+
+이렇게 하면 정적 파일 경로가 올바르게 설정되어 프론트엔드가 표시됩니다.

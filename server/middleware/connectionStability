@@ -1,0 +1,45 @@
+// Connection stability middleware for Render deployment
+
+export function setupConnectionStability(app) {
+  // Keep-alive headers for persistent connections
+  app.use((req, res, next) => {
+    // Render 환경에서 연결 유지를 위한 헤더 설정
+    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('Keep-Alive', 'timeout=65');
+    
+    // CORS with keep-alive support
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Max-Age', '86400'); // 24시간 캐시
+    
+    // 빠른 OPTIONS 응답
+    if (req.method === 'OPTIONS') {
+      res.status(200).end();
+      return;
+    }
+    
+    next();
+  });
+
+  // Health check endpoint to prevent Render from sleeping
+  app.get('/keep-alive', (req, res) => {
+    res.status(200).json({ 
+      status: 'alive',
+      timestamp: Date.now(),
+      uptime: process.uptime()
+    });
+  });
+
+  // 연결 상태 모니터링
+  app.get('/connection-status', (req, res) => {
+    res.status(200).json({
+      status: 'connected',
+      memory: {
+        used: Math.round(process.memoryUsage().rss / 1024 / 1024),
+        heap: Math.round(process.memoryUsage().heapUsed / 1024 / 1024)
+      },
+      uptime: Math.round(process.uptime())
+    });
+  });
+}

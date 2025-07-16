@@ -1,0 +1,596 @@
+
+Search
+
+Live tail
+GMT+9
+
+Menu
+==> Cloning from https://github.com/sunghyun929/ContentCove
+==> Checking out commit 8b29d5d0b5b1bcab0942a3bcab1915368feaa857 in branch main
+==> Downloading cache...
+==> Transferred 215MB in 8s. Extraction took 4s.
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a bun version: https://render.com/docs/bun-version
+==> Running build command 'npm install && npm run build'...
+up to date, audited 482 packages in 1s
+64 packages are looking for funding
+  run `npm fund` for details
+8 vulnerabilities (1 low, 7 moderate)
+To address issues that do not require attention, run:
+  npm audit fix
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+vite v5.4.14 building for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 1680 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/public/index.html                   0.62 kB │ gzip:  0.38 kB
+../dist/public/assets/index-BoJa61d3.css   69.60 kB │ gzip: 12.30 kB
+../dist/public/assets/index-Cpy-9UC3.js   315.68 kB │ gzip: 99.49 kB
+✓ built in 3.70s
+  dist/index.js  89.2kb
+⚡ Done in 9ms
+==> Uploading build...
+==> Uploaded in 5.9s. Compression took 3.2s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'npm start'
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+5:48:44 AM [express] serving on port 10000
+==> Your service is live 🎉
+==> 
+==> ///////////////////////////////////////////////////////////
+==> 
+==> Available at your primary URL https://contentcove.onrender.com
+==> 
+==> ///////////////////////////////////////////////////////////
+5:49:34 AM [express] POST /api/games 200 in 5ms :: {"id":1,"roomCode":"9GV5PC","maxPlayers":6,"small…
+Client connected to WebSocket
+Client connected to WebSocket
+Client connected to WebSocket
+블라인드 전 총 칩: $3000
+블라인드 후 총 칩: $2970, 팟: $30, 총계: $3000
+Client disconnected from WebSocket
+Client disconnected from WebSocket
+Client disconnected from WebSocket
+5:53:11 AM [express] POST /api/games 200 in 0ms :: {"id":2,"roomCode":"Z5A0AK","maxPlayers":6,"small…
+Client connected to WebSocket
+Client connected to WebSocket
+Client connected to WebSocket
+==> Detected service running on port 10000
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+블라인드 전 총 칩: $6000
+블라인드 후 총 칩: $5970, 팟: $30, 총계: $6000
+a 액션 call 전 - 총 칩: $5970, 팟: $30, 총계: $6000
+a 액션 call 후 - 총 칩: $5950, 팟: $50, 총계: $6000
+베팅 라운드 체크: 활성 플레이어 3명, 남은 플레이어 3명
+모든 플레이어 행동: false, 모든 베팅 동일: false
+b 액션 allIn 전 - 총 칩: $5950, 팟: $50, 총계: $6000
+b 액션 allIn 후 - 총 칩: $3960, 팟: $2040, 총계: $6000
+베팅 라운드 체크: 활성 플레이어 2명, 남은 플레이어 3명
+모든 플레이어 행동: false, 모든 베팅 동일: false
+c 액션 allIn 전 - 총 칩: $3960, 팟: $2040, 총계: $6000
+c 액션 allIn 후 - 총 칩: $1980, 팟: $4020, 총계: $6000
+베팅 라운드 체크: 활성 플레이어 1명, 남은 플레이어 3명
+마지막 활성 플레이어: a, 행동함: false, 베팅: 20, 현재베팅: 2000
+마지막 플레이어가 아직 행동해야 함
+a 액션 fold 전 - 총 칩: $1980, 팟: $4020, 총계: $6000
+a 액션 fold 후 - 총 칩: $1980, 팟: $4020, 총계: $6000
+베팅 라운드 체크: 활성 플레이어 0명, 남은 플레이어 2명
+모든 플레이어가 폴드하거나 올인 - 베팅 라운드 완료
+올인 상황에서 실제 베팅 정보 저장: [
+  {
+    id: 'bsarnmr8ils',
+    name: 'a',
+    currentBet: 20,
+    hasFolded: true,
+    totalChipsInPot: 20
+  },
+  {
+    id: 'bnv4i8wcl2',
+    name: 'b',
+    currentBet: 2000,
+    hasFolded: false,
+    totalChipsInPot: 2000
+  },
+  {
+    id: 'odyyznd8wjr',
+    name: 'c',
+    currentBet: 2000,
+    hasFolded: false,
+    totalChipsInPot: 2000
+  }
+]
+스테이지 전환 전 - 총 칩: $1980, 팟: $4020, 총계: $6000
+베팅 정보 저장: [
+  { id: 'bsarnmr8ils', name: 'a', currentBet: 20, hasFolded: true },
+  { id: 'bnv4i8wcl2', name: 'b', currentBet: 2000, hasFolded: false },
+  { id: 'odyyznd8wjr', name: 'c', currentBet: 2000, hasFolded: false }
+]
+스테이지 전환 후 - 총 칩: $1980, 팟: $4020, 총계: $6000
+모든 활성 플레이어가 올인 - 박진감을 위해 패와 카드 공개
+=== 올인 드라마틱 패 공개 시작 ===
+활성 플레이어 패 공개: [
+  { name: 'b', cards: [ [Object], [Object] ] },
+  { name: 'c', cards: [ [Object], [Object] ] }
+]
+=== 새로운 쇼다운 시스템 ===
+올인 베팅 정보: [
+  {
+    id: 'bsarnmr8ils',
+    name: 'a',
+    currentBet: 20,
+    hasFolded: true,
+    totalChipsInPot: 20
+  },
+  {
+    id: 'bnv4i8wcl2',
+    name: 'b',
+    currentBet: 2000,
+    hasFolded: false,
+    totalChipsInPot: 2000
+  },
+  {
+    id: 'odyyznd8wjr',
+    name: 'c',
+    currentBet: 2000,
+    hasFolded: false,
+    totalChipsInPot: 2000
+  }
+]
+=== 새로운 사이드팟 시스템 ===
+활성 플레이어 현재 상태: [
+  { name: 'b', currentBet: 0, chips: 0 },
+  { name: 'c', currentBet: 0, chips: 0 }
+]
+활성 플레이어 베팅 데이터: [
+  {
+    id: 'bnv4i8wcl2',
+    name: 'b',
+    currentBet: 2000,
+    hasFolded: false,
+    totalChipsInPot: 2000
+  },
+  {
+    id: 'odyyznd8wjr',
+    name: 'c',
+    currentBet: 2000,
+    hasFolded: false,
+    totalChipsInPot: 2000
+  }
+]
+저장된 베팅 정보로 사이드팟 생성 시작
+베팅 정보: [
+  {
+    id: 'bnv4i8wcl2',
+    name: 'b',
+    currentBet: 2000,
+    hasFolded: false,
+    totalChipsInPot: 2000
+  },
+  {
+    id: 'odyyznd8wjr',
+    name: 'c',
+    currentBet: 2000,
+    hasFolded: false,
+    totalChipsInPot: 2000
+  }
+]
+실제 총 팟: $4020
+활성 베팅: [
+  {
+    id: 'bnv4i8wcl2',
+    name: 'b',
+    currentBet: 2000,
+    hasFolded: false,
+    totalChipsInPot: 2000
+  },
+  {
+    id: 'odyyznd8wjr',
+    name: 'c',
+    currentBet: 2000,
+    hasFolded: false,
+    totalChipsInPot: 2000
+  }
+]
+베팅 금액들: [ 2000 ]
+팟 생성: $4000 (베팅레벨: $2000, 참여자: 2명)
+잔여 팟 $20을 메인 팟에 추가
+총 할당된 팟: $4020
+생성된 사이드팟: [ { amount: 4020, eligiblePlayers: [ 'bnv4i8wcl2', 'odyyznd8wjr' ] } ]
+핸드 순위: [ { name: 'b', hand: '투 페어' }, { name: 'c', hand: '원 페어' } ]
+팟 1 분배 (금액: $4020, 참여자: bnv4i8wcl2, odyyznd8wjr)
+b이 팟 1에서 $4020 획득 (투 페어)
+최종 칩 상태: [
+  { name: 'b', chips: 4020, isWinner: true },
+  { name: 'c', chips: 0, isWinner: false }
+]
+승자 확인 타이머 종료 - 자동으로 다음 핸드 시작
+Newly eliminated players this hand: c
+플레이어 1명 제거로 인한 블라인드 2배 증가: 20/40
+블라인드 전 총 칩: $6000
+블라인드 후 총 칩: $5940, 팟: $60, 총계: $6000
+블라인드 전 총 칩: $18000
+블라인드 후 총 칩: $17970, 팟: $30, 총계: $18000
+블라인드 전 총 칩: $18000
+블라인드 후 총 칩: $17970, 팟: $30, 총계: $18000
+6:05:55 AM [express] POST /api/games 200 in 1ms :: {"id":3,"roomCode":"8GO4YI","maxPlayers":6,"small…
+Client connected to WebSocket
+Client disconnected from WebSocket
+Client disconnected from WebSocket
+Client disconnected from WebSocket
+Client disconnected from WebSocket
+6:07:05 AM [express] POST /api/games 200 in 0ms :: {"id":4,"roomCode":"4SA7DH","maxPlayers":6,"small…
+Client connected to WebSocket
+Client connected to WebSocket
+Client connected to WebSocket
+블라인드 전 총 칩: $3000
+블라인드 후 총 칩: $2925, 팟: $75, 총계: $3000
+Client disconnected from WebSocket
+No host found, assigning to first player with chips: e
+Client disconnected from WebSocket
+Client disconnected from WebSocket
+6:07:51 AM [express] POST /api/games 200 in 24ms :: {"id":5,"roomCode":"184N9G","maxPlayers":6,"smal…
+Client connected to WebSocket
+Client connected to WebSocket
+Client connected to WebSocket
+블라인드 전 총 칩: $3000
+블라인드 후 총 칩: $2970, 팟: $30, 총계: $3000
+q 액션 call 전 - 총 칩: $2970, 팟: $30, 총계: $3000
+q 액션 call 후 - 총 칩: $2950, 팟: $50, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 3명, 남은 플레이어 3명
+모든 플레이어 행동: false, 모든 베팅 동일: false
+w 액션 call 전 - 총 칩: $2950, 팟: $50, 총계: $3000
+w 액션 call 후 - 총 칩: $2940, 팟: $60, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 3명, 남은 플레이어 3명
+모든 플레이어 행동: false, 모든 베팅 동일: true
+e 액션 check 전 - 총 칩: $2940, 팟: $60, 총계: $3000
+e 액션 check 후 - 총 칩: $2940, 팟: $60, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 3명, 남은 플레이어 3명
+모든 플레이어 행동: true, 모든 베팅 동일: true
+스테이지 전환 전 - 총 칩: $2940, 팟: $60, 총계: $3000
+베팅 정보 저장: [
+  { id: 'vidc2pph0u9', name: 'q', currentBet: 20, hasFolded: false },
+  { id: 'es6trfd3ovp', name: 'w', currentBet: 20, hasFolded: false },
+  { id: 'bvrq2hlcppj', name: 'e', currentBet: 20, hasFolded: false }
+]
+스테이지 전환 후 - 총 칩: $2940, 팟: $60, 총계: $3000
+w 액션 check 전 - 총 칩: $2940, 팟: $60, 총계: $3000
+w 액션 check 후 - 총 칩: $2940, 팟: $60, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 3명, 남은 플레이어 3명
+모든 플레이어 행동: false, 모든 베팅 동일: true
+e 액션 check 전 - 총 칩: $2940, 팟: $60, 총계: $3000
+e 액션 check 후 - 총 칩: $2940, 팟: $60, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 3명, 남은 플레이어 3명
+모든 플레이어 행동: false, 모든 베팅 동일: true
+q 액션 allIn 전 - 총 칩: $2940, 팟: $60, 총계: $3000
+q 액션 allIn 후 - 총 칩: $1960, 팟: $1040, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 2명, 남은 플레이어 3명
+모든 플레이어 행동: false, 모든 베팅 동일: false
+w 액션 fold 전 - 총 칩: $1960, 팟: $1040, 총계: $3000
+w 액션 fold 후 - 총 칩: $1960, 팟: $1040, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 1명, 남은 플레이어 2명
+마지막 활성 플레이어: e, 행동함: false, 베팅: 0, 현재베팅: 980
+마지막 플레이어가 아직 행동해야 함
+e 액션 allIn 전 - 총 칩: $1960, 팟: $1040, 총계: $3000
+e 액션 allIn 후 - 총 칩: $980, 팟: $2020, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 0명, 남은 플레이어 2명
+모든 플레이어가 폴드하거나 올인 - 베팅 라운드 완료
+올인 상황에서 실제 베팅 정보 저장: [
+  {
+    id: 'vidc2pph0u9',
+    name: 'q',
+    currentBet: 980,
+    hasFolded: false,
+    totalChipsInPot: 1000
+  },
+  {
+    id: 'es6trfd3ovp',
+    name: 'w',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 20
+  },
+  {
+    id: 'bvrq2hlcppj',
+    name: 'e',
+    currentBet: 980,
+    hasFolded: false,
+    totalChipsInPot: 1000
+  }
+]
+스테이지 전환 전 - 총 칩: $980, 팟: $2020, 총계: $3000
+스테이지 전환 후 - 총 칩: $980, 팟: $2020, 총계: $3000
+모든 활성 플레이어가 올인 - 박진감을 위해 패와 카드 공개
+=== 올인 드라마틱 패 공개 시작 ===
+활성 플레이어 패 공개: [
+  { name: 'q', cards: [ [Object], [Object] ] },
+  { name: 'e', cards: [ [Object], [Object] ] }
+]
+=== 새로운 쇼다운 시스템 ===
+올인 베팅 정보: [
+  {
+    id: 'vidc2pph0u9',
+    name: 'q',
+    currentBet: 980,
+    hasFolded: false,
+    totalChipsInPot: 1000
+  },
+  {
+    id: 'es6trfd3ovp',
+    name: 'w',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 20
+  },
+  {
+    id: 'bvrq2hlcppj',
+    name: 'e',
+    currentBet: 980,
+    hasFolded: false,
+    totalChipsInPot: 1000
+  }
+]
+=== 새로운 사이드팟 시스템 ===
+활성 플레이어 현재 상태: [
+  { name: 'q', currentBet: 0, chips: 0 },
+  { name: 'e', currentBet: 0, chips: 0 }
+]
+활성 플레이어 베팅 데이터: [
+  {
+    id: 'vidc2pph0u9',
+    name: 'q',
+    currentBet: 980,
+    hasFolded: false,
+    totalChipsInPot: 1000
+  },
+  {
+    id: 'bvrq2hlcppj',
+    name: 'e',
+    currentBet: 980,
+    hasFolded: false,
+    totalChipsInPot: 1000
+  }
+]
+저장된 베팅 정보로 사이드팟 생성 시작
+베팅 정보: [
+  {
+    id: 'vidc2pph0u9',
+    name: 'q',
+    currentBet: 980,
+    hasFolded: false,
+    totalChipsInPot: 1000
+  },
+  {
+    id: 'bvrq2hlcppj',
+    name: 'e',
+    currentBet: 980,
+    hasFolded: false,
+    totalChipsInPot: 1000
+  }
+]
+실제 총 팟: $2020
+활성 베팅: [
+  {
+    id: 'vidc2pph0u9',
+    name: 'q',
+    currentBet: 980,
+    hasFolded: false,
+    totalChipsInPot: 1000
+  },
+  {
+    id: 'bvrq2hlcppj',
+    name: 'e',
+    currentBet: 980,
+    hasFolded: false,
+    totalChipsInPot: 1000
+  }
+]
+베팅 금액들: [ 1000 ]
+팟 생성: $2000 (베팅레벨: $1000, 참여자: 2명)
+잔여 팟 $20을 메인 팟에 추가
+총 할당된 팟: $2020
+생성된 사이드팟: [ { amount: 2020, eligiblePlayers: [ 'vidc2pph0u9', 'bvrq2hlcppj' ] } ]
+핸드 순위: [ { name: 'q', hand: '투 페어' }, { name: 'e', hand: '원 페어' } ]
+팟 1 분배 (금액: $2020, 참여자: vidc2pph0u9, bvrq2hlcppj)
+q이 팟 1에서 $2020 획득 (투 페어)
+최종 칩 상태: [
+  { name: 'q', chips: 2020, isWinner: true },
+  { name: 'e', chips: 0, isWinner: false }
+]
+승자 확인: 1/2 활성 플레이어가 확인함
+승자 확인: 2/2 활성 플레이어가 확인함
+모든 플레이어가 승자 확인 완료 - 다음 핸드 자동 시작
+Newly eliminated players this hand: e
+플레이어 1명 제거로 인한 블라인드 2배 증가: 20/40
+블라인드 전 총 칩: $3000
+블라인드 후 총 칩: $2940, 팟: $60, 총계: $3000
+w 액션 call 전 - 총 칩: $2940, 팟: $60, 총계: $3000
+w 액션 call 후 - 총 칩: $2920, 팟: $80, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 2명, 남은 플레이어 3명
+모든 플레이어 행동: false, 모든 베팅 동일: true
+q 액션 check 전 - 총 칩: $2920, 팟: $80, 총계: $3000
+q 액션 check 후 - 총 칩: $2920, 팟: $80, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 2명, 남은 플레이어 3명
+모든 플레이어 행동: true, 모든 베팅 동일: true
+스테이지 전환 전 - 총 칩: $2920, 팟: $80, 총계: $3000
+베팅 정보 저장: [
+  { id: 'vidc2pph0u9', name: 'q', currentBet: 40, hasFolded: false },
+  { id: 'es6trfd3ovp', name: 'w', currentBet: 40, hasFolded: false },
+  { id: 'bvrq2hlcppj', name: 'e', currentBet: 0, hasFolded: false }
+]
+스테이지 전환 후 - 총 칩: $2920, 팟: $80, 총계: $3000
+q 액션 allIn 전 - 총 칩: $2920, 팟: $80, 총계: $3000
+q 액션 allIn 후 - 총 칩: $940, 팟: $2060, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 1명, 남은 플레이어 3명
+마지막 활성 플레이어: w, 행동함: false, 베팅: 0, 현재베팅: 1980
+마지막 플레이어가 아직 행동해야 함
+w 액션 allIn 전 - 총 칩: $940, 팟: $2060, 총계: $3000
+w 액션 allIn 후 - 총 칩: $0, 팟: $3000, 총계: $3000
+베팅 라운드 체크: 활성 플레이어 0명, 남은 플레이어 3명
+모든 플레이어가 폴드하거나 올인 - 베팅 라운드 완료
+올인 상황에서 실제 베팅 정보 저장: [
+  {
+    id: 'vidc2pph0u9',
+    name: 'q',
+    currentBet: 1980,
+    hasFolded: false,
+    totalChipsInPot: 2020
+  },
+  {
+    id: 'es6trfd3ovp',
+    name: 'w',
+    currentBet: 940,
+    hasFolded: false,
+    totalChipsInPot: 980
+  },
+  {
+    id: 'bvrq2hlcppj',
+    name: 'e',
+    currentBet: 0,
+    hasFolded: false,
+    totalChipsInPot: 0
+  }
+]
+스테이지 전환 전 - 총 칩: $0, 팟: $3000, 총계: $3000
+스테이지 전환 후 - 총 칩: $0, 팟: $3000, 총계: $3000
+모든 활성 플레이어가 올인 - 박진감을 위해 패와 카드 공개
+=== 올인 드라마틱 패 공개 시작 ===
+활성 플레이어 패 공개: [
+  { name: 'q', cards: [ [Object], [Object] ] },
+  { name: 'w', cards: [ [Object], [Object] ] },
+  { name: 'e', cards: [ [Object], [Object] ] }
+]
+=== 새로운 쇼다운 시스템 ===
+올인 베팅 정보: [
+  {
+    id: 'vidc2pph0u9',
+    name: 'q',
+    currentBet: 1980,
+    hasFolded: false,
+    totalChipsInPot: 2020
+  },
+  {
+    id: 'es6trfd3ovp',
+    name: 'w',
+    currentBet: 940,
+    hasFolded: false,
+    totalChipsInPot: 980
+  },
+  {
+    id: 'bvrq2hlcppj',
+    name: 'e',
+    currentBet: 0,
+    hasFolded: false,
+    totalChipsInPot: 0
+  }
+]
+=== 새로운 사이드팟 시스템 ===
+활성 플레이어 현재 상태: [
+  { name: 'q', currentBet: 0, chips: 0 },
+  { name: 'w', currentBet: 0, chips: 0 },
+  { name: 'e', currentBet: 0, chips: 0 }
+]
+활성 플레이어 베팅 데이터: [
+  {
+    id: 'vidc2pph0u9',
+    name: 'q',
+    currentBet: 1980,
+    hasFolded: false,
+    totalChipsInPot: 2020
+  },
+  {
+    id: 'es6trfd3ovp',
+    name: 'w',
+    currentBet: 940,
+    hasFolded: false,
+    totalChipsInPot: 980
+  },
+  {
+    id: 'bvrq2hlcppj',
+    name: 'e',
+    currentBet: 0,
+    hasFolded: false,
+    totalChipsInPot: 0
+  }
+]
+저장된 베팅 정보로 사이드팟 생성 시작
+베팅 정보: [
+  {
+    id: 'vidc2pph0u9',
+    name: 'q',
+    currentBet: 1980,
+    hasFolded: false,
+    totalChipsInPot: 2020
+  },
+  {
+    id: 'es6trfd3ovp',
+    name: 'w',
+    currentBet: 940,
+    hasFolded: false,
+    totalChipsInPot: 980
+  },
+  {
+    id: 'bvrq2hlcppj',
+    name: 'e',
+    currentBet: 0,
+    hasFolded: false,
+    totalChipsInPot: 0
+  }
+]
+실제 총 팟: $3000
+활성 베팅: [
+  {
+    id: 'vidc2pph0u9',
+    name: 'q',
+    currentBet: 1980,
+    hasFolded: false,
+    totalChipsInPot: 2020
+  },
+  {
+    id: 'es6trfd3ovp',
+    name: 'w',
+    currentBet: 940,
+    hasFolded: false,
+    totalChipsInPot: 980
+  },
+  {
+    id: 'bvrq2hlcppj',
+    name: 'e',
+    currentBet: 0,
+    hasFolded: false,
+    totalChipsInPot: 0
+  }
+]
+베팅 금액들: [ 0, 980, 2020 ]
+팟 생성: $1960 (베팅레벨: $980, 참여자: 2명)
+팟 생성: $1040 (베팅레벨: $2020, 참여자: 1명)
+총 할당된 팟: $3000
+생성된 사이드팟: [
+  { amount: 1960, eligiblePlayers: [ 'vidc2pph0u9', 'es6trfd3ovp' ] },
+  { amount: 1040, eligiblePlayers: [ 'vidc2pph0u9' ] }
+]
+핸드 순위: [
+  { name: 'e', hand: '투 페어' },
+  { name: 'q', hand: '투 페어' },
+  { name: 'w', hand: '투 페어' }
+]
+팟 1 분배 (금액: $1960, 참여자: vidc2pph0u9, es6trfd3ovp)
+q이 팟 1에서 $1960 획득 (투 페어)
+팟 2 분배 (금액: $1040, 참여자: vidc2pph0u9)
+q이 팟 2에서 $1040 획득 (투 페어)
+최종 칩 상태: [
+  { name: 'e', chips: 0, isWinner: false },
+  { name: 'q', chips: 3000, isWinner: true },
+  { name: 'w', chips: 0, isWinner: false }
+]

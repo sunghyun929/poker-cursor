@@ -1,0 +1,382 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Poker-specific colors */
+  --poker-table: hsl(120, 100%, 15%);
+  --poker-felt: hsl(120, 60%, 20%);
+  --chip-red: hsl(0, 85%, 55%);
+  --chip-blue: hsl(210, 85%, 55%);
+  --chip-green: hsl(120, 85%, 40%);
+  --chip-black: hsl(0, 0%, 15%);
+  --chip-white: hsl(0, 0%, 95%);
+  --card-red: hsl(0, 85%, 50%);
+  --card-black: hsl(0, 0%, 15%);
+}
+
+/* Mobile-first responsive design */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure touch targets are at least 44px */
+button, input, select, textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Responsive text that works on all devices */
+.responsive-text-sm {
+  font-size: clamp(12px, 2vw, 14px);
+}
+
+.responsive-text-base {
+  font-size: clamp(14px, 2.5vw, 16px);
+}
+
+.responsive-text-lg {
+  font-size: clamp(16px, 3vw, 18px);
+}
+
+/* Mobile-specific styling to prevent UI overlap */
+@media screen and (max-width: 768px) {
+  /* Hide game info on mobile to prevent overlap */
+  .game-info {
+    display: none !important;
+  }
+  
+  /* Move control buttons to prevent overlap */
+  .control-buttons {
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 100 !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+  
+  .control-buttons > * {
+    font-size: 0.75rem !important;
+    padding: 0.25rem 0.5rem !important;
+    min-width: 60px !important;
+  }
+  
+  /* Restore original table position */
+  .mobile-table {
+    width: min(40vw, 200px) !important;
+    height: min(50vh, 350px) !important;
+    border-width: 2px !important;
+    top: 25% !important;
+  }
+  
+  /* Much larger mobile community cards for visibility */
+  .mobile-community-cards .poker-card {
+    width: 64px !important;
+    height: 48px !important;
+    font-size: 1rem !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.7) !important;
+    border: 3px solid #000 !important;
+    background-color: white !important;
+    font-weight: bold !important;
+  }
+  
+  /* Player seats - PC-like horizontal layout */
+  .player-seat {
+    transform: scale(0.4) !important;
+    min-width: 120px !important;
+  }
+  
+  /* Community cards mobile scaling */
+  .community-cards {
+    transform: scale(0.75) !important;
+    margin: 0.5rem 0 !important;
+  }
+  
+  /* Game info panel mobile adjustment */
+  .game-info {
+    font-size: 0.7rem !important;
+    padding: 0.4rem !important;
+    max-width: 120px !important;
+  }
+  
+  /* Mobile betting controls - compact size */
+  .betting-controls {
+    width: min(70vw, 200px) !important;
+    padding: 0.3rem !important;
+    margin: 0 auto !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    max-height: 30vh !important;
+    overflow-y: auto !important;
+    font-size: 0.7rem !important;
+  }
+  
+  .betting-controls .space-y-2 > * + * {
+    margin-top: 0.05rem !important;
+  }
+  
+  .betting-controls button {
+    padding: 0.4rem 0.6rem !important;
+    font-size: 0.65rem !important;
+    min-height: 2rem !important;
+  }
+  
+  .betting-controls input {
+    padding: 0.3rem !important;
+    font-size: 0.65rem !important;
+    min-height: 1.8rem !important;
+  }
+  
+  .betting-controls .slider {
+    margin: 0.2rem 0 !important;
+  }
+  
+  /* Tiny buttons but still touchable */
+  .betting-controls button {
+    padding: 0.4rem 0.6rem !important;
+    font-size: 0.7rem !important;
+    min-height: 32px !important;
+  }
+  
+  /* Compact player info */
+  .betting-controls .text-center {
+    margin-bottom: 0.25rem !important;
+  }
+  
+  .betting-controls .text-sm {
+    font-size: 0.7rem !important;
+  }
+  
+  /* Smaller input and slider */
+  .betting-controls input {
+    padding: 0.3rem !important;
+    font-size: 0.7rem !important;
+    min-height: 28px !important;
+  }
+  
+  .betting-controls .w-full.h-2 {
+    height: 0.4rem !important;
+  }
+  
+  /* Reduce pot display size */
+  .bg-black\/50 {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Poker-specific styles */
+.poker-table {
+  background: radial-gradient(ellipse at center, #1a4c1a 0%, #0d260d 100%);
+  border: 8px solid #8b4513;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.poker-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.poker-card.face-down {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+}
+
+.poker-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.poker-chip {
+  border-radius: 50%;
+  border: 2px solid;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.poker-chip:hover {
+  transform: scale(1.1);
+}
+
+.poker-chip.red {
+  background: var(--chip-red);
+  border-color: #dc2626;
+}
+
+.poker-chip.blue {
+  background: var(--chip-blue);
+  border-color: #2563eb;
+}
+
+.poker-chip.green {
+  background: var(--chip-green);
+  border-color: #16a34a;
+}
+
+.poker-chip.black {
+  background: var(--chip-black);
+  border-color: #374151;
+}
+
+.poker-chip.white {
+  background: var(--chip-white);
+  border-color: #d1d5db;
+}
+
+.card-animate-deal {
+  animation: dealCard 0.5s ease-out forwards;
+}
+
+.card-animate-flip {
+  animation: flipCard 0.6s ease-in-out forwards;
+}
+
+@keyframes dealCard {
+  from {
+    transform: translateX(-100px) rotate(-45deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes flipCard {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(90deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+.bet-button {
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.bet-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.bet-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.pulse-dealer {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.player-seat.active {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+  border: 2px solid #22c55e;
+}
+
+.pot-chips {
+  animation: stackChips 0.5s ease-out forwards;
+}
+
+@keyframes stackChips {
+  from {
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive betting controls positioning */
+@media (max-height: 700px) {
+  .betting-controls-container {
+    bottom: 2rem !important;
+  }
+}
+
+@media (max-height: 600px) {
+  .betting-controls-container {
+    bottom: 1rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .betting-controls-container {
+    bottom: 1rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    max-width: calc(100vw - 2rem) !important;
+  }
+}

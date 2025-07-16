@@ -1,0 +1,69 @@
+# Render 배포를 위한 필수 파일 목록
+
+## 루트 디렉토리 파일들
+- package.json
+- package-lock.json
+- tsconfig.json
+- vite.config.ts
+- tailwind.config.ts
+- postcss.config.js
+- components.json
+- render.yaml
+- README.md
+- DEPLOYMENT.md
+- .gitignore
+
+## client/ 폴더
+client/
+├── src/
+│   ├── main.tsx
+│   ├── App.tsx
+│   ├── index.css
+│   ├── vite-env.d.ts
+│   ├── pages/
+│   │   ├── CreateGamePage.tsx
+│   │   ├── GamePage.tsx
+│   │   └── JoinGamePage.tsx
+│   ├── components/
+│   │   ├── poker/
+│   │   │   ├── BettingControls.tsx
+│   │   │   ├── GameInfoPanel.tsx
+│   │   │   ├── PlayerHand.tsx
+│   │   │   ├── PokerTable.tsx
+│   │   │   ├── WinnerDisplay.tsx
+│   │   │   └── CommunityCards.tsx
+│   │   └── ui/
+│   │       ├── button.tsx
+│   │       ├── card.tsx
+│   │       ├── dialog.tsx
+│   │       ├── form.tsx
+│   │       ├── input.tsx
+│   │       ├── label.tsx
+│   │       ├── select.tsx
+│   │       ├── toast.tsx
+│   │       ├── toaster.tsx
+│   │       └── use-toast.ts
+│   ├── hooks/
+│   │   ├── use-mobile.tsx
+│   │   ├── use-toast.ts
+│   │   └── use-websocket.ts
+│   └── lib/
+│       ├── queryClient.ts
+│       ├── utils.ts
+│       └── websocket.ts
+└── index.html
+
+## server/ 폴더
+server/
+├── index.ts
+├── routes.ts
+├── storage.ts
+├── vite.ts
+└── game/
+    ├── GameManager.ts
+    ├── HandEvaluator.ts
+    └── PokerGame.ts
+
+## shared/ 폴더
+shared/
+└── schema.ts

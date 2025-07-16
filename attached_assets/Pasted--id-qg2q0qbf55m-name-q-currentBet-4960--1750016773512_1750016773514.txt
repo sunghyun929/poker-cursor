@@ -1,0 +1,111 @@
+=== 새로운 쇼다운 시스템 ===
+올인 베팅 정보: [
+  {
+    id: 'qg2q0qbf55m',
+    name: 'q',
+    currentBet: 4960,
+    hasFolded: false,
+    totalChipsInPot: 4960
+  },
+  {
+    id: 'r7a91ntol1o',
+    name: 'w',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 0
+  },
+  {
+    id: 'w3v790h2o8q',
+    name: 'e',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 0
+  },
+  {
+    id: 'nq8skqlftk',
+    name: 'r',
+    currentBet: 40,
+    hasFolded: false,
+    totalChipsInPot: 40
+  },
+  {
+    id: '4rjxj0v8awt',
+    name: 't',
+    currentBet: 0,
+    hasFolded: true,
+    totalChipsInPot: 0
+  }
+]
+=== 새로운 사이드팟 시스템 ===
+활성 플레이어 현재 상태: [
+  { name: 'q', currentBet: 0, chips: 0 },
+  { name: 'r', currentBet: 0, chips: 0 }
+]
+활성 플레이어 베팅 데이터: [
+  {
+    id: 'qg2q0qbf55m',
+    name: 'q',
+    currentBet: 4960,
+    hasFolded: false,
+    totalChipsInPot: 4960
+  },
+  {
+    id: 'nq8skqlftk',
+    name: 'r',
+    currentBet: 40,
+    hasFolded: false,
+    totalChipsInPot: 40
+  }
+]
+저장된 베팅 정보로 사이드팟 생성 시작
+베팅 정보: [
+  {
+    id: 'qg2q0qbf55m',
+    name: 'q',
+    currentBet: 4960,
+    hasFolded: false,
+    totalChipsInPot: 4960
+  },
+  {
+    id: 'nq8skqlftk',
+    name: 'r',
+    currentBet: 40,
+    hasFolded: false,
+    totalChipsInPot: 40
+  }
+]
+실제 총 팟: $5000
+활성 베팅: [
+  {
+    id: 'qg2q0qbf55m',
+    name: 'q',
+    currentBet: 4960,
+    hasFolded: false,
+    totalChipsInPot: 4960
+  },
+  {
+    id: 'nq8skqlftk',
+    name: 'r',
+    currentBet: 40,
+    hasFolded: false,
+    totalChipsInPot: 40
+  }
+]
+베팅 금액들: [ 40, 4960 ]
+팟 생성: $80 (베팅레벨: $40, 참여자: 2명)
+팟 생성: $4920 (베팅레벨: $4960, 참여자: 1명)
+총 할당된 팟: $5000
+생성된 사이드팟: [
+  { amount: 80, eligiblePlayers: [ 'qg2q0qbf55m', 'nq8skqlftk' ] },
+  { amount: 4920, eligiblePlayers: [ 'qg2q0qbf55m' ] }
+]
+핸드 순위: [ { name: 'q', hand: '하이카드' }, { name: 'r', hand: '하이카드' } ]
+팟 1 분배 (금액: $80, 참여자: qg2q0qbf55m, nq8skqlftk)
+q이 팟 1에서 $80 획득 (하이카드)
+팟 2 분배 (금액: $4920, 참여자: qg2q0qbf55m)
+q이 팟 2에서 $4920 획득 (하이카드)
+최종 칩 상태: [
+  { name: 'q', chips: 5000, isWinner: true },
+  { name: 'r', chips: 0, isWinner: false }
+]
+승자 확인 타이머 종료 - 수동 진행 대기
