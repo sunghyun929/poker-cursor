@@ -29,7 +29,7 @@ export default function PokerGame() {
     },
     onChatMessage: (message: ChatMessage) => {
       setChatMessages(prev => [...prev, message]);
-      // 내가 보낸 메시지가 아니고, 채팅창이 닫혀 있으면 새 알림 표시
+      // 내 메시지가 아니고, 채팅창이 닫혀 있을 때만 알림
       if (message.playerId !== playerId && !isChatOpen) {
         setUnreadNew(true);
       }

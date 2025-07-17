@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Card } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { ChevronUp, ChevronDown } from "lucide-react";
@@ -14,8 +14,8 @@ interface BettingControlsProps {
 }
 
 export default function BettingControls({ player, gameState, onAction }: BettingControlsProps) {
-  const [betAmount, setBetAmount] = useState(gameState.minRaise);
-  const [customBet, setCustomBet] = useState("");
+  const [betAmount, setBetAmount] = React.useState(gameState.minRaise);
+  const [customBet, setCustomBet] = React.useState("");
 
   // If player has no chips, show spectator mode
   if (player.chips === 0) {
@@ -111,6 +111,10 @@ export default function BettingControls({ player, gameState, onAction }: Betting
     const newAmount = Math.max(betAmount - betIncrement, minRaise);
     setBetAmount(newAmount);
   };
+
+  // 내 플레이어 객체 찾기
+  const me = gameState.players.find(p => p.id === player.id);
+  const myCurrentBet = me?.currentBet ?? 0;
 
   return (
     <Card className="p-2 bg-black/95 backdrop-blur text-white w-80 betting-controls relative">
@@ -218,21 +222,21 @@ export default function BettingControls({ player, gameState, onAction }: Betting
               <Button
                 size="sm"
                 className="flex-1 h-8 py-0 font-medium text-sm bg-green-600 hover:bg-green-700 text-white border-none"
-                onClick={() => onAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 2, minRaise), maxBet) })}
+                onClick={() => onAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 2 - myCurrentBet, minRaise), maxBet) })}
               >
                 2 Bet
               </Button>
               <Button
                 size="sm"
                 className="flex-1 h-8 py-0 font-medium text-sm bg-blue-600 hover:bg-blue-700 text-white border-none"
-                onClick={() => onAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 3, minRaise), maxBet) })}
+                onClick={() => onAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 3 - myCurrentBet, minRaise), maxBet) })}
               >
                 3 Bet
               </Button>
               <Button
                 size="sm"
                 className="flex-1 h-8 py-0 font-medium text-sm bg-red-600 hover:bg-red-700 text-white border-none"
-                onClick={() => onAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 4, minRaise), maxBet) })}
+                onClick={() => onAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 4 - myCurrentBet, minRaise), maxBet) })}
               >
                 4 Bet
               </Button>

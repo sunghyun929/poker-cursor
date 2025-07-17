@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Player, PlayerAction, GameState } from '@shared/schema';
@@ -14,7 +14,7 @@ export default function MobileBettingControls({
   gameState, 
   onPlayerAction 
 }: MobileBettingControlsProps) {
-  const [betAmount, setBetAmount] = useState(gameState.minRaise);
+  const [betAmount, setBetAmount] = React.useState(gameState.minRaise);
   
   const callAmount = gameState.currentBet - player.currentBet;
   const canCheck = callAmount === 0;
@@ -159,21 +159,21 @@ export default function MobileBettingControls({
           <Button
             size="sm"
             className="flex-1 h-8 py-0 font-medium text-sm bg-green-600 hover:bg-green-700 text-white border-none"
-            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 2, minRaise), maxBet) })}
+            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 2 - player.currentBet, minRaise), maxBet) })}
           >
             2 Bet
           </Button>
           <Button
             size="sm"
             className="flex-1 h-8 py-0 font-medium text-sm bg-blue-600 hover:bg-blue-700 text-white border-none"
-            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 3, minRaise), maxBet) })}
+            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 3 - player.currentBet, minRaise), maxBet) })}
           >
             3 Bet
           </Button>
           <Button
             size="sm"
             className="flex-1 h-8 py-0 font-medium text-sm bg-red-600 hover:bg-red-700 text-white border-none"
-            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 4, minRaise), maxBet) })}
+            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 4 - player.currentBet, minRaise), maxBet) })}
           >
             4 Bet
           </Button>
