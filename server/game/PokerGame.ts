@@ -925,7 +925,7 @@ export class PokerGame {
       this.gameState.bigBlind *= multiplier;
       this.gameState.smallBlind = Math.floor(this.gameState.bigBlind / 2);
       this.gameState.minRaise = this.gameState.bigBlind;
-      console.log(`플레이어 ${eliminatedCount}명 제거로 인한 블라인드 ${multiplier}배 증가: ${this.gameState.smallBlind}/${this.gameState.bigBlind}`);
+      // console.log(`플레이어 ${eliminatedCount}명 제거로 인한 블라인드 ${multiplier}배 증가: ${this.gameState.smallBlind}/${this.gameState.bigBlind}`);
     }
 
     // Move dealer button to next active player (텍사스 홀덤 룰)

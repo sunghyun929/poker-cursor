@@ -157,26 +157,23 @@ export default function MobileBettingControls({
         {/* Quick Bet Buttons */}
         <div className="flex space-x-1">
           <Button
-            onClick={() => handleQuickBet(2)}
             size="sm"
-            style={{ backgroundColor: '#2563eb', color: 'white' }}
-            className="flex-1 h-6 py-0 text-xs font-bold border-none hover:brightness-110"
+            className="flex-1 h-8 py-0 font-medium text-sm bg-green-600 hover:bg-green-700 text-white border-none"
+            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 2, minRaise), maxBet) })}
           >
             2 Bet
           </Button>
           <Button
-            onClick={() => handleQuickBet(3)}
             size="sm"
-            style={{ backgroundColor: '#22c55e', color: 'white' }}
-            className="flex-1 h-6 py-0 text-xs font-bold border-none hover:brightness-110"
+            className="flex-1 h-8 py-0 font-medium text-sm bg-blue-600 hover:bg-blue-700 text-white border-none"
+            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 3, minRaise), maxBet) })}
           >
             3 Bet
           </Button>
           <Button
-            onClick={() => handleQuickBet(4)}
             size="sm"
-            style={{ backgroundColor: '#a21caf', color: 'white' }}
-            className="flex-1 h-6 py-0 text-xs font-bold border-none hover:brightness-110"
+            className="flex-1 h-8 py-0 font-medium text-sm bg-red-600 hover:bg-red-700 text-white border-none"
+            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 4, minRaise), maxBet) })}
           >
             4 Bet
           </Button>

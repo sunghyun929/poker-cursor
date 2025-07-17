@@ -214,28 +214,25 @@ export default function BettingControls({ player, gameState, onAction }: Betting
             </div>
 
             {/* Quick Bet Buttons - Smaller */}
-            <div className="flex space-x-1">
-              <Button 
-                size="sm" 
-                style={{ backgroundColor: '#2563eb', color: 'white' }}
-                onClick={() => handleQuickBet(2)}
-                className="flex-1 h-6 text-xs py-0 font-bold border-none hover:brightness-110"
+            <div className="flex space-x-1 mt-2">
+              <Button
+                size="sm"
+                className="flex-1 h-8 py-0 font-medium text-sm bg-green-600 hover:bg-green-700 text-white border-none"
+                onClick={() => onAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 2, minRaise), maxBet) })}
               >
                 2 Bet
               </Button>
-              <Button 
-                size="sm" 
-                style={{ backgroundColor: '#22c55e', color: 'white' }}
-                onClick={() => handleQuickBet(3)}
-                className="flex-1 h-6 text-xs py-0 font-bold border-none hover:brightness-110"
+              <Button
+                size="sm"
+                className="flex-1 h-8 py-0 font-medium text-sm bg-blue-600 hover:bg-blue-700 text-white border-none"
+                onClick={() => onAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 3, minRaise), maxBet) })}
               >
                 3 Bet
               </Button>
-              <Button 
-                size="sm" 
-                style={{ backgroundColor: '#a21caf', color: 'white' }}
-                onClick={() => handleQuickBet(4)}
-                className="flex-1 h-6 text-xs py-0 font-bold border-none hover:brightness-110"
+              <Button
+                size="sm"
+                className="flex-1 h-8 py-0 font-medium text-sm bg-red-600 hover:bg-red-700 text-white border-none"
+                onClick={() => onAction({ type: 'raise', amount: Math.min(Math.max((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 4, minRaise), maxBet) })}
               >
                 4 Bet
               </Button>
