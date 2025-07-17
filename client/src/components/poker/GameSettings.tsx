@@ -153,7 +153,7 @@ export default function GameSettings({ gameState, currentPlayerId, onUpdateSetti
 
                 {/* 파산 시 인상 옵션 */}
                 <div className="flex items-center gap-2 mt-4">
-                  <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <label className="flex items-center gap-2 cursor-pointer select-none text-base font-normal flex-nowrap">
                     <input
                       type="checkbox"
                       checked={bankruptIncreaseEnabled}
@@ -179,7 +179,7 @@ export default function GameSettings({ gameState, currentPlayerId, onUpdateSetti
 
                 {/* 한 바퀴 인상 옵션 */}
                 <div className="flex items-center gap-2 mt-2">
-                  <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <label className="flex items-center gap-2 cursor-pointer select-none text-base font-normal flex-nowrap">
                     <input
                       type="checkbox"
                       checked={orbitIncreaseEnabled}

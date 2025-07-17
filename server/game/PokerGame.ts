@@ -913,15 +913,25 @@ export class PokerGame {
     const settings = this.gameState.gameSettings;
     let newBigBlind = this.gameState.bigBlind;
     let increased = false;
-    // 1. 파산 인상
+    // 1. 파산 인상: 이번 핸드에서 파산자가 실제로 발생한 경우에만 적용
     if (settings?.bankruptIncreaseEnabled && eliminatedCount > 0) {
       newBigBlind = Math.floor(newBigBlind * (settings.bankruptIncreasePercent / 100));
       increased = true;
     }
-    // 2. 한 바퀴 인상
+    // 2. 한 바퀴 인상: 기준 딜러와 현재 딜러가 같아진 경우에만 적용
     if (settings?.orbitIncreaseEnabled) {
-      newBigBlind = Math.floor(newBigBlind * (settings.orbitIncreasePercent / 100));
-      increased = true;
+      // 기준 딜러가 없으면 현재 딜러로 초기화
+      if (!settings.dealerReferenceId) {
+        settings.dealerReferenceId = this.gameState.players[this.gameState.dealerPosition]?.id;
+      }
+      // 한 바퀴 돌았는지 체크
+      const currentDealerId = this.gameState.players[this.gameState.dealerPosition]?.id;
+      if (settings.dealerReferenceId && currentDealerId === settings.dealerReferenceId) {
+        newBigBlind = Math.floor(newBigBlind * (settings.orbitIncreasePercent / 100));
+        increased = true;
+        // 기준 딜러를 현재 딜러로 갱신(다음 바퀴 체크용)
+        settings.dealerReferenceId = currentDealerId;
+      }
     }
     if (increased) {
       this.gameState.bigBlind = newBigBlind;
