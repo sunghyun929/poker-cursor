@@ -22,8 +22,13 @@ export default function GameSettings({ gameState, currentPlayerId, onUpdateSetti
   
   // Small blind is always half of big blind
   const smallBlind = Math.floor(bigBlind / 2);
-
   const isHost = gameState.hostPlayerId === currentPlayerId;
+  // 추가: 파산 시 인상 옵션
+  const [bankruptIncreaseEnabled, setBankruptIncreaseEnabled] = useState(false);
+  const [bankruptIncreasePercent, setBankruptIncreasePercent] = useState(200);
+  // 추가: 한 바퀴 인상 옵션
+  const [orbitIncreaseEnabled, setOrbitIncreaseEnabled] = useState(false);
+  const [orbitIncreasePercent, setOrbitIncreasePercent] = useState(120);
 
   // Force re-render when gameState.players changes
   useEffect(() => {
@@ -31,7 +36,15 @@ export default function GameSettings({ gameState, currentPlayerId, onUpdateSetti
   }, [gameState.players.length]);
 
   const handleUpdateSettings = () => {
-    onUpdateSettings({ startingChips, smallBlind, bigBlind });
+    onUpdateSettings({
+      startingChips,
+      smallBlind,
+      bigBlind,
+      bankruptIncreaseEnabled,
+      bankruptIncreasePercent,
+      orbitIncreaseEnabled,
+      orbitIncreasePercent
+    });
   };
 
   const handleStartGame = () => {
@@ -129,6 +142,60 @@ export default function GameSettings({ gameState, currentPlayerId, onUpdateSetti
                       스몰 블라인드: {smallBlind} (빅 블라인드의 절반)
                     </div>
                   </div>
+                </div>
+
+                {/* 파산 시 인상 옵션 */}
+                <div className="flex items-center gap-2 mt-4">
+                  <input
+                    type="checkbox"
+                    id="bankruptIncreaseEnabled"
+                    checked={bankruptIncreaseEnabled}
+                    onChange={e => setBankruptIncreaseEnabled(e.target.checked)}
+                  />
+                  <Label htmlFor="bankruptIncreaseEnabled" className="text-sm font-medium">
+                    플레이어 파산 시 빅 블라인드 인상
+                  </Label>
+                  {bankruptIncreaseEnabled && (
+                    <div className="flex items-center gap-1 ml-2">
+                      <Input
+                        type="number"
+                        value={bankruptIncreasePercent}
+                        onChange={e => setBankruptIncreasePercent(Number(e.target.value))}
+                        min={101}
+                        max={500}
+                        step={1}
+                        className="w-16 text-center"
+                      />
+                      <span className="text-xs">%</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* 한 바퀴 인상 옵션 */}
+                <div className="flex items-center gap-2 mt-2">
+                  <input
+                    type="checkbox"
+                    id="orbitIncreaseEnabled"
+                    checked={orbitIncreaseEnabled}
+                    onChange={e => setOrbitIncreaseEnabled(e.target.checked)}
+                  />
+                  <Label htmlFor="orbitIncreaseEnabled" className="text-sm font-medium">
+                    딜러 한 바퀴 돌 때마다 빅 블라인드 인상
+                  </Label>
+                  {orbitIncreaseEnabled && (
+                    <div className="flex items-center gap-1 ml-2">
+                      <Input
+                        type="number"
+                        value={orbitIncreasePercent}
+                        onChange={e => setOrbitIncreasePercent(Number(e.target.value))}
+                        min={101}
+                        max={500}
+                        step={1}
+                        className="w-16 text-center"
+                      />
+                      <span className="text-xs">%</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded">

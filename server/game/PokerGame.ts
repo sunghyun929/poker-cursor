@@ -37,7 +37,12 @@ export class PokerGame {
       gameSettings: {
         startingChips: 1000,
         initialSmallBlind: options.smallBlind,
-        initialBigBlind: options.bigBlind
+        initialBigBlind: options.bigBlind,
+        bankruptIncreaseEnabled: false,
+        bankruptIncreasePercent: 200,
+        orbitIncreaseEnabled: false,
+        orbitIncreasePercent: 120,
+        dealerReferenceId: undefined // 기준 딜러 id
       }
     };
   }
@@ -1706,93 +1711,51 @@ export class PokerGame {
     }
   }
 
-  updateGameSettings(playerId: string, settings: { startingChips: number; smallBlind: number; bigBlind: number }): { success: boolean; error?: string } {
-    // Only host can update settings
+  updateGameSettings(playerId: string, settings: any): { success: boolean; error?: string } {
     if (this.gameState.hostPlayerId !== playerId) {
       return { success: false, error: "Only host can update settings" };
     }
-
-    // Only allow updates before game starts
     if (this.gameState.stage !== 'settings') {
       return { success: false, error: "Cannot update settings after game has started" };
     }
-
     this.gameState.gameSettings = {
       startingChips: settings.startingChips,
       initialSmallBlind: settings.smallBlind,
-      initialBigBlind: settings.bigBlind
+      initialBigBlind: settings.bigBlind,
+      bankruptIncreaseEnabled: settings.bankruptIncreaseEnabled,
+      bankruptIncreasePercent: settings.bankruptIncreasePercent,
+      orbitIncreaseEnabled: settings.orbitIncreaseEnabled,
+      orbitIncreasePercent: settings.orbitIncreasePercent,
+      dealerReferenceId: undefined
     };
-
     this.gameState.smallBlind = settings.smallBlind;
     this.gameState.bigBlind = settings.bigBlind;
     this.gameState.minRaise = settings.bigBlind;
-
-    // Update existing players' chips
     this.gameState.players.forEach(player => {
       player.chips = settings.startingChips;
     });
-
     this.notifyStateChange();
     return { success: true };
   }
 
   increaseBlind(playerId: string, newBigBlind?: number): { success: boolean; error?: string } {
-    // Only host can increase blinds
     if (this.gameState.hostPlayerId !== playerId) {
       return { success: false, error: "Only host can increase blinds" };
     }
-
-    // If no newBigBlind specified, show the blind increase prompt
     if (newBigBlind === undefined) {
       this.gameState.blindIncrease = {
         pending: true
       };
-      
-      console.log("블라인드 증가 옵션 표시");
       this.notifyStateChange();
       return { success: true };
     }
-
-    // Clear timer
-    if (this.blindIncreaseTimer) {
-      clearTimeout(this.blindIncreaseTimer);
-      this.blindIncreaseTimer = undefined;
-    }
-
-    if (newBigBlind > this.gameState.bigBlind) {
-      // Set specific blind amount (only if it's an increase)
-      this.gameState.bigBlind = newBigBlind;
-      this.gameState.smallBlind = Math.floor(newBigBlind / 2);
-      this.gameState.minRaise = newBigBlind;
-      
-      console.log(`블라인드 증가 완료: ${this.gameState.smallBlind}/${this.gameState.bigBlind}`);
-      // 블라인드 인상 시 딜러 포지션을 다음 활성 플레이어로 이동
-      let nextDealer = (this.gameState.dealerPosition + 1) % this.gameState.players.length;
-      let attempts = 0;
-      while (attempts < this.gameState.players.length) {
-        if (this.gameState.players[nextDealer].chips > 0) {
-          this.gameState.dealerPosition = nextDealer;
-          break;
-        }
-        nextDealer = (nextDealer + 1) % this.gameState.players.length;
-        attempts++;
-      }
-    } else {
-      // Keep current blinds (when newBigBlind is not an increase)
-      console.log(`현재 블라인드 유지: ${this.gameState.smallBlind}/${this.gameState.bigBlind}`);
-    }
-    
-    // Clear blind increase pending state
+    // 실제 인상 적용
+    this.gameState.bigBlind = newBigBlind;
+    this.gameState.smallBlind = Math.floor(newBigBlind / 2);
+    this.gameState.minRaise = newBigBlind;
     this.gameState.blindIncrease = undefined;
-    
-    // Clear any existing lastAction to avoid showing system messages
-    this.gameState.lastAction = undefined;
-    
-    // Start next hand immediately after blind decision
-    this.resetGameState();
-    this.startNewHand();
+    // endHand를 즉시 호출하지 않고, winnerConfirmations가 모두 모일 때까지 대기(상태만 갱신)
     this.notifyStateChange();
-    
     return { success: true };
   }
 

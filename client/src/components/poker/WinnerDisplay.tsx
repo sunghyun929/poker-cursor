@@ -80,6 +80,8 @@ export default function WinnerDisplay({ gameState, currentPlayerId, onConfirm, o
   const handleIncreaseBlind = () => {
     // Trigger blind increase prompt by calling without parameters
     onIncreaseBlind();
+    // 블라인드 인상 후에도 확인 버튼을 눌러야만 다음 라운드로 넘어가도록 변경
+    // (onStartNextHand는 onConfirm에서만 호출)
   };
 
   // Check if current player has already confirmed

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +15,9 @@ interface BlindIncreasePromptProps {
 export default function BlindIncreasePrompt({ gameState, currentPlayerId, onIncreaseBlind }: BlindIncreasePromptProps) {
   const [showCustomAmount, setShowCustomAmount] = useState(false);
   const [customBigBlind, setCustomBigBlind] = useState(gameState.bigBlind * 2);
+  useEffect(() => {
+    setCustomBigBlind(gameState.bigBlind * 2);
+  }, [gameState.bigBlind]);
 
   const isHost = gameState.hostPlayerId === currentPlayerId;
   const isPending = gameState.blindIncrease?.pending;
