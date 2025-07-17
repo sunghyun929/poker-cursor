@@ -158,27 +158,27 @@ export default function MobileBettingControls({
         <div className="flex space-x-1">
           <Button
             onClick={() => handleQuickBet(2)}
-            variant="outline"
             size="sm"
-            className="flex-1 h-6 py-0 text-xs"
+            style={{ backgroundColor: '#2563eb', color: 'white' }}
+            className="flex-1 h-6 py-0 text-xs font-bold border-none hover:brightness-110"
           >
-            2x Current Bet
+            2 Bet
           </Button>
           <Button
             onClick={() => handleQuickBet(3)}
-            variant="outline"
             size="sm"
-            className="flex-1 h-6 py-0 text-xs"
+            style={{ backgroundColor: '#22c55e', color: 'white' }}
+            className="flex-1 h-6 py-0 text-xs font-bold border-none hover:brightness-110"
           >
-            3x Current Bet
+            3 Bet
           </Button>
           <Button
             onClick={() => handleQuickBet(4)}
-            variant="outline"
             size="sm"
-            className="flex-1 h-6 py-0 text-xs"
+            style={{ backgroundColor: '#a21caf', color: 'white' }}
+            className="flex-1 h-6 py-0 text-xs font-bold border-none hover:brightness-110"
           >
-            4x Current Bet
+            4 Bet
           </Button>
         </div>
 

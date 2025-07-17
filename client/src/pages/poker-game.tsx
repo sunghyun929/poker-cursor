@@ -20,7 +20,7 @@ export default function PokerGame() {
   const [isConnected, setIsConnected] = useState(false);
   const [showJoinForm, setShowJoinForm] = useState(true);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const [unreadCount, setUnreadCount] = useState(0);
+  const [unreadNew, setUnreadNew] = useState(false);
   const { toast } = useToast();
 
   const { connect, disconnect, joinGame, sendPlayerAction, leaveGame, startGame, confirmWinner, updateSettings, increaseBlind, startNextHand, resetToSettings, sendChatMessage, reconnectToGame, isConnected: wsConnected, isReconnecting } = useWebSocket({
@@ -29,9 +29,9 @@ export default function PokerGame() {
     },
     onChatMessage: (message: ChatMessage) => {
       setChatMessages(prev => [...prev, message]);
-      // Increment unread count if message is from another player
-      if (message.playerId !== playerId) {
-        setUnreadCount(prev => prev + 1);
+      // 내가 보낸 메시지가 아니고, 채팅창이 닫혀 있으면 새 알림 표시
+      if (message.playerId !== playerId && !isChatOpen) {
+        setUnreadNew(true);
       }
     },
     onPlayerJoined: (data: { playerName: string; playerId: string }) => {
@@ -203,7 +203,7 @@ export default function PokerGame() {
   };
 
   const handleMarkMessagesRead = () => {
-    setUnreadCount(0);
+    setUnreadNew(false);
   };
 
   if (showJoinForm) {
@@ -309,7 +309,7 @@ export default function PokerGame() {
         onEndGame={handleEndGame}
         chatMessages={chatMessages}
         onSendMessage={handleSendMessage}
-        unreadCount={unreadCount}
+        unreadCount={unreadNew ? 1 : 0}
         onMarkMessagesRead={handleMarkMessagesRead}
       />
     </div>

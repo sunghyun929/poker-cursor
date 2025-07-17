@@ -217,27 +217,27 @@ export default function BettingControls({ player, gameState, onAction }: Betting
             <div className="flex space-x-1">
               <Button 
                 size="sm" 
-                variant="outline"
+                style={{ backgroundColor: '#2563eb', color: 'white' }}
                 onClick={() => handleQuickBet(2)}
-                className="flex-1 h-3 text-xs py-0"
+                className="flex-1 h-6 text-xs py-0 font-bold border-none hover:brightness-110"
               >
-                2x Current Bet
+                2 Bet
               </Button>
               <Button 
                 size="sm" 
-                variant="outline"
+                style={{ backgroundColor: '#22c55e', color: 'white' }}
                 onClick={() => handleQuickBet(3)}
-                className="flex-1 h-3 text-xs py-0"
+                className="flex-1 h-6 text-xs py-0 font-bold border-none hover:brightness-110"
               >
-                3x Current Bet
+                3 Bet
               </Button>
               <Button 
                 size="sm" 
-                variant="outline"
+                style={{ backgroundColor: '#a21caf', color: 'white' }}
                 onClick={() => handleQuickBet(4)}
-                className="flex-1 h-3 text-xs py-0"
+                className="flex-1 h-6 text-xs py-0 font-bold border-none hover:brightness-110"
               >
-                4x Current Bet
+                4 Bet
               </Button>
             </div>
 

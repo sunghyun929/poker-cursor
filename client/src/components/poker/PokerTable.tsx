@@ -250,7 +250,7 @@ export default function PokerTable({
             <Badge 
               className="absolute -top-2 -right-2 bg-red-500 text-white text-xs min-w-[1.2rem] h-5 flex items-center justify-center rounded-full px-1"
             >
-              {unreadCount > 99 ? '99+' : unreadCount}
+              N
             </Badge>
           )}
         </Button>

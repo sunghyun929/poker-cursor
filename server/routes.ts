@@ -48,17 +48,20 @@ export async function registerRoutes(app) {
 
   const httpServer = createServer(app);
   
-  // WebSocket server optimized for Render's persistent connections
+  // WebSocket 서버 설정 개선
   const wss = new WebSocketServer({ 
     server: httpServer, 
     path: '/ws',
-    // Render 최적화 설정
-    perMessageDeflate: false,     // 압축 비활성화로 CPU 절약
-    maxPayload: 512 * 1024,       // 512KB로 제한하여 메모리 절약
+    perMessageDeflate: false,
+    maxPayload: 256 * 1024,       // 256KB로 더 줄임
     clientTracking: true,
-    skipUTF8Validation: true,     // UTF8 검증 건너뛰어 성능 향상
-    backlog: 511                  // 연결 대기열 크기
+    skipUTF8Validation: true,
+    backlog: 50                    // 더 작은 대기열
   });
+
+  // 연결 수 제한 추가
+  const MAX_CONNECTIONS = 50; // 최대 50개 연결만 허용
+  const MAX_CONNECTIONS_PER_ROOM = 10; // 방당 최대 10개 연결
 
   // Track active connections per room for better management
   const roomConnections = new Map<string, Set<WebSocket>>();
@@ -78,7 +81,18 @@ export async function registerRoutes(app) {
 
   // Render 환경에 맞춘 연결 유지 시스템 (더 짧은 간격으로 체크)
   const interval = setInterval(() => {
+    const now = Date.now();
     wss.clients.forEach((ws: WebSocket) => {
+      const connectedAt = (ws as any).connectedAt || now;
+      const connectionAge = now - connectedAt;
+      
+      // 30분 이상 된 연결은 강제 종료
+      if (connectionAge > 30 * 60 * 1000) {
+        console.log('Terminating old connection');
+        ws.terminate();
+        return;
+      }
+      
       if ((ws as any).isAlive === false) {
         console.log('Terminating dead connection');
         return ws.terminate();
@@ -90,19 +104,27 @@ export async function registerRoutes(app) {
         ws.ping('heartbeat');
       }
     });
-  }, 20000); // 20초마다 체크하여 연결 유지
+  }, 10000); // 10초마다 체크
 
   wss.on('close', () => {
     clearInterval(interval);
   });
   
   wss.on('connection', (ws: WebSocket, req) => {
-    console.log('Client connected to WebSocket');
+    // 연결 수 체크
+    if (wss.clients.size > MAX_CONNECTIONS) {
+      console.warn(`Too many connections (${wss.clients.size}), rejecting new connection`);
+      ws.close(1013, 'Server overloaded');
+      return;
+    }
+    
+    console.log(`Client connected to WebSocket (${wss.clients.size}/${MAX_CONNECTIONS})`);
     
     // Initialize connection health
     (ws as any).isAlive = true;
     (ws as any).roomCode = null;
     (ws as any).playerId = null;
+    (ws as any).connectedAt = Date.now();
 
     // Set up heartbeat
     ws.on('pong', heartbeat);

@@ -851,9 +851,53 @@ export class PokerGame {
     this.gameState.pot = 0;
     this.gameState.sidePots = [];
 
+    // 라운드 종료 시 메모리 정리
+    this.cleanupRoundData();
+    
     // Start confirmation timer for winner display
     this.startConfirmationTimer();
     this.notifyStateChange();
+  }
+
+  private cleanupRoundData(): void {
+    console.log('라운드 종료 - 메모리 정리 시작');
+    
+    // 베팅 정보 정리
+    (this.gameState as any).savedBettingInfo = undefined;
+    (this.gameState as any).allInBettingInfo = undefined;
+    (this.gameState as any).playersAtHandStart = undefined;
+    
+    // 드라마틱 리빌 관련 데이터 정리
+    (this.gameState as any).dramaticReveal = false;
+    (this.gameState as any).showAllHoleCards = false;
+    
+    // 플레이어 카드 정보 정리 (보안상)
+    this.gameState.players.forEach(player => {
+      player.cards = [];
+      player.currentBet = 0;
+      player.hasActed = false;
+      player.hasFolded = false;
+      player.isAllIn = false;
+      player.lastAction = undefined;
+    });
+    
+    // 커뮤니티 카드 정리
+    this.gameState.communityCards = [];
+    
+    // 베팅 관련 상태 정리
+    this.gameState.pot = 0;
+    this.gameState.sidePots = [];
+    this.gameState.currentBet = 0;
+    this.gameState.minRaise = this.gameState.bigBlind;
+    
+    // 승자 정보 정리 (15초 후)
+    setTimeout(() => {
+      this.gameState.showdownHands = undefined;
+      this.gameState.lastAction = undefined;
+      this.notifyStateChange();
+    }, 15000);
+    
+    console.log('라운드 데이터 정리 완료');
   }
 
   private endHand(): void {

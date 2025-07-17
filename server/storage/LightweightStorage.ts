@@ -8,6 +8,8 @@ export class LightweightStorage {
   private dataDir: string;
   private cleanupInterval?: NodeJS.Timeout;
   private saveTimeout?: NodeJS.Timeout;
+  private readonly MAX_GAMES = 10; // 최대 10개 게임만 유지
+  private readonly MAX_AGE_MINUTES = 15; // 15분 이상 된 게임 삭제
 
   constructor() {
     this.dataDir = path.join(process.cwd(), 'game-data');
@@ -54,21 +56,27 @@ export class LightweightStorage {
   }
 
   private startCleanup(): void {
-    // Aggressive cleanup every 10 minutes
+    // 더 자주 정리 (2분마다)
     this.cleanupInterval = setInterval(() => {
       this.cleanup();
-    }, 10 * 60 * 1000);
+    }, 2 * 60 * 1000);
   }
 
   private cleanup(): void {
     let removed = 0;
     const roomsToDelete: string[] = [];
+    const now = Date.now();
+    const maxAgeMs = this.MAX_AGE_MINUTES * 60 * 1000;
 
     this.gameStates.forEach((gameState, roomCode) => {
       const activePlayers = gameState.players.filter(p => p.chips > 0 && p.isActive);
-      const isInactive = activePlayers.length === 0 || 
-                        gameState.stage === 'ended' || 
-                        gameState.stage === 'waiting';
+      
+      // 더 적극적인 정리 조건
+      const isInactive = 
+        activePlayers.length === 0 || 
+        gameState.stage === 'ended' ||
+        (gameState.stage === 'waiting' && activePlayers.length < 2) ||
+        (gameState.lastActivity && (now - gameState.lastActivity) > maxAgeMs);
 
       if (isInactive) {
         roomsToDelete.push(roomCode);
@@ -76,15 +84,30 @@ export class LightweightStorage {
       }
     });
 
+    // 최대 게임 수 제한
+    if (this.gameStates.size > this.MAX_GAMES) {
+      const gamesToRemove = this.gameStates.size - this.MAX_GAMES;
+      const sortedGames = Array.from(this.gameStates.entries())
+        .sort(([, a], [, b]) => {
+          const aAge = a.lastActivity || 0;
+          const bAge = b.lastActivity || 0;
+          return aAge - bAge;
+        });
+      
+      for (let i = 0; i < gamesToRemove; i++) {
+        roomsToDelete.push(sortedGames[i][0]);
+        removed++;
+      }
+    }
+
     roomsToDelete.forEach(roomCode => {
       this.gameStates.delete(roomCode);
     });
 
     if (removed > 0) {
-      console.log(`Cleaned up ${removed} inactive games`);
+      console.log(`Cleaned up ${removed} inactive games (${this.gameStates.size} remaining)`);
       this.saveGameStates();
       
-      // Force garbage collection if available
       if (global.gc) {
         global.gc();
       }

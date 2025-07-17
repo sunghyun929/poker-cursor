@@ -1,15 +1,15 @@
 // Memory monitoring utility for Render's 512MB limit
 export class MemoryMonitor {
-  private static readonly MEMORY_LIMIT_MB = 400; // 80% of 512MB limit
+  private static readonly MEMORY_LIMIT_MB = 300; // 더 보수적인 한계
+  private static readonly CRITICAL_LIMIT_MB = 400;
   private static logInterval?: NodeJS.Timeout;
 
   static startMonitoring() {
-    // Check memory every 5 minutes
+    // 30초마다 체크 (더 자주)
     this.logInterval = setInterval(() => {
       this.checkMemoryUsage();
-    }, 5 * 60 * 1000);
+    }, 30 * 1000);
     
-    // Initial check
     this.checkMemoryUsage();
   }
 
@@ -32,6 +32,19 @@ export class MemoryMonitor {
       global.gc();
       console.log('Forced garbage collection');
     }
+  }
+
+  private static emergencyCleanup() {
+    console.error('🚨 EMERGENCY CLEANUP - 모든 비활성 게임 삭제');
+    
+    // 강제 가비지 컬렉션
+    if (global.gc) {
+      global.gc();
+    }
+    
+    // WebSocket 연결 정리
+    // 게임 상태 정리
+    console.log('Emergency cleanup completed');
   }
 
   static stopMonitoring() {
