@@ -39,12 +39,17 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
     );
   };
 
-  const renderPlayerCard = (player: Player) => {
+  // showAllHoleCards, showdown 변수를 받아서 renderPlayerCard에 전달
+  const showAllHoleCards = (gameState as any).showAllHoleCards || gameState.stage === 'showdown';
+
+  const renderPlayerCard = (player: Player, isMe = false) => {
     if (!player) return null;
     const isCurrentTurn = gameState.currentPlayerIndex === players.findIndex(p => p.id === player.id);
     const isDealer = gameState.dealerPosition === players.findIndex(p => p.id === player.id);
     const isSmallBlind = gameState.smallBlindPosition === players.findIndex(p => p.id === player.id);
     const isBigBlind = gameState.bigBlindPosition === players.findIndex(p => p.id === player.id);
+    // 내 카드가 아니고, showAllHoleCards가 false면 카드 가리기
+    const shouldHideCards = !isMe && !showAllHoleCards;
     return (
       <div className={`bg-gray-800 rounded-lg p-2 shadow-md min-w-[70px] max-w-[90px] mx-auto mb-2 ${isCurrentTurn ? 'ring-2 ring-yellow-400' : ''} ${player.hasFolded ? 'opacity-50' : ''}`}> 
         <div className="flex items-center justify-between mb-1">
@@ -59,7 +64,13 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
           </div>
         </div>
         <div className="flex space-x-1 mb-1 justify-center">
-          {player.cards.map((card, index) => renderCard(card, index))}
+          {shouldHideCards
+            ? [0, 1].map((i) => (
+                <div key={i} className="w-12 h-16 bg-blue-800 rounded border border-blue-600 flex items-center justify-center">
+                  <div className="text-blue-300 text-xl">🂠</div>
+                </div>
+              ))
+            : player.cards.map((card, index) => renderCard(card, index))}
         </div>
         <div className="text-center">
           <div className="text-green-400 font-bold text-xs">${player.chips}</div>
@@ -85,9 +96,9 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
     <div className="h-screen bg-green-800 relative overflow-hidden font-sans">
       {/* 좌측 상단 세로 버튼 */}
       <div className="absolute top-4 left-4 z-[9999] flex flex-col gap-2">
-        <Button variant="outline">채팅</Button>
-        <Button variant="outline">Leave</Button>
-        <Button variant="outline">게임종료</Button>
+        <Button variant="outline" className="bg-blue-600 text-white rounded shadow hover:bg-blue-700">채팅</Button>
+        <Button variant="outline" className="bg-red-600 text-white rounded shadow hover:bg-red-700">Leave</Button>
+        <Button variant="outline" className="bg-orange-500 text-white rounded shadow hover:bg-orange-600">게임종료</Button>
       </div>
 
       {/* 메인 flex row: 좌측 플레이어 / 커뮤니티+나 / 우측 플레이어 */}
@@ -99,7 +110,7 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
         {/* 커뮤니티 카드 + 내 UI */}
         <div className="flex flex-col items-center justify-center h-full">
           {/* 커뮤니티 카드 세로 */}
-          <div className="flex flex-col items-center justify-center gap-2 mt-8 mb-2">
+          <div className="flex flex-col items-center justify-center gap-2 mt-2 mb-2">
             {Array.from({ length: 5 }, (_, index) => {
               const card = index < visibleCards ? gameState.communityCards[index] : null;
               return renderCard(card, index);
@@ -107,8 +118,8 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
           </div>
           {/* 내 UI (margin-bottom으로 베팅창과 겹침 방지) */}
           {currentPlayer && (
-            <div className="mt-2 mb-32 w-full flex justify-center">
-              {renderPlayerCard(currentPlayer)}
+            <div className="mt-2 mb-36 w-full flex justify-center">
+              {renderPlayerCard(currentPlayer, true)}
             </div>
           )}
         </div>

@@ -155,29 +155,7 @@ export default function MobileBettingControls({
       {/* Betting Controls */}
       <div className="space-y-2">
         {/* Quick Bet Buttons */}
-        <div className="flex space-x-1">
-          <Button
-            size="sm"
-            className="flex-1 h-8 py-0 font-medium text-sm bg-green-600 hover:bg-green-700 text-white border-none"
-            onClick={() => onPlayerAction({ type: 'raise', amount: minRaise })}
-          >
-            1 Bet
-          </Button>
-          <Button
-            size="sm"
-            className="flex-1 h-8 py-0 font-medium text-sm bg-blue-600 hover:bg-blue-700 text-white border-none"
-            onClick={() => onPlayerAction({ type: 'raise', amount: minRaise * 2 })}
-          >
-            2 Bet
-          </Button>
-          <Button
-            size="sm"
-            className="flex-1 h-8 py-0 font-medium text-sm bg-red-600 hover:bg-red-700 text-white border-none"
-            onClick={() => onPlayerAction({ type: 'raise', amount: minRaise * 3 })}
-          >
-            3 Bet
-          </Button>
-        </div>
+        {/* 1Bet/2Bet/3Bet 버튼이 있는 부분 전체 삭제 */}
 
         {/* Bet Amount Control */}
         <div className="flex items-center space-x-1">
