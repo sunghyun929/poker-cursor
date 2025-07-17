@@ -107,8 +107,8 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
         <div className="flex flex-col justify-center items-end flex-1 h-full pt-16 pb-40">
           {leftPlayers.map((player) => renderPlayerCard(player))}
         </div>
-        {/* 커뮤니티 카드와 내 카드를 감싸는 flex column 컨테이너를 absolute top-0 left-1/2 transform -translate-x-1/2 w-full로 화면 맨 위에 고정 */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full flex flex-col items-center z-10 mb-24">
+        {/* 커뮤니티 카드와 내 카드를 감싸는 flex column 컨테이너를 absolute top-4 left-1/2 transform -translate-x-1/2로 살짝 아래로 이동 */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-full flex flex-col items-center z-10 mb-24">
           <div className="flex flex-col items-center gap-2">
             {Array.from({ length: 5 }, (_, index) => {
               const card = index < visibleCards ? gameState.communityCards[index] : null;

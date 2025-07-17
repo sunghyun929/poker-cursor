@@ -120,20 +120,10 @@ export default function PokerTable({
               Start Game
             </Button>
           )}
-          {isHost && gameState.stage !== 'waiting' && onEndGame && (
-            <Button 
-              onClick={onEndGame}
-              variant="outline"
-              size="sm"
-              className="bg-orange-600 hover:bg-orange-700 text-white border-orange-600"
-            >
-              게임 종료
-            </Button>
-          )}
           {/* 채팅 버튼과 N 알림을 flex row로 묶고, N을 버튼 오른쪽(외부)에 배치 */}
           <div className="flex items-center gap-1">
             <Button
-              onClick={() => setIsChatOpen(true)}
+              onClick={handleToggleChat}
               variant="outline"
               size="sm"
               className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600"
@@ -152,6 +142,16 @@ export default function PokerTable({
           >
             Leave
           </Button>
+          {isHost && gameState.stage !== 'waiting' && onEndGame && (
+            <Button
+              onClick={onEndGame}
+              variant="outline"
+              size="sm"
+              className="bg-orange-500 hover:bg-orange-600 text-white border-orange-500"
+            >
+              게임종료
+            </Button>
+          )}
         </div>
 
         {/* Mobile Game Layout */}
