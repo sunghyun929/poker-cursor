@@ -131,17 +131,15 @@ export default function PokerTable({
             </Button>
           )}
           <Button
-            onClick={handleToggleChat}
+            onClick={() => setIsChatOpen(true)}
             variant="outline"
             size="sm"
             className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600 relative"
           >
             채팅
-            <Badge 
-              {...{ className: 'absolute -top-2 -right-2 bg-red-500 text-white text-xs min-w-[1.2rem] h-5 flex items-center justify-center rounded-full px-1' }}
-            >
-              {unreadCount > 99 ? '99+' : unreadCount}
-            </Badge>
+            {unreadCount > 0 && (
+              <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs min-w-[1.2rem] h-5 flex items-center justify-center rounded-full px-1 shadow">N</span>
+            )}
           </Button>
           <Button 
             onClick={onLeaveGame}

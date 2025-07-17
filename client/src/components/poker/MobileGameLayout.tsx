@@ -109,12 +109,14 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
         </div>
         {/* 커뮤니티 카드 + 내 UI */}
         <div className="flex flex-col items-center justify-center h-full">
-          {/* 커뮤니티 카드 세로 */}
-          <div className="flex flex-col items-center justify-start gap-2 mt-0 pt-0 mb-0">
-            {Array.from({ length: 5 }, (_, index) => {
-              const card = index < visibleCards ? gameState.communityCards[index] : null;
-              return renderCard(card, index);
-            })}
+          {/* 커뮤니티 카드 영역을 absolute top-0 left-1/2 translate-x-1/2 mt-1로 위에 거의 딱 붙게 배치 */}
+          <div className="absolute top-1 left-1/2 transform -translate-x-1/2 z-10">
+            <div className="flex flex-col items-center gap-2">
+              {Array.from({ length: 5 }, (_, index) => {
+                const card = index < visibleCards ? gameState.communityCards[index] : null;
+                return renderCard(card, index);
+              })}
+            </div>
           </div>
           {/* 내 UI (margin-bottom으로 베팅창과 겹침 방지) */}
           {currentPlayer && (
