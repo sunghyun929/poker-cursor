@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from 'react';
 import PlayerSeat from "./PlayerSeat";
 import CommunityCards from "./CommunityCards";
 import BettingControls from "./BettingControls";
@@ -32,6 +32,8 @@ interface PokerTableProps {
   onSendMessage: (message: string) => void;
   unreadCount: number;
   onMarkMessagesRead: () => void;
+  isChatOpen: boolean;
+  setIsChatOpen: (open: boolean) => void;
 }
 
 export default function PokerTable({ 
@@ -48,12 +50,14 @@ export default function PokerTable({
   chatMessages,
   onSendMessage,
   unreadCount,
-  onMarkMessagesRead
+  onMarkMessagesRead,
+  isChatOpen,
+  setIsChatOpen
 }: PokerTableProps) {
   const currentPlayer = gameState.players.find(p => p.id === currentPlayerId);
   const isCurrentPlayerTurn = gameState.players[gameState.currentPlayerIndex]?.id === currentPlayerId;
   const isHost = gameState.hostPlayerId === currentPlayerId;
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  // const [isChatOpen, setIsChatOpen] = useState(false); // This line is removed as per edit hint
 
   // 현재 플레이어를 첫 번째 위치로 재정렬
   const reorderPlayersForCurrentPlayer = (players: Player[], currentPlayerId: string) => {
@@ -133,13 +137,11 @@ export default function PokerTable({
             className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600 relative"
           >
             채팅
-            {unreadCount > 0 && (
-              <Badge 
-                className="absolute -top-2 -right-2 bg-red-500 text-white text-xs min-w-[1.2rem] h-5 flex items-center justify-center rounded-full px-1"
-              >
-                {unreadCount > 99 ? '99+' : unreadCount}
-              </Badge>
-            )}
+            <Badge 
+              {...{ className: 'absolute -top-2 -right-2 bg-red-500 text-white text-xs min-w-[1.2rem] h-5 flex items-center justify-center rounded-full px-1' }}
+            >
+              {unreadCount > 99 ? '99+' : unreadCount}
+            </Badge>
           </Button>
           <Button 
             onClick={onLeaveGame}
@@ -247,11 +249,9 @@ export default function PokerTable({
           <MessageCircle className="mr-2 h-4 w-4" />
           채팅
           {unreadCount > 0 && (
-            <Badge 
-              className="absolute -top-2 -right-2 bg-red-500 text-white text-xs min-w-[1.2rem] h-5 flex items-center justify-center rounded-full px-1"
-            >
+            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs min-w-[1.2rem] h-5 flex items-center justify-center rounded-full px-1">
               N
-            </Badge>
+            </div>
           )}
         </Button>
         <Button 

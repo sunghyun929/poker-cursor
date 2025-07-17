@@ -1,0 +1,5 @@
+- 모든 신규 버튼은 반드시 기존 Button 컴포넌트의 폰트, 색상, 스타일을 참고하여 일관성 있게 제작해야 한다.
+description:
+globs:
+alwaysApply: false
+---

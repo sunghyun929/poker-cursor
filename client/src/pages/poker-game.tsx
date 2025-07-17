@@ -21,6 +21,7 @@ export default function PokerGame() {
   const [showJoinForm, setShowJoinForm] = useState(true);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [unreadNew, setUnreadNew] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const { toast } = useToast();
 
   const { connect, disconnect, joinGame, sendPlayerAction, leaveGame, startGame, confirmWinner, updateSettings, increaseBlind, startNextHand, resetToSettings, sendChatMessage, reconnectToGame, isConnected: wsConnected, isReconnecting } = useWebSocket({
@@ -311,6 +312,8 @@ export default function PokerGame() {
         onSendMessage={handleSendMessage}
         unreadCount={unreadNew ? 1 : 0}
         onMarkMessagesRead={handleMarkMessagesRead}
+        isChatOpen={isChatOpen}
+        setIsChatOpen={setIsChatOpen}
       />
     </div>
   );
