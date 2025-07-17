@@ -161,82 +161,17 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
   const visibleCards = getVisibleCommunityCards();
 
   return (
-    <div className="h-screen bg-green-800 relative overflow-hidden">
-      {/* 왼쪽 플레이어 (W) - 시계방향 첫번째 */}
-      {otherPlayers[0] && (
-        <div className="absolute left-2 top-1/2 transform -translate-y-1/2 w-20">
-          {renderPlayerCard(otherPlayers[0], true)}
-        </div>
-      )}
-
-      {/* 상단 중앙 플레이어 (E) - 시계방향 두번째 */}
-      {otherPlayers[1] && (
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-20">
-          {renderPlayerCard(otherPlayers[1], true)}
-        </div>
-      )}
-
-      {/* 오른쪽 위 플레이어 (R) - 시계방향 세번째 */}
-      {otherPlayers[2] && (
-        <div className="absolute right-4 top-4 w-20">
-          {renderPlayerCard(otherPlayers[2], true)}
-        </div>
-      )}
-
-      {/* 오른쪽 플레이어 (T) - 시계방향 네번째 */}
-      {otherPlayers[3] && (
-        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 w-20">
-          {renderPlayerCard(otherPlayers[3], true)}
-        </div>
-      )}
-
-      {/* 커뮤니티 카드 (상단 중앙) */}
-      <div className="absolute top-[20%] left-1/2 transform -translate-x-1/2 text-center">
-        {/* 커뮤니티 카드 (세로 배치) */}
-        <div className="mb-4">
-          <div className="text-white text-sm mb-2">Community Cards</div>
-          <div className="flex flex-col space-y-1 items-center">
-            {/* 첫 3장 */}
-            <div className="flex space-x-1">
-              {Array.from({ length: 3 }, (_, index) => {
-                const card = index < visibleCards ? gameState.communityCards[index] : null;
-                return renderCard(card, index);
-              })}
-            </div>
-            {/* 4번째, 5번째 카드 */}
-            <div className="flex space-x-1">
-              {Array.from({ length: 2 }, (_, index) => {
-                const cardIndex = index + 3;
-                const card = cardIndex < visibleCards ? gameState.communityCards[cardIndex] : null;
-                return renderCard(card, cardIndex);
-              })}
-            </div>
-          </div>
-        </div>
+    <div className="h-screen bg-green-800 relative overflow-hidden font-sans">
+      {/* 좌측 상단 세로 버튼 */}
+      <div className="absolute top-4 left-4 z-[9999] flex flex-col gap-2">
+        <Button variant="outline">Chat</Button>
+        <Button variant="outline">Leave</Button>
+        <Button variant="outline">End Game</Button>
       </div>
 
-      {/* 팟 정보 - 파란색 영역 (커뮤니티 카드와 현재 플레이어 사이) */}
-      <div className="absolute top-[45%] left-1/2 transform -translate-x-1/2 text-center">
-        <div className="bg-black/70 rounded-lg px-3 py-1 mb-2">
-          <div className="text-yellow-400 font-bold text-sm">Pot: ${gameState.pot}</div>
-          {gameState.sidePots.length > 0 && (
-            <div className="text-yellow-300 text-xs">
-              Side: {gameState.sidePots.map(sp => `$${sp.amount}`).join(", ")}
-            </div>
-          )}
-        </div>
-
-        {/* 현재 베팅 */}
-        {gameState.currentBet > 0 && (
-          <div className="bg-red-600/80 rounded-lg px-3 py-1">
-            <div className="text-white font-semibold text-sm">Bet: ${gameState.currentBet}</div>
-          </div>
-        )}
-      </div>
-
-      {/* 내 카드(플레이어 정보+카드) - 하단 고정 */}
+      {/* 상단 중앙 내 카드/정보 */}
       {currentPlayer && (
-        <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 w-11/12 max-w-xs z-20">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-xs z-20">
           <div className="bg-gray-800 rounded-lg p-3 ring-2 ring-blue-500 shadow-lg">
             <div className="text-center mb-2">
               <div className="text-white font-bold text-sm">{currentPlayer.name}</div>
@@ -253,17 +188,54 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
         </div>
       )}
 
-      {/* 베팅 컨트롤 - 맨 아래 고정 */}
-      <div className="fixed bottom-2 left-0 right-0 z-30 px-2">
-        {children}
+      {/* 시계방향 플레이어 배치 */}
+      <div className="absolute bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-full flex justify-center gap-2">
+        {otherPlayers.map((player, index) => (
+          <div key={index} className="w-20">
+            {renderPlayerCard(player, true)}
+          </div>
+        ))}
       </div>
 
-      {/* 추가 플레이어 (5번째 이상) */}
-      {otherPlayers[4] && (
-        <div className="absolute bottom-40 left-4 w-20">
-          {renderPlayerCard(otherPlayers[4], true)}
+      {/* 중앙 커뮤니티 카드 및 Pot/Current Bet */}
+      <div className="absolute top-[20%] left-1/2 transform -translate-x-1/2 text-center">
+        <div className="mb-4">
+          <div className="text-white text-sm mb-2">Community Cards</div>
+          <div className="flex flex-col space-y-1 items-center">
+            <div className="flex space-x-1">
+              {Array.from({ length: 3 }, (_, index) => {
+                const card = index < visibleCards ? gameState.communityCards[index] : null;
+                return renderCard(card, index);
+              })}
+            </div>
+            <div className="flex space-x-1">
+              {Array.from({ length: 2 }, (_, index) => {
+                const cardIndex = index + 3;
+                const card = cardIndex < visibleCards ? gameState.communityCards[cardIndex] : null;
+                return renderCard(card, cardIndex);
+              })}
+            </div>
+          </div>
         </div>
-      )}
+        <div className="bg-black/70 rounded-lg px-3 py-1 mb-2">
+          <div className="text-yellow-400 font-bold text-sm">Pot: ${gameState.pot}</div>
+          {gameState.sidePots.length > 0 && (
+            <div className="text-yellow-300 text-xs">
+              Side: {gameState.sidePots.map(sp => `$${sp.amount}`).join(", ")}
+            </div>
+          )}
+        </div>
+        {gameState.currentBet > 0 && (
+          <div className="bg-red-600/80 rounded-lg px-3 py-1">
+            <div className="text-white font-semibold text-sm">Bet: ${gameState.currentBet}</div>
+          </div>
+        )}
+      </div>
+
+      {/* 하단 고정 베팅창 */}
+      <div className="fixed bottom-2 left-0 right-0 z-30 px-2 bg-black/70 rounded-t-lg py-2">
+        {children}
+      </div>
     </div>
   );
 }
