@@ -159,23 +159,23 @@ export default function MobileBettingControls({
           <Button
             size="sm"
             className="flex-1 h-8 py-0 font-medium text-sm bg-green-600 hover:bg-green-700 text-white border-none"
-            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 2, maxBet) })}
+            onClick={() => onPlayerAction({ type: 'raise', amount: minRaise })}
+          >
+            1 Bet
+          </Button>
+          <Button
+            size="sm"
+            className="flex-1 h-8 py-0 font-medium text-sm bg-blue-600 hover:bg-blue-700 text-white border-none"
+            onClick={() => onPlayerAction({ type: 'raise', amount: minRaise * 2 })}
           >
             2 Bet
           </Button>
           <Button
             size="sm"
-            className="flex-1 h-8 py-0 font-medium text-sm bg-blue-600 hover:bg-blue-700 text-white border-none"
-            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 3, maxBet) })}
+            className="flex-1 h-8 py-0 font-medium text-sm bg-red-600 hover:bg-red-700 text-white border-none"
+            onClick={() => onPlayerAction({ type: 'raise', amount: minRaise * 3 })}
           >
             3 Bet
-          </Button>
-          <Button
-            size="sm"
-            className="flex-1 h-8 py-0 font-medium text-sm bg-red-600 hover:bg-red-700 text-white border-none"
-            onClick={() => onPlayerAction({ type: 'raise', amount: Math.min((gameState.currentBet > 0 ? gameState.currentBet : minRaise) * 4, maxBet) })}
-          >
-            4 Bet
           </Button>
         </div>
 
