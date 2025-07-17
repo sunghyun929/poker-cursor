@@ -130,17 +130,20 @@ export default function PokerTable({
               게임 종료
             </Button>
           )}
-          <Button
-            onClick={() => setIsChatOpen(true)}
-            variant="outline"
-            size="sm"
-            className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600 relative"
-          >
-            채팅
+          {/* 채팅 버튼과 N 알림을 flex row로 묶고, N을 버튼 오른쪽(외부)에 배치 */}
+          <div className="flex items-center gap-1">
+            <Button
+              onClick={() => setIsChatOpen(true)}
+              variant="outline"
+              size="sm"
+              className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600"
+            >
+              채팅
+            </Button>
             {unreadCount > 0 && (
-              <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs min-w-[1.2rem] h-5 flex items-center justify-center rounded-full px-1 shadow">N</span>
+              <span className="bg-red-500 text-white text-xs min-w-[1.2rem] h-5 flex items-center justify-center rounded-full px-1 shadow z-50 ml-1">N</span>
             )}
-          </Button>
+          </div>
           <Button 
             onClick={onLeaveGame}
             variant="outline"

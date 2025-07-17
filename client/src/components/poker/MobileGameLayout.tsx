@@ -118,9 +118,9 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
               })}
             </div>
           </div>
-          {/* 내 UI (margin-bottom으로 베팅창과 겹침 방지) */}
+          {/* '나'의 카드 영역(absolute bottom-28 left-1/2 transform -translate-x-1/2 z-20 등) */}
           {currentPlayer && (
-            <div className="mt-0 mb-20 w-full flex justify-center">
+            <div className="absolute bottom-28 left-1/2 transform -translate-x-1/2 z-20">
               {renderPlayerCard(currentPlayer, true)}
             </div>
           )}
