@@ -234,10 +234,10 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
         )}
       </div>
 
-      {/* 현재 플레이어 (Q) - 파란색 영역 (중앙) */}
+      {/* 내 카드(플레이어 정보+카드) - 하단 고정 */}
       {currentPlayer && (
-        <div className="absolute top-[55%] left-1/2 transform -translate-x-1/2 w-32">
-          <div className="bg-gray-800 rounded-lg p-3 ring-2 ring-blue-500">
+        <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 w-11/12 max-w-xs z-20">
+          <div className="bg-gray-800 rounded-lg p-3 ring-2 ring-blue-500 shadow-lg">
             <div className="text-center mb-2">
               <div className="text-white font-bold text-sm">{currentPlayer.name}</div>
               <div className="text-green-400 font-bold">${currentPlayer.chips}</div>
@@ -245,7 +245,6 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
                 <div className="text-orange-400 text-sm">Bet: ${currentPlayer.currentBet}</div>
               )}
             </div>
-            
             {/* 현재 플레이어 카드 */}
             <div className="flex space-x-1 justify-center">
               {currentPlayer.cards.map((card, index) => renderCard(card, index))}
@@ -254,8 +253,8 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
         </div>
       )}
 
-      {/* 베팅 컨트롤 (하단) */}
-      <div className="absolute bottom-4 left-4 right-4">
+      {/* 베팅 컨트롤 - 맨 아래 고정 */}
+      <div className="fixed bottom-2 left-0 right-0 z-30 px-2">
         {children}
       </div>
 

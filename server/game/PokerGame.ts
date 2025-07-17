@@ -915,8 +915,12 @@ export class PokerGame {
     let increased = false;
     // 1. 파산 인상: 이번 핸드에서 파산자가 실제로 발생한 경우에만 적용
     if (settings?.bankruptIncreaseEnabled && eliminatedCount > 0) {
-      newBigBlind = Math.floor(newBigBlind * (settings.bankruptIncreasePercent / 100));
-      increased = true;
+      const percent = settings.bankruptIncreasePercent ?? 100;
+      if (percent > 100) {
+        newBigBlind = Math.floor(newBigBlind * (percent / 100));
+        increased = true;
+        console.log(`[파산 인상] ${percent}% 적용 → bigBlind=${newBigBlind}`);
+      }
     }
     // 2. 한 바퀴 인상: 기준 딜러와 현재 딜러가 같아진 경우에만 적용
     if (settings?.orbitIncreaseEnabled) {
@@ -927,8 +931,12 @@ export class PokerGame {
       // 한 바퀴 돌았는지 체크
       const currentDealerId = this.gameState.players[this.gameState.dealerPosition]?.id;
       if (settings.dealerReferenceId && currentDealerId === settings.dealerReferenceId) {
-        newBigBlind = Math.floor(newBigBlind * (settings.orbitIncreasePercent / 100));
-        increased = true;
+        const percent = settings.orbitIncreasePercent ?? 100;
+        if (percent > 100) {
+          newBigBlind = Math.floor(newBigBlind * (percent / 100));
+          increased = true;
+          console.log(`[한 바퀴 인상] ${percent}% 적용 → bigBlind=${newBigBlind}`);
+        }
         // 기준 딜러를 현재 딜러로 갱신(다음 바퀴 체크용)
         settings.dealerReferenceId = currentDealerId;
       }
@@ -937,7 +945,7 @@ export class PokerGame {
       this.gameState.bigBlind = newBigBlind;
       this.gameState.smallBlind = Math.floor(newBigBlind / 2);
       this.gameState.minRaise = newBigBlind;
-      console.log(`[블라인드 인상] bigBlind=${this.gameState.bigBlind}, smallBlind=${this.gameState.smallBlind}`);
+      console.log(`[블라인드 인상 최종] bigBlind=${this.gameState.bigBlind}, smallBlind=${this.gameState.smallBlind}`);
     }
     // ... 기존 endHand 코드 계속 ...
 
