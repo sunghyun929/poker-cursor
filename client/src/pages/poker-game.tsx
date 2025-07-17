@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "wouter";
 import PokerTable from "@/components/poker/PokerTable";
 import ConnectionStatus from "@/components/ConnectionStatus";
@@ -24,6 +24,9 @@ export default function PokerGame() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const { toast } = useToast();
 
+  const playerIdRef = useRef(playerId);
+  useEffect(() => { playerIdRef.current = playerId; }, [playerId]);
+
   const { connect, disconnect, joinGame, sendPlayerAction, leaveGame, startGame, confirmWinner, updateSettings, increaseBlind, startNextHand, resetToSettings, sendChatMessage, reconnectToGame, isConnected: wsConnected, isReconnecting } = useWebSocket({
     onGameState: (state: GameState) => {
       setGameState(state);
@@ -31,7 +34,7 @@ export default function PokerGame() {
     onChatMessage: (message: ChatMessage) => {
       setChatMessages(prev => [...prev, message]);
       // 내 메시지가 아니고, 채팅창이 닫혀 있을 때만 알림
-      if (message.playerId !== playerId && !isChatOpen) {
+      if (message.playerId !== playerIdRef.current && !isChatOpen) {
         setUnreadNew(true);
       }
     },

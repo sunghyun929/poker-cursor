@@ -71,6 +71,13 @@ export default function GameSettings({ gameState, currentPlayerId, onUpdateSetti
     }
   };
 
+  // 체크박스 스타일
+  const checkboxStyle = `relative w-5 h-5 border-2 border-gray-400 rounded-md transition-colors duration-150 bg-white
+  focus:outline-none focus:ring-2 focus:ring-blue-400
+  checked:border-blue-600 checked:bg-blue-600
+  hover:border-blue-500`;
+  const checkmarkStyle = `absolute left-0 top-0 w-5 h-5 flex items-center justify-center pointer-events-none`;
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-20 bg-black/50 backdrop-blur-sm">
       <Card className="w-full max-w-md mx-4 bg-white">
@@ -146,15 +153,23 @@ export default function GameSettings({ gameState, currentPlayerId, onUpdateSetti
 
                 {/* 파산 시 인상 옵션 */}
                 <div className="flex items-center gap-2 mt-4">
-                  <input
-                    type="checkbox"
-                    id="bankruptIncreaseEnabled"
-                    checked={bankruptIncreaseEnabled}
-                    onChange={e => setBankruptIncreaseEnabled(e.target.checked)}
-                  />
-                  <Label htmlFor="bankruptIncreaseEnabled" className="text-sm font-medium">
-                    플레이어 파산 시 빅 블라인드 인상
-                  </Label>
+                  <label className="flex items-center cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      id="bankruptIncreaseEnabled"
+                      checked={bankruptIncreaseEnabled}
+                      onChange={e => setBankruptIncreaseEnabled(e.target.checked)}
+                      className="sr-only"
+                    />
+                    <span className={checkboxStyle}>
+                      {bankruptIncreaseEnabled && (
+                        <svg className="w-4 h-4 text-white absolute left-0 top-0 m-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                    </span>
+                    <span className="ml-2 text-sm font-medium">플레이어 파산 시 빅 블라인드 인상</span>
+                  </label>
                   {bankruptIncreaseEnabled && (
                     <div className="flex items-center gap-1 ml-2">
                       <Input
@@ -173,15 +188,23 @@ export default function GameSettings({ gameState, currentPlayerId, onUpdateSetti
 
                 {/* 한 바퀴 인상 옵션 */}
                 <div className="flex items-center gap-2 mt-2">
-                  <input
-                    type="checkbox"
-                    id="orbitIncreaseEnabled"
-                    checked={orbitIncreaseEnabled}
-                    onChange={e => setOrbitIncreaseEnabled(e.target.checked)}
-                  />
-                  <Label htmlFor="orbitIncreaseEnabled" className="text-sm font-medium">
-                    딜러 한 바퀴 돌 때마다 빅 블라인드 인상
-                  </Label>
+                  <label className="flex items-center cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      id="orbitIncreaseEnabled"
+                      checked={orbitIncreaseEnabled}
+                      onChange={e => setOrbitIncreaseEnabled(e.target.checked)}
+                      className="sr-only"
+                    />
+                    <span className={checkboxStyle}>
+                      {orbitIncreaseEnabled && (
+                        <svg className="w-4 h-4 text-white absolute left-0 top-0 m-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                    </span>
+                    <span className="ml-2 text-sm font-medium">딜러 한 바퀴 돌 때마다 빅 블라인드 인상</span>
+                  </label>
                   {orbitIncreaseEnabled && (
                     <div className="flex items-center gap-1 ml-2">
                       <Input
