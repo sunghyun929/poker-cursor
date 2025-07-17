@@ -16,17 +16,12 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
   const myIndex = players.findIndex(p => p.id === currentPlayerId);
   const playerCount = players.length;
 
-  // 시계방향 플레이어 분배: 내 위(0), 좌(1), 우(2), 아래(3,4,...)
-  const getPlayerByOffset = (offset: number) => players[(myIndex + offset + playerCount) % playerCount];
-  const leftPlayer = playerCount > 1 ? getPlayerByOffset(1) : null;
-  const rightPlayer = playerCount > 2 ? getPlayerByOffset(-1) : null;
-  const bottomPlayers = [];
-  for (let i = 2; i < playerCount; i++) {
-    const idx = (myIndex + i) % playerCount;
-    if (players[idx].id !== currentPlayerId && players[idx].id !== leftPlayer?.id && players[idx].id !== rightPlayer?.id) {
-      bottomPlayers.push(players[idx]);
-    }
-  }
+  // 내 자신을 제외한 다른 플레이어들
+  const otherPlayers = players.filter(p => p.id !== currentPlayerId);
+  // 좌우로 균등 분배 (짝수면 반반, 홀수면 좌가 1명 더)
+  const half = Math.ceil(otherPlayers.length / 2);
+  const leftPlayers = otherPlayers.slice(0, half);
+  const rightPlayers = otherPlayers.slice(half);
 
   const renderCard = (card: Card | null, index: number) => {
     if (!card) {
@@ -44,14 +39,14 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
     );
   };
 
-  const renderPlayerCard = (player: Player, compact = false) => {
+  const renderPlayerCard = (player: Player) => {
     if (!player) return null;
     const isCurrentTurn = gameState.currentPlayerIndex === players.findIndex(p => p.id === player.id);
     const isDealer = gameState.dealerPosition === players.findIndex(p => p.id === player.id);
     const isSmallBlind = gameState.smallBlindPosition === players.findIndex(p => p.id === player.id);
     const isBigBlind = gameState.bigBlindPosition === players.findIndex(p => p.id === player.id);
     return (
-      <div className={`bg-gray-800 rounded-lg p-2 shadow-md min-w-[70px] max-w-[90px] mx-auto ${isCurrentTurn ? 'ring-2 ring-yellow-400' : ''} ${player.hasFolded ? 'opacity-50' : ''}`}> 
+      <div className={`bg-gray-800 rounded-lg p-2 shadow-md min-w-[70px] max-w-[90px] mx-auto mb-2 ${isCurrentTurn ? 'ring-2 ring-yellow-400' : ''} ${player.hasFolded ? 'opacity-50' : ''}`}> 
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center space-x-1">
             <User className="h-3 w-3 text-white" />
@@ -95,46 +90,31 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
         <Button variant="outline">게임종료</Button>
       </div>
 
-      {/* 내 플레이어(커뮤니티 카드 위) */}
-      {currentPlayer && (
-        <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 z-20">
-          {renderPlayerCard(currentPlayer)}
+      {/* 메인 flex row: 좌측 플레이어 / 커뮤니티+나 / 우측 플레이어 */}
+      <div className="flex flex-row justify-center items-center h-full w-full">
+        {/* 좌측 플레이어들 */}
+        <div className="flex flex-col justify-center items-end flex-1 h-full pt-16 pb-40">
+          {leftPlayers.map((player) => renderPlayerCard(player))}
         </div>
-      )}
-
-      {/* 커뮤니티 카드 & 좌우 플레이어 */}
-      <div className="absolute top-[28%] left-1/2 transform -translate-x-1/2 w-full flex flex-row items-center justify-center z-10">
-        {/* 좌측 플레이어 */}
-        <div className="flex-1 flex justify-end pr-2">
-          {leftPlayer && renderPlayerCard(leftPlayer, true)}
-        </div>
-        {/* 커뮤니티 카드 */}
-        <div className="flex flex-col items-center">
-          <div className="flex flex-row space-x-2 mb-2">
+        {/* 커뮤니티 카드 + 내 UI */}
+        <div className="flex flex-col items-center justify-center h-full">
+          {/* 커뮤니티 카드 세로 */}
+          <div className="flex flex-col items-center justify-center gap-2 mt-8 mb-2">
             {Array.from({ length: 5 }, (_, index) => {
               const card = index < visibleCards ? gameState.communityCards[index] : null;
               return renderCard(card, index);
             })}
           </div>
+          {/* 내 UI (margin-bottom으로 베팅창과 겹침 방지) */}
+          {currentPlayer && (
+            <div className="mt-2 mb-32 w-full flex justify-center">
+              {renderPlayerCard(currentPlayer)}
+            </div>
+          )}
         </div>
-        {/* 우측 플레이어 */}
-        <div className="flex-1 flex justify-start pl-2">
-          {rightPlayer && renderPlayerCard(rightPlayer, true)}
-        </div>
-      </div>
-
-      {/* 커뮤니티 카드 아래(아래쪽 플레이어들) */}
-      <div className="absolute top-[48%] left-1/2 transform -translate-x-1/2 w-10/12 flex flex-row items-start justify-center gap-2 z-10">
-        {bottomPlayers.map((player, idx) => (
-          <div key={player.id}>{renderPlayerCard(player, true)}</div>
-        ))}
-      </div>
-
-      {/* Pot, Current Bet */}
-      <div className="absolute top-[62%] left-1/2 transform -translate-x-1/2 text-center z-20 w-full">
-        <div className="inline-block bg-black/70 rounded-lg px-4 py-1 mb-2 shadow">
-          <span className="text-yellow-400 font-bold text-base mr-4">Pot: ${gameState.pot}</span>
-          {gameState.currentBet > 0 && <span className="text-red-400 font-bold text-base">Current Bet: ${gameState.currentBet}</span>}
+        {/* 우측 플레이어들 */}
+        <div className="flex flex-col justify-center items-start flex-1 h-full pt-16 pb-40">
+          {rightPlayers.map((player) => renderPlayerCard(player))}
         </div>
       </div>
 
