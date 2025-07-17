@@ -110,7 +110,7 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
         {/* 커뮤니티 카드 + 내 UI */}
         <div className="flex flex-col items-center justify-center h-full">
           {/* 커뮤니티 카드 세로 */}
-          <div className="flex flex-col items-center justify-center gap-2 mt-2 mb-2">
+          <div className="flex flex-col items-center justify-center gap-2 mt-0 mb-0">
             {Array.from({ length: 5 }, (_, index) => {
               const card = index < visibleCards ? gameState.communityCards[index] : null;
               return renderCard(card, index);
@@ -118,7 +118,7 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
           </div>
           {/* 내 UI (margin-bottom으로 베팅창과 겹침 방지) */}
           {currentPlayer && (
-            <div className="mt-2 mb-36 w-full flex justify-center">
+            <div className="mt-0 mb-20 w-full flex justify-center">
               {renderPlayerCard(currentPlayer, true)}
             </div>
           )}

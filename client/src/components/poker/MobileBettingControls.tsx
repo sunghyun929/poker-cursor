@@ -109,14 +109,8 @@ export default function MobileBettingControls({
 
   return (
     <div className="bg-black/95 backdrop-blur text-white p-3 rounded-lg w-full max-w-sm mx-auto">
-      {/* Player Info */}
-      <div className="text-center mb-3">
-        <div className="font-medium text-sm">{player.name}</div>
-        <div className="text-green-400 text-sm">${player.chips} chips</div>
-        {callAmount > 0 && (
-          <div className="text-yellow-400 text-sm">Call: ${callAmount}</div>
-        )}
-      </div>
+      {/* Player Info, 칩, Call 금액, 닉네임 등 정보 표시 부분 전체 삭제 */}
+      {/* 버튼만 남기고 전체 높이 최소화 */}
 
       {/* Quick Actions */}
       <div className="flex space-x-1 mb-3">
