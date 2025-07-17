@@ -153,72 +153,54 @@ export default function GameSettings({ gameState, currentPlayerId, onUpdateSetti
 
                 {/* 파산 시 인상 옵션 */}
                 <div className="flex items-center gap-2 mt-4">
-                  <label className="flex items-center cursor-pointer select-none">
+                  <label className="flex items-center gap-2 cursor-pointer select-none">
                     <input
                       type="checkbox"
-                      id="bankruptIncreaseEnabled"
                       checked={bankruptIncreaseEnabled}
                       onChange={e => setBankruptIncreaseEnabled(e.target.checked)}
-                      className="sr-only"
+                      className="hidden"
+                      id="bankruptIncrease"
                     />
-                    <span className={checkboxStyle}>
-                      {bankruptIncreaseEnabled && (
-                        <svg className="w-4 h-4 text-white absolute left-0 top-0 m-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      )}
-                    </span>
-                    <span className="ml-2 text-sm font-medium">플레이어 파산 시 빅 블라인드 인상</span>
+                    <span className="custom-checkbox" />
+                    플레이어 파산 시 빅 블라인드 인상
+                    <Input
+                      type="number"
+                      value={bankruptIncreasePercent}
+                      onChange={e => setBankruptIncreasePercent(Number(e.target.value))}
+                      className="w-20 text-center ml-2"
+                      min={100}
+                      max={1000}
+                      step={10}
+                      disabled={!bankruptIncreaseEnabled}
+                    />
+                    %
                   </label>
-                  {bankruptIncreaseEnabled && (
-                    <div className="flex items-center gap-1 ml-2">
-                      <Input
-                        type="number"
-                        value={bankruptIncreasePercent}
-                        onChange={e => setBankruptIncreasePercent(Number(e.target.value))}
-                        min={101}
-                        max={500}
-                        step={1}
-                        className="w-16 text-center"
-                      />
-                      <span className="text-xs">%</span>
-                    </div>
-                  )}
                 </div>
 
                 {/* 한 바퀴 인상 옵션 */}
                 <div className="flex items-center gap-2 mt-2">
-                  <label className="flex items-center cursor-pointer select-none">
+                  <label className="flex items-center gap-2 cursor-pointer select-none">
                     <input
                       type="checkbox"
-                      id="orbitIncreaseEnabled"
                       checked={orbitIncreaseEnabled}
                       onChange={e => setOrbitIncreaseEnabled(e.target.checked)}
-                      className="sr-only"
+                      className="hidden"
+                      id="orbitIncrease"
                     />
-                    <span className={checkboxStyle}>
-                      {orbitIncreaseEnabled && (
-                        <svg className="w-4 h-4 text-white absolute left-0 top-0 m-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      )}
-                    </span>
-                    <span className="ml-2 text-sm font-medium">딜러 한 바퀴 돌 때마다 빅 블라인드 인상</span>
+                    <span className="custom-checkbox" />
+                    딜러 한 바퀴 돌 때마다 빅 블라인드 인상
+                    <Input
+                      type="number"
+                      value={orbitIncreasePercent}
+                      onChange={e => setOrbitIncreasePercent(Number(e.target.value))}
+                      className="w-20 text-center ml-2"
+                      min={100}
+                      max={1000}
+                      step={10}
+                      disabled={!orbitIncreaseEnabled}
+                    />
+                    %
                   </label>
-                  {orbitIncreaseEnabled && (
-                    <div className="flex items-center gap-1 ml-2">
-                      <Input
-                        type="number"
-                        value={orbitIncreasePercent}
-                        onChange={e => setOrbitIncreasePercent(Number(e.target.value))}
-                        min={101}
-                        max={500}
-                        step={1}
-                        className="w-16 text-center"
-                      />
-                      <span className="text-xs">%</span>
-                    </div>
-                  )}
                 </div>
 
                 <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded">

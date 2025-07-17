@@ -909,6 +909,28 @@ export class PokerGame {
     // Check for eliminated players and auto-increase blinds if someone was eliminated
     const eliminatedCount = this.checkForEliminatedPlayers();
 
+    // === 블라인드 인상 옵션 적용 ===
+    const settings = this.gameState.gameSettings;
+    let newBigBlind = this.gameState.bigBlind;
+    let increased = false;
+    // 1. 파산 인상
+    if (settings?.bankruptIncreaseEnabled && eliminatedCount > 0) {
+      newBigBlind = Math.floor(newBigBlind * (settings.bankruptIncreasePercent / 100));
+      increased = true;
+    }
+    // 2. 한 바퀴 인상
+    if (settings?.orbitIncreaseEnabled) {
+      newBigBlind = Math.floor(newBigBlind * (settings.orbitIncreasePercent / 100));
+      increased = true;
+    }
+    if (increased) {
+      this.gameState.bigBlind = newBigBlind;
+      this.gameState.smallBlind = Math.floor(newBigBlind / 2);
+      this.gameState.minRaise = newBigBlind;
+      console.log(`[블라인드 인상] bigBlind=${this.gameState.bigBlind}, smallBlind=${this.gameState.smallBlind}`);
+    }
+    // ... 기존 endHand 코드 계속 ...
+
     // Check if host was eliminated and transfer host rights before starting next hand
     const currentHost = this.gameState.players.find(p => p.id === this.gameState.hostPlayerId);
     if (currentHost && currentHost.chips === 0) {

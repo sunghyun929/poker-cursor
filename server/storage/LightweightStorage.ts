@@ -74,7 +74,7 @@ export class LightweightStorage {
       // 더 적극적인 정리 조건
       const isInactive = 
         activePlayers.length === 0 || 
-        gameState.stage === 'ended' ||
+                        gameState.stage === 'ended' || 
         (gameState.stage === 'waiting' && activePlayers.length < 2) ||
         (gameState.lastActivity && (now - gameState.lastActivity) > maxAgeMs);
 

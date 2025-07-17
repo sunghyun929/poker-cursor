@@ -101,6 +101,11 @@ export interface GameState {
     startingChips: number;
     initialSmallBlind: number;
     initialBigBlind: number;
+    bankruptIncreaseEnabled?: boolean;
+    bankruptIncreasePercent?: number;
+    orbitIncreaseEnabled?: boolean;
+    orbitIncreasePercent?: number;
+    dealerReferenceId?: string;
   };
   blindIncrease?: {
     pending: boolean;

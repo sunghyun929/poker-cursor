@@ -380,3 +380,31 @@ button, input, select, textarea {
     max-width: calc(100vw - 2rem) !important;
   }
 }
+
+.custom-checkbox {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #b0b8c1;
+  border-radius: 6px;
+  background: #fff;
+  position: relative;
+  vertical-align: middle;
+  margin-right: 8px;
+  transition: border-color 0.2s, background 0.2s;
+}
+input[type="checkbox"]:checked + .custom-checkbox {
+  border-color: #2563eb;
+  background: #2563eb;
+}
+input[type="checkbox"]:checked + .custom-checkbox::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 8px;
+  height: 14px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
