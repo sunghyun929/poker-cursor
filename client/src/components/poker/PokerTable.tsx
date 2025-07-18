@@ -83,16 +83,16 @@ export default function PokerTable({
     { top: '20%', left: '5%', transform: 'none' }, // Top left
   ];
 
-  // Mobile: 현재 플레이어를 중앙 하단에 배치하고 시계방향으로 배치 (베팅창과 겹치지 않도록)
+  // Mobile: 화면 영역을 나누어 겹치지 않게 배치 (시계방향)
   const mobileSeatPositions = [
-    { bottom: '30%', left: '50%', transform: 'translateX(-50%)' }, // 현재 플레이어 (중앙 하단, 베팅창 위)
-    { bottom: '35%', right: '6%', transform: 'none' }, // 시계방향 1번째 (우측 하단)
-    { top: '45%', right: '2%', transform: 'translateY(-50%)' }, // 시계방향 2번째 (우측 중간)  
-    { top: '10%', right: '6%', transform: 'none' }, // 시계방향 3번째 (우측 상단)
-    { top: '6%', left: '50%', transform: 'translateX(-50%)' }, // 시계방향 4번째 (상단 중앙)
-    { top: '10%', left: '6%', transform: 'none' }, // 시계방향 5번째 (좌측 상단)
-    { top: '45%', left: '2%', transform: 'translateY(-50%)' }, // 시계방향 6번째 (좌측 중간)
-    { bottom: '35%', left: '6%', transform: 'none' }, // 시계방향 7번째 (좌측 하단)
+    { top: '75%', left: '50%', transform: 'translateX(-50%)' }, // 현재 플레이어 (하단 중앙, 베팅창과 여유 확보)
+    { top: '62%', right: '6%', transform: 'none' }, // 시계방향 1번째 (우측 하단)
+    { top: '45%', right: '3%', transform: 'translateY(-50%)' }, // 시계방향 2번째 (우측 중간)  
+    { top: '25%', right: '15%', transform: 'none' }, // 시계방향 3번째 (우측 상단, 버튼 피함)
+    { top: '15%', left: '50%', transform: 'translateX(-50%)' }, // 시계방향 4번째 (상단 중앙)
+    { top: '25%', left: '15%', transform: 'none' }, // 시계방향 5번째 (좌측 상단, 버튼 피함)
+    { top: '45%', left: '3%', transform: 'translateY(-50%)' }, // 시계방향 6번째 (좌측 중간)
+    { top: '62%', left: '6%', transform: 'none' }, // 시계방향 7번째 (좌측 하단)
   ];
 
   const handleToggleChat = () => {
@@ -190,7 +190,7 @@ export default function PokerTable({
                 style={{
                   ...mobileSeatPositions[dealerPositionIndex],
                   transform: 'translate(-50%, -50%)',
-                  zIndex: 5
+                  zIndex: 50
                 }}
               >
                 D

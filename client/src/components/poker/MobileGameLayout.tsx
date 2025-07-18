@@ -91,8 +91,8 @@ export default function MobileGameLayout({ gameState, currentPlayerId, onLeaveGa
         )}
       </div>
 
-      {/* 중앙 커뮤니티 카드 영역 */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-5">
+      {/* 중앙 커뮤니티 카드 영역 - 35-55% 영역에 배치 */}
+      <div className="absolute top-[45%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-5">
         <div className="flex flex-col items-center gap-3">
           {/* 커뮤니티 카드 */}
           <div className="flex gap-1">
@@ -116,8 +116,8 @@ export default function MobileGameLayout({ gameState, currentPlayerId, onLeaveGa
         </div>
       </div>
 
-      {/* 베팅 컨트롤 - 하단 고정 */}
-      <div className="fixed bottom-2 left-0 right-0 z-30 px-2 bg-black/70 rounded-t-lg py-2">
+      {/* 베팅 컨트롤 - 하단 고정, 좌우 여백 확보 */}
+      <div className="fixed bottom-2 left-4 right-4 z-30 px-2 bg-black/70 rounded-lg py-2">
         {children}
       </div>
     </div>
