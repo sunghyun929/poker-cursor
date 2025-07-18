@@ -83,14 +83,14 @@ export default function PokerTable({
     { top: '20%', left: '5%', transform: 'none' }, // Top left
   ];
 
-  // Mobile: 커뮤니티 카드 주변 배치 (겹침 방지)
+  // Mobile: 겹치지 않는 안전한 배치 (버튼과 커뮤니티 카드 영역 회피)
   const mobileSeatPositions = [
-    { top: '15%', left: '50%', transform: 'translateX(-50%)' }, // 커뮤니티 카드 위쪽
-    { top: '20%', right: '3%', transform: 'none' }, // 커뮤니티 카드 오른쪽 위
-    { top: '50%', right: '3%', transform: 'none' }, // 커뮤니티 카드 오른쪽 아래
-    { top: '60%', left: '50%', transform: 'translateX(-50%)' }, // 커뮤니티 카드 밑 (현재 플레이어)
-    { top: '50%', left: '3%', transform: 'none' }, // 커뮤니티 카드 왼쪽 아래
-    { top: '20%', left: '3%', transform: 'none' }, // 커뮤니티 카드 왼쪽 위
+    { top: '8%', left: '50%', transform: 'translateX(-50%)' }, // 상단 중앙
+    { top: '25%', right: '2%', transform: 'none' }, // 우측 상단  
+    { top: '65%', right: '2%', transform: 'none' }, // 우측 하단
+    { bottom: '25%', left: '50%', transform: 'translateX(-50%)' }, // 하단 중앙 (현재 플레이어)
+    { top: '65%', left: '2%', transform: 'none' }, // 좌측 하단 (버튼 아래)
+    { top: '35%', left: '2%', transform: 'none' }, // 좌측 중간 (버튼 아래)
   ];
 
   const handleToggleChat = () => {
@@ -318,11 +318,11 @@ export default function PokerTable({
         </div>
       </div>
 
-      {/* Current Bet Display */}
-      {gameState.currentBet > 0 && (
-        <div className={`absolute text-center ${isMobile ? 'top-[70%] left-1/2 transform -translate-x-1/2' : 'top-[50%] left-1/2 transform -translate-x-1/2'}`}>
-          <div className={`bg-red-600/80 rounded-lg backdrop-blur ${isMobile ? 'px-3 py-1' : 'px-6 py-2'}`}>
-            <div className={`text-white font-semibold ${isMobile ? 'text-sm' : 'text-lg'}`}>
+      {/* Current Bet Display - PC Only */}
+      {!isMobile && gameState.currentBet > 0 && (
+        <div className="absolute text-center top-[50%] left-1/2 transform -translate-x-1/2">
+          <div className="bg-red-600/80 rounded-lg backdrop-blur px-6 py-2">
+            <div className="text-white font-semibold text-lg">
               Current Bet: ${gameState.currentBet}
             </div>
           </div>
