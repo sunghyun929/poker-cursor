@@ -83,14 +83,16 @@ export default function PokerTable({
     { top: '20%', left: '5%', transform: 'none' }, // Top left
   ];
 
-  // Mobile: 겹치지 않는 안전한 배치 (버튼과 커뮤니티 카드 영역 회피)
+  // Mobile: 현재 플레이어를 중앙 하단에 배치하고 시계방향으로 배치 (베팅창과 겹치지 않도록)
   const mobileSeatPositions = [
-    { top: '8%', left: '50%', transform: 'translateX(-50%)' }, // 상단 중앙
-    { top: '25%', right: '2%', transform: 'none' }, // 우측 상단  
-    { top: '65%', right: '2%', transform: 'none' }, // 우측 하단
-    { bottom: '25%', left: '50%', transform: 'translateX(-50%)' }, // 하단 중앙 (현재 플레이어)
-    { top: '65%', left: '2%', transform: 'none' }, // 좌측 하단 (버튼 아래)
-    { top: '35%', left: '2%', transform: 'none' }, // 좌측 중간 (버튼 아래)
+    { bottom: '30%', left: '50%', transform: 'translateX(-50%)' }, // 현재 플레이어 (중앙 하단, 베팅창 위)
+    { bottom: '35%', right: '6%', transform: 'none' }, // 시계방향 1번째 (우측 하단)
+    { top: '45%', right: '2%', transform: 'translateY(-50%)' }, // 시계방향 2번째 (우측 중간)  
+    { top: '10%', right: '6%', transform: 'none' }, // 시계방향 3번째 (우측 상단)
+    { top: '6%', left: '50%', transform: 'translateX(-50%)' }, // 시계방향 4번째 (상단 중앙)
+    { top: '10%', left: '6%', transform: 'none' }, // 시계방향 5번째 (좌측 상단)
+    { top: '45%', left: '2%', transform: 'translateY(-50%)' }, // 시계방향 6번째 (좌측 중간)
+    { bottom: '35%', left: '6%', transform: 'none' }, // 시계방향 7번째 (좌측 하단)
   ];
 
   const handleToggleChat = () => {
@@ -257,11 +259,21 @@ export default function PokerTable({
             if (isMobile) {
               const dealerIndexInReordered = reorderedPlayers.findIndex(p => p.id === dealerPlayer.id);
               if (dealerIndexInReordered >= 0) {
+                // 딜러 위치 계산: 현재 플레이어가 0번, 다른 플레이어들은 1번부터 시작
+                let dealerPositionIndex = 0;
+                if (dealerPlayer.id === currentPlayerId) {
+                  dealerPositionIndex = 0;
+                } else {
+                  const otherPlayers = reorderedPlayers.filter(p => p.id !== currentPlayerId);
+                  const otherPlayerIndex = otherPlayers.findIndex(p => p.id === dealerPlayer.id);
+                  dealerPositionIndex = (otherPlayerIndex + 1) % mobileSeatPositions.length;
+                }
+                
                 return (
                   <div 
                     className="absolute w-8 h-8 bg-white rounded-full flex items-center justify-center text-xs font-bold text-black border-2 border-gray-400 pulse-dealer"
                     style={{
-                      ...mobileSeatPositions[dealerIndexInReordered],
+                      ...mobileSeatPositions[dealerPositionIndex],
                       transform: 'translate(-50%, -50%)',
                       zIndex: 5
                     }}
@@ -290,7 +302,7 @@ export default function PokerTable({
         })()}
 
       {/* Community Cards */}
-      <div className={`absolute ${isMobile ? 'top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2' : 'top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2'}`}>
+      <div className={`absolute ${isMobile ? 'top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2' : 'top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2'}`}>
         {isMobile ? (
           <MobileCommunityCards 
             cards={gameState.communityCards} 
@@ -305,7 +317,7 @@ export default function PokerTable({
       </div>
 
       {/* Pot Display */}
-      <div className={`absolute text-center ${isMobile ? 'bottom-8 left-1/2 transform -translate-x-1/2' : 'top-[43%] left-1/2 transform -translate-x-1/2'}`}>
+      <div className={`absolute text-center ${isMobile ? 'top-[25%] left-1/2 transform -translate-x-1/2' : 'top-[43%] left-1/2 transform -translate-x-1/2'}`}>
         <div className={`bg-black/70 rounded-lg backdrop-blur ${isMobile ? 'px-2 py-1' : 'px-4 py-2'}`}>
           <div className={`text-yellow-400 font-bold ${isMobile ? 'text-xs' : 'text-lg'}`}>
             Pot: ${gameState.pot}
@@ -338,6 +350,7 @@ export default function PokerTable({
         const isSmallBlind = gameState.smallBlindPosition === origIndex;
         const isBigBlind = gameState.bigBlindPosition === origIndex;
         if (isMobile) {
+          // 현재 플레이어는 항상 0번 위치 (중앙 하단)
           if (player.id === currentPlayerId) {
             return (
               <MobilePlayerCard
@@ -345,17 +358,21 @@ export default function PokerTable({
                 player={player}
                 isCurrentPlayer={true}
                 isActive={isCurrentTurn}
-                style={mobileSeatPositions[3]}
+                style={mobileSeatPositions[0]}
                 gameStage={gameState.stage}
                 showAllHoleCards={(gameState as any).showAllHoleCards || false}
               />
             );
           }
+          
+          // 다른 플레이어들은 시계방향으로 배치 (1번부터 시작)
           const otherPlayers = reorderedPlayers.filter(p => p.id !== currentPlayerId);
           const otherPlayerIndex = otherPlayers.findIndex(p => p.id === player.id);
           if (otherPlayerIndex === -1) return null;
-          const availablePositions = [0, 1, 2, 4, 5];
-          const positionIndex = availablePositions[otherPlayerIndex % availablePositions.length];
+          
+          // 1번부터 7번까지 시계방향 위치 사용
+          const positionIndex = (otherPlayerIndex + 1) % mobileSeatPositions.length;
+          
           return (
             <MobilePlayerCard
               key={player.id}
