@@ -7,21 +7,69 @@ import type { Player, GameState, Card } from "@shared/schema";
 interface MobileGameLayoutProps {
   gameState: GameState;
   currentPlayerId: string;
+  onLeaveGame?: () => void;
+  onEndGame?: () => void;
+  onStartGame?: () => void;
+  onOpenChat?: () => void;
+  unreadCount?: number;
   children: React.ReactNode; // 베팅 컨트롤
 }
 
-export default function MobileGameLayout({ gameState, currentPlayerId, children }: MobileGameLayoutProps) {
+export default function MobileGameLayout({ gameState, currentPlayerId, onLeaveGame, onEndGame, onStartGame, onOpenChat, unreadCount, children }: MobileGameLayoutProps) {
   const currentPlayer = gameState.players.find(p => p.id === currentPlayerId);
   const players = gameState.players;
   const myIndex = players.findIndex(p => p.id === currentPlayerId);
   const playerCount = players.length;
 
-  // 내 자신을 제외한 다른 플레이어들
-  const otherPlayers = players.filter(p => p.id !== currentPlayerId);
-  // 좌우로 균등 분배 (짝수면 반반, 홀수면 좌가 1명 더)
-  const half = Math.ceil(otherPlayers.length / 2);
-  const leftPlayers = otherPlayers.slice(0, half);
-  const rightPlayers = otherPlayers.slice(half);
+  // 시계방향으로 플레이어 재정렬 (현재 플레이어 기준)
+  const reorderedPlayers = myIndex !== -1 ? [
+    ...players.slice(myIndex),
+    ...players.slice(0, myIndex)
+  ] : players;
+  
+  // 내 자신을 제외한 다른 플레이어들 (시계방향 순서)
+  const otherPlayers = reorderedPlayers.slice(1);
+  
+  // 모바일 배치: 나를 제외한 플레이어들을 시계방향으로 배치
+  // 2명: [상단]
+  // 3명: [상단, 우측]
+  // 4명: [상단, 우측, 좌측]
+  // 5명: [상단좌, 상단우, 우측, 좌측]
+  // 6명: [상단좌, 상단우, 우측, 좌측하, 좌측상]
+  
+  const getPlayersByPosition = () => {
+    const positions = {
+      top: [] as Player[],
+      right: [] as Player[],
+      left: [] as Player[]
+    };
+    
+    otherPlayers.forEach((player, index) => {
+      if (otherPlayers.length === 1) {
+        positions.top.push(player);
+      } else if (otherPlayers.length === 2) {
+        if (index === 0) positions.top.push(player);
+        else positions.right.push(player);
+      } else if (otherPlayers.length === 3) {
+        if (index === 0) positions.top.push(player);
+        else if (index === 1) positions.right.push(player);
+        else positions.left.push(player);
+      } else if (otherPlayers.length === 4) {
+        if (index === 0 || index === 1) positions.top.push(player);
+        else if (index === 2) positions.right.push(player);
+        else positions.left.push(player);
+      } else {
+        // 5명 이상일 때
+        if (index < 2) positions.top.push(player);
+        else if (index < Math.ceil((otherPlayers.length + 1) / 2)) positions.right.push(player);
+        else positions.left.push(player);
+      }
+    });
+    
+    return positions;
+  };
+  
+  const playerPositions = getPlayersByPosition();
 
   const renderCard = (card: Card | null, index: number) => {
     if (!card) {
@@ -55,7 +103,9 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center space-x-1">
             <User className="h-3 w-3 text-white" />
-            <span className="text-white text-xs font-medium truncate max-w-[60px]">{player.name}</span>
+            <span className="text-white text-xs font-medium truncate max-w-[60px]">
+              {player.name}{isMe && <span className="text-yellow-400 ml-1">(ME)</span>}
+            </span>
           </div>
           <div className="flex space-x-1">
             {isDealer && <Badge variant="outline" className="text-xs p-0.5 h-4"><Crown className="h-2 w-2" /></Badge>}
@@ -96,35 +146,98 @@ export default function MobileGameLayout({ gameState, currentPlayerId, children 
     <div className="h-screen bg-green-800 relative overflow-hidden font-sans">
       {/* 좌측 상단 세로 버튼 */}
       <div className="absolute top-4 left-4 z-[9999] flex flex-col gap-2">
-        <Button variant="outline" className="bg-blue-600 text-white rounded shadow hover:bg-blue-700">채팅</Button>
-        <Button variant="outline" className="bg-red-600 text-white rounded shadow hover:bg-red-700">Leave</Button>
-        <Button variant="outline" className="bg-orange-500 text-white rounded shadow hover:bg-orange-600">게임종료</Button>
-      </div>
-
-      {/* 메인 flex row: 좌측 플레이어 / 커뮤니티+나 / 우측 플레이어 */}
-      <div className="flex flex-row justify-center items-center h-full w-full">
-        {/* 좌측 플레이어들 */}
-        <div className="flex flex-col justify-center items-end flex-1 h-full pt-16 pb-40">
-          {leftPlayers.map((player) => renderPlayerCard(player))}
-        </div>
-        {/* 커뮤니티 카드와 내 카드를 감싸는 flex column 컨테이너를 absolute top-4 left-1/2 transform -translate-x-1/2로 살짝 아래로 이동 */}
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-full flex flex-col items-center z-10 mb-24">
-          <div className="flex flex-col items-center gap-2">
-            {Array.from({ length: 5 }, (_, index) => {
-              const card = index < visibleCards ? gameState.communityCards[index] : null;
-              return renderCard(card, index);
-            })}
-          </div>
-          {currentPlayer && (
-            <div className="mt-1">
-              {renderPlayerCard(currentPlayer, true)}
+        {gameState.stage === 'waiting' && gameState.players.length >= 2 && gameState.hostPlayerId === currentPlayerId && onStartGame && (
+          <Button 
+            variant="outline" 
+            className="bg-green-600 text-white rounded shadow hover:bg-green-700"
+            onClick={onStartGame}
+          >
+            Start Game
+          </Button>
+        )}
+        <div className="relative">
+          <Button 
+            variant="outline" 
+            className="bg-blue-600 text-white rounded shadow hover:bg-blue-700"
+            onClick={onOpenChat}
+          >
+            채팅
+          </Button>
+          {unreadCount && unreadCount > 0 && (
+            <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+              {unreadCount}
             </div>
           )}
         </div>
-        {/* 우측 플레이어들 */}
-        <div className="flex flex-col justify-center items-start flex-1 h-full pt-16 pb-40">
-          {rightPlayers.map((player) => renderPlayerCard(player))}
+        <Button 
+          variant="outline" 
+          className="bg-red-600 text-white rounded shadow hover:bg-red-700"
+          onClick={onLeaveGame}
+        >
+          Leave
+        </Button>
+        {gameState.hostPlayerId === currentPlayerId && gameState.stage !== 'waiting' && onEndGame && (
+          <Button 
+            variant="outline" 
+            className="bg-orange-500 text-white rounded shadow hover:bg-orange-600"
+            onClick={onEndGame}
+          >
+            게임종료
+          </Button>
+        )}
+      </div>
+
+      {/* 개선된 모바일 레이아웃 */}
+      <div className="h-full flex flex-col relative">
+        {/* 상단 플레이어들 */}
+        {playerPositions.top.length > 0 && (
+          <div className="absolute top-16 left-1/2 transform -translate-x-1/2 flex gap-4 z-10">
+            {playerPositions.top.map((player) => (
+              <div key={player.id}>{renderPlayerCard(player)}</div>
+            ))}
+          </div>
+        )}
+        
+        {/* 중앙 영역 */}
+        <div className="flex-1 flex items-center justify-center relative">
+          {/* 좌측 플레이어들 */}
+          {playerPositions.left.length > 0 && (
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-3">
+              {playerPositions.left.map((player) => (
+                <div key={player.id}>{renderPlayerCard(player)}</div>
+              ))}
+            </div>
+          )}
+          
+          {/* 중앙 커뮤니티 카드 */}
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex gap-1">
+              {Array.from({ length: 5 }, (_, index) => {
+                const card = index < visibleCards ? gameState.communityCards[index] : null;
+                return renderCard(card, index);
+              })}
+            </div>
+            <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-full">
+              Pot: ${gameState.pot}
+            </div>
+          </div>
+          
+          {/* 우측 플레이어들 */}
+          {playerPositions.right.length > 0 && (
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-3">
+              {playerPositions.right.map((player) => (
+                <div key={player.id}>{renderPlayerCard(player)}</div>
+              ))}
+            </div>
+          )}
         </div>
+        
+        {/* 하단 내 플레이어 */}
+        {currentPlayer && (
+          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-10">
+            {renderPlayerCard(currentPlayer, true)}
+          </div>
+        )}
       </div>
 
       {/* 베팅 컨트롤 - 하단 고정 */}

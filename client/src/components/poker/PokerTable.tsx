@@ -108,54 +108,16 @@ export default function PokerTable({
   if (isMobile) {
     return (
       <>
-        {/* Game Control Buttons - Mobile (파란색 영역 - 좌상단) */}
-        <div className="absolute top-4 left-4 z-[9999] flex flex-col gap-2">
-          {gameState.stage === 'waiting' && gameState.players.length >= 2 && (
-            <Button 
-              onClick={onStartGame}
-              variant="outline"
-              size="sm"
-              className="bg-green-600 hover:bg-green-700 text-white border-green-600"
-            >
-              Start Game
-            </Button>
-          )}
-          {/* 채팅 버튼과 N 알림을 flex row로 묶고, N을 버튼 오른쪽(외부)에 배치 */}
-          <div className="flex items-center gap-1">
-            <Button
-              onClick={handleToggleChat}
-              variant="outline"
-              size="sm"
-              className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600"
-            >
-              채팅
-            </Button>
-            {unreadCount > 0 && (
-              <span className="bg-red-500 text-white text-xs min-w-[1.2rem] h-5 flex items-center justify-center rounded-full px-1 shadow z-50 ml-1">N</span>
-            )}
-          </div>
-          <Button 
-            onClick={onLeaveGame}
-            variant="outline"
-            size="sm"
-            className="bg-red-600 hover:bg-red-700 text-white border-red-600"
-          >
-            Leave
-          </Button>
-          {isHost && gameState.stage !== 'waiting' && onEndGame && (
-            <Button
-              onClick={onEndGame}
-              variant="outline"
-              size="sm"
-              className="bg-orange-500 hover:bg-orange-600 text-white border-orange-500"
-            >
-              게임종료
-            </Button>
-          )}
-        </div>
-
         {/* Mobile Game Layout */}
-        <MobileGameLayout gameState={gameState} currentPlayerId={currentPlayerId}>
+        <MobileGameLayout 
+          gameState={gameState} 
+          currentPlayerId={currentPlayerId}
+          onLeaveGame={onLeaveGame}
+          onEndGame={onEndGame}
+          onStartGame={onStartGame}
+          onOpenChat={handleToggleChat}
+          unreadCount={unreadCount}
+        >
           {currentPlayer && currentPlayer.chips > 0 && isCurrentPlayerTurn && gameState.stage !== 'waiting' && gameState.stage !== 'ended' && gameState.stage !== 'showdown' && gameState.stage !== 'settings' && (
             <MobileBettingControls
               player={currentPlayer}
