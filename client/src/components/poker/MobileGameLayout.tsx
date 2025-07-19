@@ -49,9 +49,9 @@ export default function MobileGameLayout({ gameState, currentPlayerId, onLeaveGa
   return (
     <div className="h-screen bg-green-800 relative overflow-hidden font-sans">
       {/* 상단 버튼들 - 확정된 레이아웃에 맞게 배치 */}
-      <div className="absolute top-2 left-0 right-0 z-[9999] flex justify-between items-start px-2">
+      <div className="absolute top-2 left-0 right-0 z-[9999] flex justify-between items-start px-2" style={{outline: '2px solid blue'}}>
         {/* 좌측: 채팅 버튼 (0-18%, 0-8%) */}
-        <div className="relative">
+        <div className="relative min-w-[60px]" style={{outline: '1px solid yellow'}}>
           <Button 
             variant="outline" 
             className="bg-blue-600 text-white rounded shadow hover:bg-blue-700 text-xs px-2 py-1"
@@ -68,23 +68,27 @@ export default function MobileGameLayout({ gameState, currentPlayerId, onLeaveGa
 
         {/* 중앙: 게임종료 버튼 (20-40%, 0-8%) - 방장만 */}
         {gameState.hostPlayerId === currentPlayerId && gameState.stage !== 'waiting' && onEndGame && (
-          <Button 
-            variant="outline" 
-            className="bg-orange-500 text-white rounded shadow hover:bg-orange-600 text-xs px-2 py-1"
-            onClick={onEndGame}
-          >
-            게임종료
-          </Button>
+          <div className="min-w-[80px]" style={{outline: '1px solid orange'}}>
+            <Button 
+              variant="outline" 
+              className="bg-orange-500 text-white rounded shadow hover:bg-orange-600 text-xs px-2 py-1"
+              onClick={onEndGame}
+            >
+              게임종료
+            </Button>
+          </div>
         )}
 
         {/* 우측: Leave 버튼 (82-100%, 0-8%) */}
-        <Button 
-          variant="outline" 
-          className="bg-red-600 text-white rounded shadow hover:bg-red-700 text-xs px-2 py-1"
-          onClick={onLeaveGame}
-        >
-          Leave
-        </Button>
+        <div className="min-w-[60px]" style={{outline: '1px solid green'}}>
+          <Button 
+            variant="outline" 
+            className="bg-red-600 text-white rounded shadow hover:bg-red-700 text-xs px-2 py-1"
+            onClick={onLeaveGame}
+          >
+            Leave
+          </Button>
+        </div>
       </div>
 
       {/* Start Game 버튼 - 별도 위치 (대기 중일 때만) */}
@@ -101,7 +105,7 @@ export default function MobileGameLayout({ gameState, currentPlayerId, onLeaveGa
       )}
 
       {/* 중앙 커뮤니티 카드 영역 - 35-55% 영역에 배치 */}
-      <div className="absolute top-[45%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-5">
+      <div className="absolute top-[45%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-5 min-w-[250px] min-h-[80px]" style={{outline: '2px solid purple'}}>
         <div className="flex flex-col items-center gap-3">
           {/* 커뮤니티 카드 */}
           <div className="flex gap-1">
@@ -126,7 +130,7 @@ export default function MobileGameLayout({ gameState, currentPlayerId, onLeaveGa
       </div>
 
       {/* 베팅 컨트롤 - 하단 고정, 좌우 여백 확보 */}
-      <div className="fixed bottom-2 left-4 right-4 z-30 px-2 bg-black/70 rounded-lg py-2">
+      <div className="fixed bottom-2 left-4 right-4 z-30 px-2 bg-black/70 rounded-lg py-2 min-h-[80px]" style={{outline: '2px solid cyan'}}>
         {children}
       </div>
     </div>

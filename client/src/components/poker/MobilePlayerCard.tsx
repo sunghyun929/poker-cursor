@@ -47,7 +47,7 @@ export default function MobilePlayerCard({ player, isCurrentPlayer, isActive, st
   );
 
   return (
-    <div className="absolute" style={style}>
+    <div className="absolute min-w-[80px] min-h-[100px]" style={{...style, outline: '2px solid red'}}>
       {/* Player Name & Chips */}
       <div className={`text-center mb-1 ${isActive ? 'animate-pulse' : ''}`}>
         <div className={`text-sm font-semibold px-2 py-1 rounded ${
