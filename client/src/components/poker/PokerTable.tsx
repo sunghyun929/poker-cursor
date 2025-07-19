@@ -139,7 +139,7 @@ export default function PokerTable({
           )}
         </MobileGameLayout>
 
-        {/* Mobile Player Cards - 가변 인원수 배치 */}
+        {/* Mobile Player Cards - Grid 영역 기반 배치 */}
         {(() => {
           const totalPlayers = gameState.players.length;
           const availablePositions = getPlayerPositions(totalPlayers);
@@ -149,42 +149,58 @@ export default function PokerTable({
             const origIndex = gameState.players.findIndex(p => p.id === player.id);
             const isCurrentTurn = gameState.currentPlayerIndex === origIndex;
             
-            // 현재 플레이어는 항상 P1 위치
+            // 현재 플레이어는 항상 Grid 영역 p1에 배치
             if (player.id === currentPlayerId) {
               return (
-                <MobilePlayerCard
+                <div
                   key={player.id}
-                  player={player}
-                  isCurrentPlayer={true}
-                  isActive={isCurrentTurn}
-                  style={mobileSeatPositions.P1}
-                  gameStage={gameState.stage}
-                  showAllHoleCards={(gameState as any).showAllHoleCards || false}
-                />
+                  className="absolute flex items-center justify-center"
+                  style={{ 
+                    gridArea: 'p1',
+                    zIndex: 10
+                  }}
+                >
+                  <MobilePlayerCard
+                    player={player}
+                    isCurrentPlayer={true}
+                    isActive={isCurrentTurn}
+                    style={{ position: 'static' }}
+                    gameStage={gameState.stage}
+                    showAllHoleCards={(gameState as any).showAllHoleCards || false}
+                  />
+                </div>
               );
             }
             
-            // 다른 플레이어들은 인원수에 따른 위치에 배치
+            // 다른 플레이어들은 Grid 영역에 배치
             const otherPlayerIndex = otherPlayers.findIndex(p => p.id === player.id);
             if (otherPlayerIndex === -1 || otherPlayerIndex >= availablePositions.length) return null;
             
-            const positionKey = availablePositions[otherPlayerIndex] as keyof typeof mobileSeatPositions;
+            const gridArea = availablePositions[otherPlayerIndex].toLowerCase();
             
             return (
-              <MobilePlayerCard
+              <div
                 key={player.id}
-                player={player}
-                isCurrentPlayer={false}
-                isActive={isCurrentTurn}
-                style={mobileSeatPositions[positionKey]}
-                gameStage={gameState.stage}
-                showAllHoleCards={(gameState as any).showAllHoleCards || false}
-              />
+                className="absolute flex items-center justify-center"
+                style={{ 
+                  gridArea: gridArea,
+                  zIndex: 10
+                }}
+              >
+                <MobilePlayerCard
+                  player={player}
+                  isCurrentPlayer={false}
+                  isActive={isCurrentTurn}
+                  style={{ position: 'static' }}
+                  gameStage={gameState.stage}
+                  showAllHoleCards={(gameState as any).showAllHoleCards || false}
+                />
+              </div>
             );
           });
         })()}
 
-        {/* Dealer Button - Mobile */}
+        {/* Dealer Button - Mobile (Grid 기반) */}
         {gameState.players.length > 0 && (() => {
           const dealerPlayer = gameState.players[gameState.dealerPosition];
           if (!dealerPlayer) return null;
@@ -193,32 +209,40 @@ export default function PokerTable({
           const availablePositions = getPlayerPositions(totalPlayers);
           const otherPlayers = reorderedPlayers.filter(p => p.id !== currentPlayerId);
           
-          let dealerPosition;
+          let gridArea;
           
           // 딜러가 현재 플레이어인 경우
           if (dealerPlayer.id === currentPlayerId) {
-            dealerPosition = mobileSeatPositions.P1;
+            gridArea = 'p1';
           } else {
             // 딜러가 다른 플레이어인 경우
             const otherPlayerIndex = otherPlayers.findIndex(p => p.id === dealerPlayer.id);
             if (otherPlayerIndex >= 0 && otherPlayerIndex < availablePositions.length) {
-              const positionKey = availablePositions[otherPlayerIndex] as keyof typeof mobileSeatPositions;
-              dealerPosition = mobileSeatPositions[positionKey];
+              gridArea = availablePositions[otherPlayerIndex].toLowerCase();
             }
           }
           
-          if (!dealerPosition) return null;
+          if (!gridArea) return null;
           
           return (
             <div 
-              className="absolute w-8 h-8 bg-white rounded-full flex items-center justify-center text-xs font-bold text-black border-2 border-gray-400 pulse-dealer"
+              className="absolute flex items-center justify-center pointer-events-none"
               style={{
-                ...dealerPosition,
-                transform: 'translate(-50%, -50%)',
-                zIndex: 50
+                gridArea: gridArea,
+                zIndex: 20
               }}
             >
-              D
+              <div 
+                className="rounded-full bg-white flex items-center justify-center font-bold text-black border-2 border-gray-400 pulse-dealer"
+                style={{
+                  width: 'var(--spacing-lg)',
+                  height: 'var(--spacing-lg)',
+                  fontSize: 'var(--text-xs)',
+                  transform: 'translate(50%, -50%)'
+                }}
+              >
+                D
+              </div>
             </div>
           );
         })()}
@@ -346,54 +370,25 @@ export default function PokerTable({
         </div>
       )}
         
-      {/* Dealer Button */}
-        {gameState.players.length > 0 && (() => {
-          const dealerPlayer = gameState.players[gameState.dealerPosition];
-          if (dealerPlayer) {
-            if (isMobile) {
-              const dealerIndexInReordered = reorderedPlayers.findIndex(p => p.id === dealerPlayer.id);
-              if (dealerIndexInReordered >= 0) {
-                // 딜러 위치 계산: 현재 플레이어가 0번, 다른 플레이어들은 1번부터 시작
-                let dealerPositionIndex = 0;
-                if (dealerPlayer.id === currentPlayerId) {
-                  dealerPositionIndex = 0;
-                } else {
-                  const otherPlayers = reorderedPlayers.filter(p => p.id !== currentPlayerId);
-                  const otherPlayerIndex = otherPlayers.findIndex(p => p.id === dealerPlayer.id);
-                  dealerPositionIndex = (otherPlayerIndex + 1) % mobileSeatPositions.length;
-                }
-                
-                return (
-                  <div 
-                    className="absolute w-8 h-8 bg-white rounded-full flex items-center justify-center text-xs font-bold text-black border-2 border-gray-400 pulse-dealer"
-                    style={{
-                      ...mobileSeatPositions[dealerPositionIndex],
-                      transform: 'translate(-50%, -50%)',
-                      zIndex: 5
-                    }}
-                  >
-                    D
-                  </div>
-                );
-              }
-            } else {
-              // PC에서는 원래 위치 사용
-              return (
-                <div 
-                  className="absolute w-8 h-8 bg-white rounded-full flex items-center justify-center text-xs font-bold text-black border-2 border-gray-400 pulse-dealer"
-                  style={{
-                    ...pcSeatPositions[gameState.dealerPosition % pcSeatPositions.length],
-                    transform: 'translate(-50%, -50%)',
-                    zIndex: 5
-                  }}
-                >
-                  D
-                </div>
-              );
-            }
-          }
-          return null;
-        })()}
+      {/* Dealer Button - PC Only */}
+      {!isMobile && gameState.players.length > 0 && (() => {
+        const dealerPlayer = gameState.players[gameState.dealerPosition];
+        if (dealerPlayer) {
+          return (
+            <div 
+              className="absolute w-8 h-8 bg-white rounded-full flex items-center justify-center text-xs font-bold text-black border-2 border-gray-400 pulse-dealer"
+              style={{
+                ...pcSeatPositions[gameState.dealerPosition % pcSeatPositions.length],
+                transform: 'translate(-50%, -50%)',
+                zIndex: 5
+              }}
+            >
+              D
+            </div>
+          );
+        }
+        return null;
+      })()}
 
       {/* Community Cards */}
       <div className={`absolute ${isMobile ? 'top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2' : 'top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2'}`}>
@@ -435,69 +430,32 @@ export default function PokerTable({
         </div>
       )}
 
-      {/* Player Seats */}
-      {reorderedPlayers.map((player, idx) => {
-        // index는 재정렬된 배열의 인덱스(즉, 0번이 항상 자기 자신)
+      {/* Player Seats - PC Only */}
+      {!isMobile && reorderedPlayers.map((player, idx) => {
         const origIndex = gameState.players.findIndex(p => p.id === player.id);
         const isCurrentTurn = gameState.currentPlayerIndex === origIndex;
         const isDealer = gameState.dealerPosition === origIndex;
         const isSmallBlind = gameState.smallBlindPosition === origIndex;
         const isBigBlind = gameState.bigBlindPosition === origIndex;
-        if (isMobile) {
-          // 현재 플레이어는 항상 0번 위치 (중앙 하단)
-          if (player.id === currentPlayerId) {
-            return (
-              <MobilePlayerCard
-                key={player.id}
-                player={player}
-                isCurrentPlayer={true}
-                isActive={isCurrentTurn}
-                style={mobileSeatPositions[0]}
-                gameStage={gameState.stage}
-                showAllHoleCards={(gameState as any).showAllHoleCards || false}
-              />
-            );
-          }
-          
-          // 다른 플레이어들은 시계방향으로 배치 (1번부터 시작)
-          const otherPlayers = reorderedPlayers.filter(p => p.id !== currentPlayerId);
-          const otherPlayerIndex = otherPlayers.findIndex(p => p.id === player.id);
-          if (otherPlayerIndex === -1) return null;
-          
-          // 1번부터 7번까지 시계방향 위치 사용
-          const positionIndex = (otherPlayerIndex + 1) % mobileSeatPositions.length;
-          
-          return (
-            <MobilePlayerCard
-              key={player.id}
+        
+        return (
+          <div
+            key={player.id}
+            className="absolute"
+            style={pcSeatPositions[idx % pcSeatPositions.length]}
+          >
+            <PlayerSeat
               player={player}
-              isCurrentPlayer={false}
-              isActive={isCurrentTurn}
-              style={mobileSeatPositions[positionIndex]}
+              isCurrentTurn={isCurrentTurn}
+              isCurrentPlayer={player.id === currentPlayerId}
+              isDealer={isDealer}
+              isSmallBlind={isSmallBlind}
+              isBigBlind={isBigBlind}
               gameStage={gameState.stage}
               showAllHoleCards={(gameState as any).showAllHoleCards || false}
             />
-          );
-        } else {
-          return (
-            <div
-              key={player.id}
-              className="absolute"
-              style={pcSeatPositions[idx % pcSeatPositions.length]}
-            >
-              <PlayerSeat
-                player={player}
-                isCurrentTurn={isCurrentTurn}
-                isCurrentPlayer={player.id === currentPlayerId}
-                isDealer={isDealer}
-                isSmallBlind={isSmallBlind}
-                isBigBlind={isBigBlind}
-                gameStage={gameState.stage}
-                showAllHoleCards={(gameState as any).showAllHoleCards || false}
-              />
-            </div>
-          );
-        }
+          </div>
+        );
       })}
 
       {/* Betting Controls - Separate for Mobile and PC */}

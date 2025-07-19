@@ -97,28 +97,45 @@ export default function MobileBettingControls({
   // If player has no chips, show spectator mode
   if (player.chips === 0) {
     return (
-      <div className="bg-black/95 backdrop-blur text-white p-3 rounded-lg w-full max-w-sm mx-auto">
-        <div className="text-center">
-          <div className="font-medium text-sm">{player.name}</div>
-          <div className="text-red-400 text-sm">관전 모드</div>
-          <div className="text-gray-400 text-xs">게임에서 탈락했습니다</div>
-        </div>
+      <div 
+        className="bg-black/95 backdrop-blur text-white rounded-lg text-center"
+        style={{ padding: 'var(--spacing-sm)' }}
+      >
+        <div style={{ fontSize: 'var(--text-sm)' }} className="font-medium">{player.name}</div>
+        <div style={{ fontSize: 'var(--text-sm)' }} className="text-red-400">관전 모드</div>
+        <div style={{ fontSize: 'var(--text-xs)' }} className="text-gray-400">게임에서 탈락했습니다</div>
       </div>
     );
   }
 
   return (
-    <div className="bg-black/95 backdrop-blur text-white p-3 rounded-lg w-full max-w-sm mx-auto">
-      {/* Player Info, 칩, Call 금액, 닉네임 등 정보 표시 부분 전체 삭제 */}
-      {/* 버튼만 남기고 전체 높이 최소화 */}
-
-      {/* Quick Actions */}
-      <div className="flex space-x-1 mb-3">
+    <div 
+      className="bg-black/95 backdrop-blur text-white rounded-lg"
+      style={{ 
+        padding: 'var(--spacing-sm)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 'var(--spacing-sm)'
+      }}
+    >
+      {/* Quick Actions - Flexbox with wrap */}
+      <div 
+        className="flex flex-wrap"
+        style={{ 
+          gap: 'var(--spacing-xs)',
+          justifyContent: 'space-between'
+        }}
+      >
         <Button 
           onClick={handleFold}
           variant="destructive"
           size="sm"
-          className="flex-1 h-8 py-0 text-xs"
+          className="flex-1 min-w-[4rem]"
+          style={{ 
+            height: 'var(--button-height)',
+            fontSize: 'var(--text-xs)',
+            padding: 'var(--spacing-xs)'
+          }}
         >
           Fold
         </Button>
@@ -128,7 +145,12 @@ export default function MobileBettingControls({
             onClick={handleCheck}
             variant="secondary"
             size="sm"
-            className="flex-1 h-8 py-0 text-xs"
+            className="flex-1 min-w-[4rem]"
+            style={{ 
+              height: 'var(--button-height)',
+              fontSize: 'var(--text-xs)',
+              padding: 'var(--spacing-xs)'
+            }}
           >
             Check
           </Button>
@@ -139,100 +161,138 @@ export default function MobileBettingControls({
             onClick={handleCall}
             variant="default"
             size="sm"
-            className="flex-1 h-8 py-0 text-xs bg-blue-600 hover:bg-blue-700"
+            className="flex-1 min-w-[4rem] bg-blue-600 hover:bg-blue-700"
+            style={{ 
+              height: 'var(--button-height)',
+              fontSize: 'var(--text-xs)',
+              padding: 'var(--spacing-xs)'
+            }}
           >
             Call ${callAmount}
           </Button>
         )}
       </div>
 
-      {/* Betting Controls */}
-      <div className="space-y-2">
-        {/* Quick Bet Buttons */}
-        {/* 1Bet/2Bet/3Bet 버튼이 있는 부분 전체 삭제 */}
-
-        {/* Bet Amount Control */}
-        <div className="flex items-center space-x-1">
-          <Button
-            onClick={handleDecrementBet}
-            variant="outline"
-            size="sm"
-            className="w-8 h-8 p-0 text-xs"
-            disabled={betAmount <= minRaise}
+      {/* Bet Amount Control */}
+      <div 
+        className="flex items-center"
+        style={{ gap: 'var(--spacing-xs)' }}
+      >
+        <Button
+          onClick={handleDecrementBet}
+          variant="outline"
+          size="sm"
+          className="p-0"
+          style={{ 
+            width: 'var(--button-height)',
+            height: 'var(--button-height)',
+            fontSize: 'var(--text-xs)'
+          }}
+          disabled={betAmount <= minRaise}
+        >
+          -
+        </Button>
+        
+        <div className="flex-1 text-center">
+          <div 
+            className="text-green-400 font-bold"
+            style={{ fontSize: 'var(--text-sm)' }}
           >
-            -
-          </Button>
-          
-          <div className="flex-1 text-center">
-            <div className="text-green-400 font-bold text-sm">${betAmount}</div>
+            ${betAmount}
           </div>
-          
-          <Button
-            onClick={handleIncrementBet}
-            variant="outline"
-            size="sm"
-            className="w-8 h-8 p-0 text-xs"
-            disabled={betAmount >= maxBet}
-          >
-            +
-          </Button>
         </div>
+        
+        <Button
+          onClick={handleIncrementBet}
+          variant="outline"
+          size="sm"
+          className="p-0"
+          style={{ 
+            width: 'var(--button-height)',
+            height: 'var(--button-height)',
+            fontSize: 'var(--text-xs)'
+          }}
+          disabled={betAmount >= maxBet}
+        >
+          +
+        </Button>
+      </div>
 
-        {/* Action Buttons */}
-        <div className="flex space-x-1">
-          {canBet && (
-            <Button
-              onClick={handleBet}
-              disabled={betAmount < minRaise || betAmount > maxBet}
-              className="flex-1 h-8 py-0 text-xs bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-500"
+      {/* Action Buttons - Flexbox with wrap */}
+      <div 
+        className="flex flex-wrap"
+        style={{ 
+          gap: 'var(--spacing-xs)',
+          justifyContent: 'space-between'
+        }}
+      >
+        {canBet && (
+          <Button
+            onClick={handleBet}
+            disabled={betAmount < minRaise || betAmount > maxBet}
+            className="flex-1 min-w-[5rem] bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-500"
+            style={{ 
+              height: 'var(--button-height)',
+              fontSize: 'var(--text-xs)',
+              padding: 'var(--spacing-xs)'
+            }}
+          >
+            Bet ${betAmount}
+          </Button>
+        )}
+        
+        {canRaise && (
+          <Button
+            onClick={handleRaise}
+            disabled={
+              (isBigBlind && callAmount === 0) 
+                ? (betAmount < minRaise || betAmount > maxBet)
+                : (callAmount + betAmount < callAmount + minRaise || callAmount + betAmount > maxBet)
+            }
+            className="flex-1 min-w-[5rem] bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-500"
+            style={{ 
+              height: 'var(--button-height)',
+              fontSize: 'var(--text-xs)',
+              padding: 'var(--spacing-xs)'
+            }}
+          >
+            Raise ${betAmount}
+          </Button>
+        )}
+        
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button 
+              variant="destructive"
+              size="sm"
+              className="flex-1 min-w-[5rem] bg-orange-600 hover:bg-orange-700"
+              style={{ 
+                height: 'var(--button-height)',
+                fontSize: 'var(--text-xs)',
+                padding: 'var(--spacing-xs)'
+              }}
             >
-              Bet ${betAmount}
+              All-in ${player.chips}
             </Button>
-          )}
-          
-          {canRaise && (
-            <Button
-              onClick={handleRaise}
-              disabled={
-                (isBigBlind && callAmount === 0) 
-                  ? (betAmount < minRaise || betAmount > maxBet)
-                  : (callAmount + betAmount < callAmount + minRaise || callAmount + betAmount > maxBet)
-              }
-              className="flex-1 h-8 py-0 text-xs bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-500"
-            >
-              Raise ${betAmount}
-            </Button>
-          )}
-          
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button 
-                variant="destructive"
-                size="sm"
-                className="flex-1 h-8 py-0 text-xs bg-orange-600 hover:bg-orange-700"
+          </AlertDialogTrigger>
+          <AlertDialogContent className="z-[10000] bg-gray-900 border-gray-600">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-white">Confirm All-in</AlertDialogTitle>
+              <AlertDialogDescription className="text-gray-300">
+                Are you sure you want to go all-in with ${player.chips}?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="bg-gray-600 text-white border-gray-500 hover:bg-gray-700">Cancel</AlertDialogCancel>
+              <AlertDialogAction 
+                onClick={handleAllIn}
+                className="bg-orange-600 hover:bg-orange-700 text-white"
               >
-                All-in ${player.chips}
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent className="z-[10000] bg-gray-900 border-gray-600">
-              <AlertDialogHeader>
-                <AlertDialogTitle className="text-white">Confirm All-in</AlertDialogTitle>
-                <AlertDialogDescription className="text-gray-300">
-                  Are you sure you want to go all-in with ${player.chips}?
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel className="bg-gray-600 text-white border-gray-500 hover:bg-gray-700">Cancel</AlertDialogCancel>
-                <AlertDialogAction 
-                  onClick={handleAllIn}
-                  className="bg-orange-600 hover:bg-orange-700 text-white"
-                >
-                  Confirm All-in
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
+                Confirm All-in
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

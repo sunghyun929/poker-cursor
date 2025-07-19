@@ -1,0 +1,219 @@
+/* 모바일 포커 게임 반응형 CSS 변수 및 Grid 레이아웃 */
+
+:root {
+  /* 카드 크기 - clamp(최소, 선호, 최대) */
+  --card-width: clamp(2rem, 8vw, 3rem);
+  --card-height: clamp(2.8rem, 11vw, 4.2rem);
+  
+  /* 플레이어 카드 영역 크기 */
+  --player-card-width: clamp(4rem, 12vw, 6rem);
+  --player-card-height: clamp(5rem, 15vw, 8rem);
+  
+  /* 버튼 크기 */
+  --button-padding: clamp(0.25rem, 1vw, 0.5rem);
+  --button-font-size: clamp(0.75rem, 3vw, 1rem);
+  --button-min-width: clamp(3rem, 10vw, 5rem);
+  
+  /* 간격 */
+  --grid-gap: clamp(0.25rem, 1vw, 0.5rem);
+  --content-padding: clamp(0.5rem, 2vw, 1rem);
+  
+  /* 텍스트 크기 */
+  --text-xs: clamp(0.6rem, 2.5vw, 0.75rem);
+  --text-sm: clamp(0.75rem, 3vw, 0.875rem);
+  --text-base: clamp(0.875rem, 3.5vw, 1rem);
+}
+
+/* 작은 화면용 기본 폰트 크기 조정 */
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 320px) {
+  html {
+    font-size: 11px;
+  }
+}
+
+/* 모바일 포커 게임 메인 Grid 레이아웃 */
+.mobile-poker-grid {
+  display: grid;
+  height: 100vh;
+  background: #059669; /* green-600 */
+  overflow: hidden;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  
+  grid-template-areas: 
+    "header header header"
+    "player-top-left player-top-center player-top-right"
+    "player-mid-left community player-mid-right"
+    "player-bottom-left current-player player-bottom-right"
+    "betting-controls betting-controls betting-controls";
+    
+  grid-template-rows: 
+    auto          /* header */
+    1fr           /* top players */
+    2fr           /* middle (community) */
+    1fr           /* bottom players */
+    auto;         /* betting controls */
+    
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: var(--grid-gap);
+  padding: var(--content-padding);
+}
+
+/* Grid 영역별 스타일 */
+.grid-header {
+  grid-area: header;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--grid-gap);
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+}
+
+.grid-player-top-left { grid-area: player-top-left; }
+.grid-player-top-center { grid-area: player-top-center; }
+.grid-player-top-right { grid-area: player-top-right; }
+.grid-player-mid-left { grid-area: player-mid-left; }
+.grid-player-mid-right { grid-area: player-mid-right; }
+.grid-player-bottom-left { grid-area: player-bottom-left; }
+.grid-player-bottom-right { grid-area: player-bottom-right; }
+.grid-current-player { grid-area: current-player; }
+
+.grid-community {
+  grid-area: community;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.grid-betting-controls {
+  grid-area: betting-controls;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 0.5rem;
+  padding: var(--content-padding);
+  backdrop-filter: blur(4px);
+}
+
+/* 플레이어 카드 공통 스타일 */
+.player-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-width: var(--player-card-width);
+  min-height: var(--player-card-height);
+}
+
+/* 커뮤니티 카드 스타일 */
+.community-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.poker-card {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: 0.375rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d1d5db; /* gray-300 */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* 팟 정보 스타일 */
+.pot-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pot-display {
+  color: #fbbf24; /* yellow-400 */
+  font-weight: bold;
+  font-size: var(--text-sm);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(4px);
+}
+
+.current-bet-display {
+  color: #fed7aa; /* orange-200 */
+  font-size: var(--text-sm);
+  background: rgba(234, 88, 12, 0.8); /* orange-600/80 */
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+}
+
+/* 베팅 컨트롤 스타일 */
+.betting-controls-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--grid-gap);
+  justify-content: center;
+  align-items: center;
+}
+
+.betting-button {
+  min-width: var(--button-min-width);
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+  border-radius: 0.375rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+/* 반응형 조정 */
+@media (max-width: 640px) {
+  .mobile-poker-grid {
+    grid-template-columns: 0.8fr 2.4fr 0.8fr;
+    gap: 0.25rem;
+    padding: 0.25rem;
+  }
+  
+  .grid-header {
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-poker-grid {
+    grid-template-rows: 
+      auto          /* header */
+      0.8fr         /* top players */
+      2.4fr         /* middle (community) */
+      0.8fr         /* bottom players */
+      auto;         /* betting controls */
+  }
+}
+
+@media (max-width: 360px) {
+  .community-cards {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+}
