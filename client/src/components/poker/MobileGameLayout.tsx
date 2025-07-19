@@ -48,9 +48,48 @@ export default function MobileGameLayout({ gameState, currentPlayerId, onLeaveGa
 
   return (
     <div className="h-screen bg-green-800 relative overflow-hidden font-sans">
-      {/* 좌측 상단 세로 버튼 */}
-      <div className="absolute top-4 left-4 z-[9999] flex flex-col gap-2">
-        {gameState.stage === 'waiting' && gameState.players.length >= 2 && gameState.hostPlayerId === currentPlayerId && onStartGame && (
+      {/* 상단 버튼들 - 확정된 레이아웃에 맞게 배치 */}
+      <div className="absolute top-2 left-0 right-0 z-[9999] flex justify-between items-start px-2">
+        {/* 좌측: 채팅 버튼 (0-18%, 0-8%) */}
+        <div className="relative">
+          <Button 
+            variant="outline" 
+            className="bg-blue-600 text-white rounded shadow hover:bg-blue-700 text-xs px-2 py-1"
+            onClick={onOpenChat}
+          >
+            채팅
+          </Button>
+          {unreadCount && unreadCount > 0 && (
+            <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold">
+              {unreadCount}
+            </div>
+          )}
+        </div>
+
+        {/* 중앙: 게임종료 버튼 (20-40%, 0-8%) - 방장만 */}
+        {gameState.hostPlayerId === currentPlayerId && gameState.stage !== 'waiting' && onEndGame && (
+          <Button 
+            variant="outline" 
+            className="bg-orange-500 text-white rounded shadow hover:bg-orange-600 text-xs px-2 py-1"
+            onClick={onEndGame}
+          >
+            게임종료
+          </Button>
+        )}
+
+        {/* 우측: Leave 버튼 (82-100%, 0-8%) */}
+        <Button 
+          variant="outline" 
+          className="bg-red-600 text-white rounded shadow hover:bg-red-700 text-xs px-2 py-1"
+          onClick={onLeaveGame}
+        >
+          Leave
+        </Button>
+      </div>
+
+      {/* Start Game 버튼 - 별도 위치 (대기 중일 때만) */}
+      {gameState.stage === 'waiting' && gameState.players.length >= 2 && gameState.hostPlayerId === currentPlayerId && onStartGame && (
+        <div className="absolute top-12 left-1/2 transform -translate-x-1/2 z-[9999]">
           <Button 
             variant="outline" 
             className="bg-green-600 text-white rounded shadow hover:bg-green-700"
@@ -58,38 +97,8 @@ export default function MobileGameLayout({ gameState, currentPlayerId, onLeaveGa
           >
             Start Game
           </Button>
-        )}
-        <div className="relative">
-          <Button 
-            variant="outline" 
-            className="bg-blue-600 text-white rounded shadow hover:bg-blue-700"
-            onClick={onOpenChat}
-          >
-            채팅
-          </Button>
-          {unreadCount && unreadCount > 0 && (
-            <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
-              {unreadCount}
-            </div>
-          )}
         </div>
-        <Button 
-          variant="outline" 
-          className="bg-red-600 text-white rounded shadow hover:bg-red-700"
-          onClick={onLeaveGame}
-        >
-          Leave
-        </Button>
-        {gameState.hostPlayerId === currentPlayerId && gameState.stage !== 'waiting' && onEndGame && (
-          <Button 
-            variant="outline" 
-            className="bg-orange-500 text-white rounded shadow hover:bg-orange-600"
-            onClick={onEndGame}
-          >
-            게임종료
-          </Button>
-        )}
-      </div>
+      )}
 
       {/* 중앙 커뮤니티 카드 영역 - 35-55% 영역에 배치 */}
       <div className="absolute top-[45%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-5">

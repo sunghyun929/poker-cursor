@@ -83,17 +83,27 @@ export default function PokerTable({
     { top: '20%', left: '5%', transform: 'none' }, // Top left
   ];
 
-  // Mobile: 화면 영역을 나누어 겹치지 않게 배치 (시계방향)
-  const mobileSeatPositions = [
-    { top: '75%', left: '50%', transform: 'translateX(-50%)' }, // 현재 플레이어 (하단 중앙, 베팅창과 여유 확보)
-    { top: '62%', right: '6%', transform: 'none' }, // 시계방향 1번째 (우측 하단)
-    { top: '45%', right: '3%', transform: 'translateY(-50%)' }, // 시계방향 2번째 (우측 중간)  
-    { top: '25%', right: '15%', transform: 'none' }, // 시계방향 3번째 (우측 상단, 버튼 피함)
-    { top: '15%', left: '50%', transform: 'translateX(-50%)' }, // 시계방향 4번째 (상단 중앙)
-    { top: '25%', left: '15%', transform: 'none' }, // 시계방향 5번째 (좌측 상단, 버튼 피함)
-    { top: '45%', left: '3%', transform: 'translateY(-50%)' }, // 시계방향 6번째 (좌측 중간)
-    { top: '62%', left: '6%', transform: 'none' }, // 시계방향 7번째 (좌측 하단)
-  ];
+  // Mobile: 가변 인원수에 따른 플레이어 배치 위치 정의
+  const mobileSeatPositions = {
+    P1: { top: '82%', left: '50%', transform: 'translateX(-50%)' }, // 현재 플레이어 (항상 고정)
+    P2: { top: '66%', left: '15%', transform: 'none' }, // 좌측 하단
+    P3: { top: '32%', left: '15%', transform: 'none' }, // 좌측 상단  
+    P4: { top: '18%', left: '50%', transform: 'translateX(-50%)' }, // 상단 중앙
+    P5: { top: '32%', right: '5%', transform: 'none' }, // 우측 상단
+    P6: { top: '66%', right: '5%', transform: 'none' }, // 우측 하단
+  };
+
+  // 인원수에 따른 배치 순서 정의
+  const getPlayerPositions = (totalPlayers: number) => {
+    switch (totalPlayers) {
+      case 2: return ['P4'];
+      case 3: return ['P3', 'P5'];
+      case 4: return ['P2', 'P4', 'P6'];
+      case 5: return ['P2', 'P3', 'P5', 'P6'];
+      case 6: return ['P2', 'P3', 'P4', 'P5', 'P6'];
+      default: return [];
+    }
+  };
 
   const handleToggleChat = () => {
     if (!isChatOpen && unreadCount > 0) {
@@ -129,75 +139,88 @@ export default function PokerTable({
           )}
         </MobileGameLayout>
 
-        {/* Mobile Player Cards - 레이아웃 밖에서 렌더링 */}
-        {reorderedPlayers.map((player, idx) => {
-          const origIndex = gameState.players.findIndex(p => p.id === player.id);
-          const isCurrentTurn = gameState.currentPlayerIndex === origIndex;
+        {/* Mobile Player Cards - 가변 인원수 배치 */}
+        {(() => {
+          const totalPlayers = gameState.players.length;
+          const availablePositions = getPlayerPositions(totalPlayers);
+          const otherPlayers = reorderedPlayers.filter(p => p.id !== currentPlayerId);
           
-          // 현재 플레이어는 항상 0번 위치 (중앙 하단)
-          if (player.id === currentPlayerId) {
+          return reorderedPlayers.map((player, idx) => {
+            const origIndex = gameState.players.findIndex(p => p.id === player.id);
+            const isCurrentTurn = gameState.currentPlayerIndex === origIndex;
+            
+            // 현재 플레이어는 항상 P1 위치
+            if (player.id === currentPlayerId) {
+              return (
+                <MobilePlayerCard
+                  key={player.id}
+                  player={player}
+                  isCurrentPlayer={true}
+                  isActive={isCurrentTurn}
+                  style={mobileSeatPositions.P1}
+                  gameStage={gameState.stage}
+                  showAllHoleCards={(gameState as any).showAllHoleCards || false}
+                />
+              );
+            }
+            
+            // 다른 플레이어들은 인원수에 따른 위치에 배치
+            const otherPlayerIndex = otherPlayers.findIndex(p => p.id === player.id);
+            if (otherPlayerIndex === -1 || otherPlayerIndex >= availablePositions.length) return null;
+            
+            const positionKey = availablePositions[otherPlayerIndex] as keyof typeof mobileSeatPositions;
+            
             return (
               <MobilePlayerCard
                 key={player.id}
                 player={player}
-                isCurrentPlayer={true}
+                isCurrentPlayer={false}
                 isActive={isCurrentTurn}
-                style={mobileSeatPositions[0]}
+                style={mobileSeatPositions[positionKey]}
                 gameStage={gameState.stage}
                 showAllHoleCards={(gameState as any).showAllHoleCards || false}
               />
             );
-          }
-          
-          // 다른 플레이어들은 시계방향으로 배치 (1번부터 시작)
-          const otherPlayers = reorderedPlayers.filter(p => p.id !== currentPlayerId);
-          const otherPlayerIndex = otherPlayers.findIndex(p => p.id === player.id);
-          if (otherPlayerIndex === -1) return null;
-          
-          // 1번부터 7번까지 시계방향 위치 사용
-          const positionIndex = (otherPlayerIndex + 1) % mobileSeatPositions.length;
-          
-          return (
-            <MobilePlayerCard
-              key={player.id}
-              player={player}
-              isCurrentPlayer={false}
-              isActive={isCurrentTurn}
-              style={mobileSeatPositions[positionIndex]}
-              gameStage={gameState.stage}
-              showAllHoleCards={(gameState as any).showAllHoleCards || false}
-            />
-          );
-        })}
+          });
+        })()}
 
         {/* Dealer Button - Mobile */}
         {gameState.players.length > 0 && (() => {
           const dealerPlayer = gameState.players[gameState.dealerPosition];
-          if (dealerPlayer) {
-            // 딜러 위치 계산: 현재 플레이어가 0번, 다른 플레이어들은 1번부터 시작
-            let dealerPositionIndex = 0;
-            if (dealerPlayer.id === currentPlayerId) {
-              dealerPositionIndex = 0;
-            } else {
-              const otherPlayers = reorderedPlayers.filter(p => p.id !== currentPlayerId);
-              const otherPlayerIndex = otherPlayers.findIndex(p => p.id === dealerPlayer.id);
-              dealerPositionIndex = (otherPlayerIndex + 1) % mobileSeatPositions.length;
+          if (!dealerPlayer) return null;
+          
+          const totalPlayers = gameState.players.length;
+          const availablePositions = getPlayerPositions(totalPlayers);
+          const otherPlayers = reorderedPlayers.filter(p => p.id !== currentPlayerId);
+          
+          let dealerPosition;
+          
+          // 딜러가 현재 플레이어인 경우
+          if (dealerPlayer.id === currentPlayerId) {
+            dealerPosition = mobileSeatPositions.P1;
+          } else {
+            // 딜러가 다른 플레이어인 경우
+            const otherPlayerIndex = otherPlayers.findIndex(p => p.id === dealerPlayer.id);
+            if (otherPlayerIndex >= 0 && otherPlayerIndex < availablePositions.length) {
+              const positionKey = availablePositions[otherPlayerIndex] as keyof typeof mobileSeatPositions;
+              dealerPosition = mobileSeatPositions[positionKey];
             }
-            
-            return (
-              <div 
-                className="absolute w-8 h-8 bg-white rounded-full flex items-center justify-center text-xs font-bold text-black border-2 border-gray-400 pulse-dealer"
-                style={{
-                  ...mobileSeatPositions[dealerPositionIndex],
-                  transform: 'translate(-50%, -50%)',
-                  zIndex: 50
-                }}
-              >
-                D
-              </div>
-            );
           }
-          return null;
+          
+          if (!dealerPosition) return null;
+          
+          return (
+            <div 
+              className="absolute w-8 h-8 bg-white rounded-full flex items-center justify-center text-xs font-bold text-black border-2 border-gray-400 pulse-dealer"
+              style={{
+                ...dealerPosition,
+                transform: 'translate(-50%, -50%)',
+                zIndex: 50
+              }}
+            >
+              D
+            </div>
+          );
         })()}
 
         {/* Winner Display - Mobile */}
